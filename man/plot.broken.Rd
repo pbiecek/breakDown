@@ -4,10 +4,12 @@
 \alias{plot.broken}
 \title{Break Down PLot}
 \usage{
-\method{plot}{broken}(x, ...)
+\method{plot}{broken}(x, trans = I, ...)
 }
 \arguments{
 \item{x}{the model model of 'broken' class}
+
+\item{trans}{transformation that shal be applied to scores}
 
 \item{...}{other parameters}
 }

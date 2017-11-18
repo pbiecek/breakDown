@@ -11,5 +11,5 @@ print.broken <- function(x, ...) {
   broken_cumm <- x
   class(broken_cumm) = "data.frame"
   broken_cumm$contribution <- signif(broken_cumm$contribution, 2)
-  broken_cumm[,c("variable", "contribution")]
+  print(broken_cumm[,c("variable", "contribution")])
 }

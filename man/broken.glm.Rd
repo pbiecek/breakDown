@@ -27,5 +27,6 @@ modelg <- glm(qualityb~fixed.acidity + volatile.acidity + citric.acid + residual
     data=wine, family = "binomial")
 new_observation <- wine[1,]
 br <- broken(modelg, new_observation)
-plot(br)
+logit <- function(x) exp(x)/(1+exp(x))
+plot(br, logit)
 }

@@ -50,7 +50,6 @@ broken.lm <- function(model, new_observation, ...) {
 #' @param ... other parameters
 #'
 #' @return an object of the broken class
-#' @export
 #' @importFrom stats predict.lm
 #'
 #' @examples
@@ -61,7 +60,9 @@ broken.lm <- function(model, new_observation, ...) {
 #'     data=wine, family = "binomial")
 #' new_observation <- wine[1,]
 #' br <- broken(modelg, new_observation)
-#' plot(br)
+#' logit <- function(x) exp(x)/(1+exp(x))
+#' plot(br, logit)
+#' @export
 
 broken.glm <- function(model, new_observation, ...) {
   ny <- predict.glm(model, newdata = new_observation, type="terms")
