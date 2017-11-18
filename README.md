@@ -1,2 +1,2 @@
 # breakDown
-Modified Waterfall plots for xgboost, glm, lm, bgmlight and randomForest
+Modified Waterfall plots for xgboost, glm, lm, LightGBM and randomForest
