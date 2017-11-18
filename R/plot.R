@@ -4,12 +4,13 @@
 #' @param ... other parameters
 #'
 #' @return a ggplot2 object
-#' @export
 #' @import ggplot2
 #'
 #' @examples
+#' @export
 plot.broken <- function(x, ...) {
   broken_cumm <- x
+  class(broken_cumm) = "data.frame"
   ggplot(broken_cumm, aes(x = position + 0.5,
                           y = pmax(cummulative, cummulative - contribution),
                           xmin = position, xmax=position + 0.95,
