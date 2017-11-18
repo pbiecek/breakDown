@@ -29,8 +29,6 @@ broken <- function(model, new_observation, ...) {
 #' plot(br)
 
 broken.lm <- function(model, new_observation, ...) {
-  model <- lm(Sepal.Length~., data=iris)
-
   ny <- predict.lm(model, newdata = new_observation, type="terms")
 
   broken_obj <- data.frame(variable = paste(colnames(ny),  "=",
