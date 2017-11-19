@@ -4,7 +4,7 @@
 \alias{plot.broken}
 \title{Break Down PLot}
 \usage{
-\method{plot}{broken}(x, trans = I, ...)
+\method{plot}{broken}(x, trans = I, ..., add_contributions = TRUE)
 }
 \arguments{
 \item{x}{the model model of 'broken' class}
@@ -12,6 +12,8 @@
 \item{trans}{transformation that shal be applied to scores}
 
 \item{...}{other parameters}
+
+\item{add_contributions}{shall variable contributions to be added on plot?}
 }
 \value{
 a ggplot2 object

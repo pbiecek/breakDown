@@ -60,6 +60,14 @@ broken.lm <- function(model, new_observation, ...) {
 #' br <- broken(modelg, new_observation)
 #' logit <- function(x) exp(x)/(1+exp(x))
 #' plot(br, logit)
+#'
+#' # example for HR_data
+#' model <- glm(left~., data = HR_data, family = "binomial")
+#' explain_1 <- broken(model, HR_data[1,])
+#' explain_1
+#' plot(explain_1)
+#' plot(explain_1, trans = function(x) exp(x)/(1+exp(x)))
+#'
 #' @export
 
 broken.glm <- function(model, new_observation, ...) {
