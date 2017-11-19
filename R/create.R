@@ -2,7 +2,7 @@
 #' Internatl function
 #'
 #' @return enriched broken class
-#' @examples
+#'
 create.broken <- function(broken_intercept) {
   broken_cumm <- data.frame(broken_intercept,
                             cummulative = cumsum(as.numeric(broken_intercept$contribution)),

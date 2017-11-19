@@ -5,7 +5,6 @@
 #'
 #' @return a data frame
 #'
-#' @examples
 #' @export
 print.broken <- function(x, ...) {
   broken_cumm <- x

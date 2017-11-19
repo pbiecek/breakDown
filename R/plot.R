@@ -7,7 +7,6 @@
 #' @return a ggplot2 object
 #' @import ggplot2
 #'
-#' @examples
 #' @export
 plot.broken <- function(x, trans = I, ...) {
   broken_cumm <- x

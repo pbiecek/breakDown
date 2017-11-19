@@ -4,10 +4,8 @@
 #' @param new_observation a new observation with collumns that corresponds to variables used in the model
 #' @param ... other parameters
 #'
-#' @return
 #' @export
 #'
-#' @examples
 broken <- function(model, new_observation, ...) {
   UseMethod("broken")
 }
