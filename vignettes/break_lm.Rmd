@@ -1,0 +1,65 @@
+---
+title: "breakDown plots for the linear model"
+author: "Przemyslaw Biecek"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{breakDown plots for the linear model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Here we will use the wine quality data (https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv) to present the breakDown package for `lm` models.
+
+First, let's download the data from URL
+
+```{r}
+url <- 'https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv'
+wine <- read.table(url, header = T, sep=";")
+head(wine, 3)
+```
+
+Now let's create a liner model for `quality`.
+
+```{r}
+model <- lm(quality ~ fixed.acidity + volatile.acidity + citric.acid + residual.sugar + chlorides + free.sulfur.dioxide + total.sulfur.dioxide + density + pH + sulphates + alcohol,
+               data = wine)
+```
+
+The common goodness-of-fit parameteres for lm model are R^2, adjusted R^2, AIC or BIC coefficients.
+
+```{r}
+summary(model)$r.squared
+summary(model)$adj.r.squared
+BIC(model)
+```
+They assess the overall quality of fit. But how to understand the factors that drive predictions for a single observation? 
+
+With the `breakDown` package!
+
+```{r, fig.width=7}
+library(breakDown)
+library(ggplot2)
+
+new_observation <- wine[1,]
+br <- broken(model, new_observation)
+br
+plot(br) + ggtitle("breakDown plot for predicted quality of a wine")
+```
+
+Use the `baseline` argument to set the origin of plots.
+
+```{r, fig.width=7}
+br <- broken(model, new_observation, baseline = "Intercept")
+br
+plot(br) + ggtitle("breakDown plot for predicted quality of a wine")
+```
+
+
