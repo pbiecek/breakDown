@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>breakDown plots for the generalised linear model • breakDown</title>
+<title>breakDown plots for the ranger model • breakDown</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -73,7 +73,7 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>breakDown plots for the generalised linear model</h1>
+      <h1>breakDown plots for the ranger model</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
             <h4 class="date">2017-12-02</h4>
@@ -82,7 +82,7 @@
     
     
 <div class="contents">
-<p>Here we will use the HR churn data (<a href="https://www.kaggle.com/ludobenistant/hr-analytics/data" class="uri">https://www.kaggle.com/ludobenistant/hr-analytics/data</a>) to present the breakDown package for <code>glm</code> models.</p>
+<p>Here we will use the HR churn data (<a href="https://www.kaggle.com/ludobenistant/hr-analytics/data" class="uri">https://www.kaggle.com/ludobenistant/hr-analytics/data</a>) to present the <code>breakDown</code> package for <code>ranger</code> models.</p>
 <p>The data is in the <code>breakDown</code> package</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(breakDown)
 <span class="kw">head</span>(HR_data, <span class="dv">3</span>)
@@ -94,49 +94,60 @@
 <span class="co">#&gt; 1                  3             0    1                     0 sales    low</span>
 <span class="co">#&gt; 2                  6             0    1                     0 sales medium</span>
 <span class="co">#&gt; 3                  4             0    1                     0 sales medium</span></code></pre></div>
-<p>Now let’s create a logistic regression model for churn, the <code>left</code> variable.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">glm</span>(left<span class="op">~</span>., <span class="dt">data =</span> HR_data, <span class="dt">family =</span> <span class="st">"binomial"</span>)</code></pre></div>
+<p>Now let’s create a <code>ranger</code> classification forest for churn, the <code>left</code> variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ranger)
+HR_data<span class="op">$</span>left &lt;-<span class="st"> </span><span class="kw">factor</span>(HR_data<span class="op">$</span>left)
+model &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ranger/topics/ranger">ranger</a></span>(left <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> HR_data, <span class="dt">importance =</span> <span class="st">'impurity'</span>, <span class="dt">min.node.size =</span> <span class="dv">10</span>)</code></pre></div>
+<p>Variable importance for all trees in the forest.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ranger/topics/importance.ranger">importance</a></span>(model)
+<span class="co">#&gt;    satisfaction_level       last_evaluation        number_project </span>
+<span class="co">#&gt;           1828.254621            618.437884            942.880374 </span>
+<span class="co">#&gt;  average_montly_hours    time_spend_company         Work_accident </span>
+<span class="co">#&gt;            764.866356            977.718562             28.382306 </span>
+<span class="co">#&gt; promotion_last_5years                 sales                salary </span>
+<span class="co">#&gt;              5.152408             41.323609             30.812704</span></code></pre></div>
 <p>But how to understand which factors drive predictions for a single observation?</p>
 <p>With the <code>breakDown</code> package!</p>
-<p>Explanations for the linear predictor.</p>
+<p>Explanations for the trees votings.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
 explain_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, HR_data[<span class="dv">1159</span>,])
 explain_<span class="dv">1</span>
 <span class="co">#&gt;                            contribution</span>
-<span class="co">#&gt; (Intercept)                      -1.600</span>
-<span class="co">#&gt; Work_accident = 1                -1.300</span>
-<span class="co">#&gt; time_spend_company = 2           -0.400</span>
-<span class="co">#&gt; satisfaction_level = 0.57         0.180</span>
-<span class="co">#&gt; salary = medium                  -0.140</span>
-<span class="co">#&gt; last_evaluation = 0.85            0.098</span>
-<span class="co">#&gt; average_montly_hours = 219        0.080</span>
-<span class="co">#&gt; number_project = 4               -0.062</span>
-<span class="co">#&gt; promotion_last_5years = 0         0.030</span>
-<span class="co">#&gt; sales = sales                     0.014</span>
-<span class="co">#&gt; final_prognosis                  -3.100</span>
-<span class="co">#&gt; baseline:  0</span>
-<span class="kw">plot</span>(explain_<span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for linear predictors"</span>)</code></pre></div>
-<p><img src="break_glm_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
-<p>Explanations for the probability with intercept set as an origin.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">explain_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, HR_data[<span class="dv">1159</span>,], <span class="dt">baseline =</span> <span class="st">"intercept"</span>)
-explain_<span class="dv">1</span>
-<span class="co">#&gt;                            contribution</span>
-<span class="co">#&gt; Work_accident = 1                -1.300</span>
-<span class="co">#&gt; time_spend_company = 2           -0.400</span>
-<span class="co">#&gt; satisfaction_level = 0.57         0.180</span>
-<span class="co">#&gt; salary = medium                  -0.140</span>
-<span class="co">#&gt; last_evaluation = 0.85            0.098</span>
-<span class="co">#&gt; average_montly_hours = 219        0.080</span>
-<span class="co">#&gt; number_project = 4               -0.062</span>
-<span class="co">#&gt; promotion_last_5years = 0         0.030</span>
-<span class="co">#&gt; sales = sales                     0.014</span>
-<span class="co">#&gt; final_prognosis                  -1.500</span>
-<span class="co">#&gt; baseline:  -1.601457</span>
-<span class="kw">plot</span>(explain_<span class="dv">1</span>, 
-     <span class="dt">trans =</span> <span class="cf">function</span>(x) <span class="kw">exp</span>(x)<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(x))) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Predicted probability of leaving the company"</span>)<span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>( <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">name =</span> <span class="st">"probability"</span>, <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))
+<span class="co">#&gt; time_spend_company = 2           0.0480</span>
+<span class="co">#&gt; satisfaction_level = 0.57        0.0460</span>
+<span class="co">#&gt; average_montly_hours = 219       0.0430</span>
+<span class="co">#&gt; number_project = 4               0.0410</span>
+<span class="co">#&gt; last_evaluation = 0.85           0.0380</span>
+<span class="co">#&gt; Work_accident = 1                0.0310</span>
+<span class="co">#&gt; sales = sales                    0.0220</span>
+<span class="co">#&gt; salary = medium                  0.0160</span>
+<span class="co">#&gt; promotion_last_5years = 0        0.0034</span>
+<span class="co">#&gt; final_prognosis                  0.2900</span>
+<span class="co">#&gt; baseline:  0.5</span>
+<span class="kw">plot</span>(explain_<span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>( <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">name =</span> <span class="st">"fraction of trees"</span>, <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))
 <span class="co">#&gt; Scale for 'y' is already present. Adding another scale for 'y', which</span>
 <span class="co">#&gt; will replace the existing scale.</span></code></pre></div>
-<p><img src="break_glm_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
+<p><img src="break_ranger_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+explain_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, HR_data[<span class="dv">10099</span>,])
+explain_<span class="dv">1</span>
+<span class="co">#&gt;                            contribution</span>
+<span class="co">#&gt; time_spend_company = 5           -0.041</span>
+<span class="co">#&gt; satisfaction_level = 0.73        -0.041</span>
+<span class="co">#&gt; average_montly_hours = 266       -0.040</span>
+<span class="co">#&gt; last_evaluation = 0.83           -0.040</span>
+<span class="co">#&gt; number_project = 5               -0.039</span>
+<span class="co">#&gt; salary = low                     -0.024</span>
+<span class="co">#&gt; Work_accident = 0                -0.019</span>
+<span class="co">#&gt; sales = sales                    -0.017</span>
+<span class="co">#&gt; promotion_last_5years = 0        -0.010</span>
+<span class="co">#&gt; final_prognosis                  -0.270</span>
+<span class="co">#&gt; baseline:  0.5</span>
+<span class="kw">plot</span>(explain_<span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>( <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">name =</span> <span class="st">"fraction of trees"</span>, <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))
+<span class="co">#&gt; Scale for 'y' is already present. Adding another scale for 'y', which</span>
+<span class="co">#&gt; will replace the existing scale.</span></code></pre></div>
+<p><img src="break_ranger_files/figure-html/unnamed-chunk-4-2.png" width="672"></p>
+<p>This is not the right approach.</p>
 </div>
   </div>
 

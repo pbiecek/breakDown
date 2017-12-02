@@ -49,11 +49,11 @@ Explanations for the trees votings.
 library(ggplot2)
 explain_1 <- broken(model, HR_data[1159,])
 explain_1
-plot(explain_1) + ggtitle("breakDown plot for linear predictors of leaving the company")+ scale_y_continuous( limits = c(0,1), name = "fraction of trees", expand = c(0,0))
+plot(explain_1) + scale_y_continuous( limits = c(0,1), name = "fraction of trees", expand = c(0,0))
 
 explain_1 <- broken(model, HR_data[10099,])
 explain_1
-plot(explain_1) + ggtitle("breakDown plot for linear predictors of leaving the company")+ scale_y_continuous( limits = c(0,1), name = "fraction of trees", expand = c(0,0))
+plot(explain_1) + scale_y_continuous( limits = c(0,1), name = "fraction of trees", expand = c(0,0))
 ```
 
 This is not the right approach.

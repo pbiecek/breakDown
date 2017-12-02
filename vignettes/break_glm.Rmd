@@ -41,7 +41,7 @@ Explanations for the linear predictor.
 library(ggplot2)
 explain_1 <- broken(model, HR_data[1159,])
 explain_1
-plot(explain_1) + ggtitle("breakDown plot for linear predictors of leaving the company")
+plot(explain_1) + ggtitle("breakDown plot for linear predictors")
 ```
 
 Explanations for the probability with intercept set as an origin.
@@ -50,7 +50,7 @@ Explanations for the probability with intercept set as an origin.
 explain_1 <- broken(model, HR_data[1159,], baseline = "intercept")
 explain_1
 plot(explain_1, 
-     trans = function(x) exp(x)/(1+exp(x))) + ggtitle("breakDown plot for predicted probability of leaving the company")+ scale_y_continuous( limits = c(0,1), name = "probability", expand = c(0,0))
+     trans = function(x) exp(x)/(1+exp(x))) + ggtitle("Predicted probability of leaving the company")+ scale_y_continuous( limits = c(0,1), name = "probability", expand = c(0,0))
 
 ```
 
