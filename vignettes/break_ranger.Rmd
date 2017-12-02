@@ -1,0 +1,59 @@
+---
+title: "breakDown plots for the ranger model"
+author: "Przemyslaw Biecek"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{breakDown plots for the ranger model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Here we will use the HR churn data  (https://www.kaggle.com/ludobenistant/hr-analytics/data) to present the `breakDown` package for `ranger` models.
+
+The data is in the `breakDown` package
+
+```{r}
+library(breakDown)
+head(HR_data, 3)
+```
+
+Now let's create a `ranger` classification forest for churn, the `left` variable.
+
+```{r}
+library(ranger)
+HR_data$left <- factor(HR_data$left)
+model <- ranger(left ~ ., data = HR_data, importance = 'impurity', min.node.size = 10)
+```
+
+Variable importance for all trees in the forest.
+
+```{r}
+importance(model)
+```
+
+But how to understand which factors drive predictions for a single observation? 
+
+With the `breakDown` package!
+
+Explanations for the trees votings.
+
+```{r, fig.width=7}
+library(ggplot2)
+explain_1 <- broken(model, HR_data[1159,])
+explain_1
+plot(explain_1) + ggtitle("breakDown plot for linear predictors of leaving the company")+ scale_y_continuous( limits = c(0,1), name = "fraction of trees")
+
+explain_1 <- broken(model, HR_data[10099,])
+explain_1
+plot(explain_1) + ggtitle("breakDown plot for linear predictors of leaving the company")+ scale_y_continuous( limits = c(0,1), name = "fraction of trees")
+```
+
+This is not the right approach.

@@ -3,14 +3,14 @@
 \name{create.broken}
 \alias{create.broken}
 \title{Clean the object of the broken class
-Internatl function}
+Internal function}
 \usage{
-create.broken(broken_intercept)
+create.broken(broken_intercept, baseline = 0)
 }
 \value{
 enriched broken class
 }
 \description{
 Clean the object of the broken class
-Internatl function
+Internal function
 }
