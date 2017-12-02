@@ -1,0 +1,57 @@
+---
+title: "breakDown plots for the generalised linear model"
+author: "Przemyslaw Biecek"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{breakDown plots for the linear model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Here we will use the HR churn data  (https://www.kaggle.com/ludobenistant/hr-analytics/data) to present the breakDown package for `glm` models.
+
+The data is in the `breakDown` package
+
+```{r}
+library(breakDown)
+head(HR_data, 3)
+```
+
+Now let's create a logistic regression model for churn, the `left` variable.
+
+```{r}
+model <- glm(left~., data = HR_data, family = "binomial")
+```
+
+But how to understand which factors drive predictions for a single observation? 
+
+With the `breakDown` package!
+
+Explanations for the linear predictor.
+
+```{r, fig.width=7}
+library(ggplot2)
+explain_1 <- broken(model, HR_data[1,])
+explain_1
+plot(explain_1) + ggtitle("breakDown plot for linear predictors of leaving the company")
+```
+
+Explanations for the probability with intercept set as an origin.
+
+```{r, fig.width=7}
+explain_1 <- broken(model, HR_data[1,], baseline = "intercept")
+explain_1
+plot(explain_1, 
+     trans = function(x) exp(x)/(1+exp(x))) + ggtitle("breakDown plot for predicted probability of leaving the company")
+```
+
+
+

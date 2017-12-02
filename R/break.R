@@ -53,6 +53,7 @@ broken.lm <- function(model, new_observation, ..., baseline = 0) {
 #' @param model a glm model
 #' @param new_observation a new observation with collumns that corresponds to variables used in the model
 #' @param ... other parameters
+#' @param baseline the orgin/baseline for the breakDown plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.
 #'
 #' @return an object of the broken class
 #' @importFrom stats predict.lm
@@ -77,19 +78,25 @@ broken.lm <- function(model, new_observation, ..., baseline = 0) {
 #'
 #' @export
 
-broken.glm <- function(model, new_observation, ...) {
+broken.glm <- function(model, new_observation, ..., baseline = 0) {
   ny <- predict.glm(model, newdata = new_observation, type="terms")
 
   broken_obj <- data.frame(variable = paste(colnames(ny),  "=",
                                             sapply(new_observation[colnames(ny)], as.character)),
                            contribution = c(ny))
   broken_sorted <- broken_obj[order(-abs(broken_obj$contribution)),]
-  broken_intercept <- rbind(
-    data.frame(variable = "(Intercept)",
-               contribution = attributes(ny)$constant),
-    broken_sorted)
 
-  create.broken(broken_intercept)
+    # set the baseline to the model (Intercept)
+  if (tolower(baseline) == "intercept") {
+    baseline <- attributes(ny)$constant
+  } else {
+    broken_sorted <- rbind(
+      data.frame(variable = "(Intercept)",
+                 contribution = attributes(ny)$constant),
+      broken_sorted)
+  }
+
+  create.broken(broken_sorted, baseline)
 }
 
 broken.xgboost <- function() {

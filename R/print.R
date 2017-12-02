@@ -12,4 +12,5 @@ print.broken <- function(x, ...) {
   broken_cumm$contribution <- signif(broken_cumm$contribution, 2)
   rownames(broken_cumm) <- broken_cumm$variable
   print(broken_cumm[, "contribution", drop=FALSE])
+  cat("baseline: ",attr(broken_cumm, "baseline"),"\n")
 }

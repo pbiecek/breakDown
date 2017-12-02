@@ -1,6 +1,7 @@
 breakDown 0.1.1
 ----------------------------------------------------------------
-* the `baseline` argument is added to the `broken` function
+* the `baseline` argument is added to the `broken` function  ([#1](https://github.com/pbiecek/breakDown/issues/1))
+* vignettes for lm and glm models are added ([#2](https://github.com/pbiecek/breakDown/issues/2))
 
 breakDown 0.1
 ----------------------------------------------------------------

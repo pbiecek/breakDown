@@ -11,7 +11,7 @@
 #' @export
 plot.broken <- function(x, trans = I, ..., add_contributions = TRUE) {
   broken_cumm <- x
-  constant <- trans(attr(broken_cumm, "baseline"))
+  constant <- attr(broken_cumm, "baseline")
   broken_cumm$prev <- trans(constant + broken_cumm$cummulative - broken_cumm$contribution)
   broken_cumm$cummulative <- trans(constant + broken_cumm$cummulative)
   class(broken_cumm) = "data.frame"
@@ -22,7 +22,7 @@ plot.broken <- function(x, trans = I, ..., add_contributions = TRUE) {
                           fill = sign,
                           label = sapply(contribution, function(tmp) as.character(signif(tmp, 2))))) +
     geom_rect(alpha=0.9) +
-    geom_hline(yintercept = constant)
+    geom_hline(yintercept = trans(constant))
 
   if(add_contributions)
     pl <- pl + geom_text(nudge_y = 0.1, vjust = 0.5, hjust=0)
