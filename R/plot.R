@@ -15,12 +15,13 @@ plot.broken <- function(x, trans = I, ..., add_contributions = TRUE) {
   broken_cumm$prev <- trans(constant + broken_cumm$cummulative - broken_cumm$contribution)
   broken_cumm$cummulative <- trans(constant + broken_cumm$cummulative)
   class(broken_cumm) = "data.frame"
+  broken_cumm$trans_contribution <- broken_cumm$cummulative - broken_cumm$prev
   pl <- ggplot(broken_cumm, aes(x = position + 0.5,
                           y = pmax(cummulative, prev),
                           xmin = position, xmax=position + 0.95,
                           ymin = cummulative, ymax = prev,
                           fill = sign,
-                          label = sapply(contribution, function(tmp) as.character(signif(tmp, 2))))) +
+                          label = sapply(trans_contribution, function(tmp) as.character(signif(tmp, 2))))) +
     geom_rect(alpha=0.9) +
     geom_hline(yintercept = trans(constant))
 

@@ -118,7 +118,6 @@ broken.glm <- function(model, new_observation, ..., baseline = 0) {
 #' explain_1
 #' plot(explain_1) + ggtitle("breakDown plot for linear predictors of leaving the company")+ scale_y_continuous( limits = c(0,1), name = "fraction of trees", expand = c(0.1,0.1))
 #'
-#' @importFrom ranger predict.ranger
 #' @export
 
 broken.ranger <- function(model, new_observation, ..., baseline = 0) {

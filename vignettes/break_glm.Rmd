@@ -50,7 +50,7 @@ Explanations for the probability with intercept set as an origin.
 explain_1 <- broken(model, HR_data[1159,], baseline = "intercept")
 explain_1
 plot(explain_1, 
-     trans = function(x) exp(x)/(1+exp(x))) + ggtitle("breakDown plot for predicted probability of leaving the company")+ scale_y_continuous( limits = c(0,1), name = "probability", expand = c(0.1,0.1))
+     trans = function(x) exp(x)/(1+exp(x))) + ggtitle("breakDown plot for predicted probability of leaving the company")+ scale_y_continuous( limits = c(0,1), name = "probability", expand = c(0,0))
 
 ```
 
