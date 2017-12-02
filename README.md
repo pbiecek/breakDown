@@ -1,3 +1,7 @@
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/breakDown)](https://cran.r-project.org/package=breakDown)
+[![Pending Pull-Requests](http://githubbadges.herokuapp.com/pbiecek/breakDown/pulls.svg?style=flat)](https://github.com/pbiecek/breakDown/pulls)
+[![Github Issues](http://githubbadges.herokuapp.com/pbiecek/breakDown/issues.svg)](https://github.com/pbiecek/breakDown/issues)
+
 # breakDown
 
 Modified Waterfall plots for xgboost, glm, lm, LightGBM and randomForest
