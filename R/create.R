@@ -1,9 +1,9 @@
 #' Clean the object of the broken class
-#' Internatl function
+#' Internal function
 #'
 #' @return enriched broken class
 #'
-create.broken <- function(broken_intercept) {
+create.broken <- function(broken_intercept, baseline = 0) {
   broken_cumm <- data.frame(broken_intercept,
                             cummulative = cumsum(as.numeric(broken_intercept$contribution)),
                             sign = factor(sign(as.numeric(broken_intercept$contribution)), levels = c(-1, 0, 1)),
@@ -14,6 +14,7 @@ create.broken <- function(broken_intercept) {
                                   cummulative = sum(broken_cumm$contribution),
                                   sign = "X",
                                   position = max(broken_cumm$position)+1))
- class(broken_cumm) = "broken"
+ attr(broken_cumm, "baseline") <- baseline
+ class(broken_cumm) <- "broken"
  broken_cumm
 }

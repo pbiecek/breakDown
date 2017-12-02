@@ -11,9 +11,9 @@
 #' @export
 plot.broken <- function(x, trans = I, ..., add_contributions = TRUE) {
   broken_cumm <- x
-  constant <- trans(0)
-  broken_cumm$prev <- trans(broken_cumm$cummulative - broken_cumm$contribution)
-  broken_cumm$cummulative <- trans(broken_cumm$cummulative)
+  constant <- trans(attr(broken_cumm, "baseline"))
+  broken_cumm$prev <- trans(constant + broken_cumm$cummulative - broken_cumm$contribution)
+  broken_cumm$cummulative <- trans(constant + broken_cumm$cummulative)
   class(broken_cumm) = "data.frame"
   pl <- ggplot(broken_cumm, aes(x = position + 0.5,
                           y = pmax(cummulative, prev),
