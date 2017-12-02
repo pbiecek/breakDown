@@ -4,7 +4,7 @@
 \alias{broken.lm}
 \title{Create the broken object for lm models}
 \usage{
-\method{broken}{lm}(model, new_observation, ...)
+\method{broken}{lm}(model, new_observation, ..., baseline = 0)
 }
 \arguments{
 \item{model}{a lm model}
@@ -12,6 +12,8 @@
 \item{new_observation}{a new observation with collumns that corresponds to variables used in the model}
 
 \item{...}{other parameters}
+
+\item{baseline}{the orgin/baseline for the breakDown plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.}
 }
 \value{
 an object of the broken class

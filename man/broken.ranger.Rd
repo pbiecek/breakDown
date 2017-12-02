@@ -25,9 +25,9 @@ Create the broken object for ranger models
 library(ranger)
 model <- ranger(factor(left) ~ ., data = HR_data, importance = 'impurity')
 importance(model)
-new_observation <- HR_data[89,]
-# here
-# put
-# examples
+new_observation <- HR_data[10099,]
+explain_1 <- broken(model, new_observation)
+explain_1
+plot(explain_1) + ggtitle("breakDown plot for linear predictors of leaving the company")+ scale_y_continuous( limits = c(0,1), name = "fraction of trees", expand = c(0.1,0.1))
 
 }
