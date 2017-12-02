@@ -16,7 +16,7 @@
 </head>
 <body>
     <div class="container template-home">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <header><div class="navbar navbar-default navbar-fixed-top navbar-mi2" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -24,10 +24,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">breakDown</a>
+	  <a class="navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
+        <img src="https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt="MI2" height="46" title="MI2"></a>
+      <a class="navbar-brand navbar-mi2" href="index.html">breakDown</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
+      <ul class="navbar-mi2 nav navbar-nav">
 <li>
   <a href="index.html">
     <span class="fa fa-home fa-lg"></span>
@@ -36,6 +38,24 @@
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/break_glm.html">breakDown plots for the generalised linear model</a>
+    </li>
+    <li>
+      <a href="articles/break_lm.html">breakDown plots for the linear model</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="news/index.html">News</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
@@ -107,6 +127,11 @@ plot(br)</code></pre>
   </div>
 
   <div class="col-md-3" id="sidebar">
+  	<div class="sidebar-logo">
+	 <p>
+		This package is developed by the <a href="http://mi2.mini.pw.edu.pl">MI^2 group</a>. MI^2 (pronounce: Am I square?) is a group of mathematicians and computer scientists that love to play with data. We create tools, do consulting and share our positive attitude. 
+	 </p>
+	</div>
     <h2>License</h2>
 <p><a href="https://www.r-project.org/Licenses/GPL-2">GPL-2</a></p>
 <h2>Developers</h2>
