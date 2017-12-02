@@ -4,7 +4,7 @@
 
 # breakDown
 
-Modified Waterfall plots for xgboost, glm, lm, LightGBM and randomForest
+Modified Waterfall plots for glm, lm and randomForest
 
 ## Install from GitHub
 
