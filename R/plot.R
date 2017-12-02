@@ -4,12 +4,14 @@
 #' @param trans transformation that shal be applied to scores
 #' @param ... other parameters
 #' @param add_contributions shall variable contributions to be added on plot?
+#' @param vcolors named vector with colors
 #'
 #' @return a ggplot2 object
 #' @import ggplot2
 #'
 #' @export
-plot.broken <- function(x, trans = I, ..., add_contributions = TRUE) {
+plot.broken <- function(x, trans = I, ..., add_contributions = TRUE,
+                        vcolors = c("-1" = "#d8b365", "0" = "#f5f5f5", "1" = "#5ab4ac", "X" = "darkgrey")) {
   broken_cumm <- x
   constant <- attr(broken_cumm, "baseline")
   broken_cumm$prev <- trans(constant + broken_cumm$cummulative - broken_cumm$contribution)
@@ -22,7 +24,12 @@ plot.broken <- function(x, trans = I, ..., add_contributions = TRUE) {
                           ymin = cummulative, ymax = prev,
                           fill = sign,
                           label = sapply(trans_contribution, function(tmp) as.character(signif(tmp, 2))))) +
-    geom_rect(alpha=0.9) +
+    geom_errorbarh(data=broken_cumm[-nrow(broken_cumm),],
+                   aes(xmax = position,
+                      xmin = position + 2,
+                      y = cummulative), height=0,
+                   lty="F2") +
+    geom_rect(alpha = 0.9) +
     geom_hline(yintercept = trans(constant))
 
   if(add_contributions)
@@ -31,7 +38,7 @@ plot.broken <- function(x, trans = I, ..., add_contributions = TRUE) {
   pl <- pl +
     scale_y_continuous(expand = c(0.1,0.1), name="") +
     scale_x_continuous(labels = broken_cumm$variable, breaks = broken_cumm$position+0.5, name="") +
-    scale_fill_manual(values = c("-1" = "#d8b365", "0" = "#f5f5f5", "1" = "#5ab4ac", "X" = "darkgrey")) +
+    scale_fill_manual(values = vcolors) +
     coord_flip() +
     theme_light() + theme(legend.position = "none", panel.border = element_blank())
 
