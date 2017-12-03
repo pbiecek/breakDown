@@ -76,7 +76,7 @@
       <h1>breakDown plots for the ranger model</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2017-12-02</h4>
+            <h4 class="date">2017-12-03</h4>
           </div>
 
     
@@ -101,11 +101,11 @@ model &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocume
 <p>Variable importance for all trees in the forest.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ranger/topics/importance.ranger">importance</a></span>(model)
 <span class="co">#&gt;    satisfaction_level       last_evaluation        number_project </span>
-<span class="co">#&gt;           1786.046899            618.803617            987.848183 </span>
+<span class="co">#&gt;           1816.329069            608.885685            976.219952 </span>
 <span class="co">#&gt;  average_montly_hours    time_spend_company         Work_accident </span>
-<span class="co">#&gt;            752.309013            989.511008             27.751059 </span>
+<span class="co">#&gt;            750.806656            982.629628             29.058430 </span>
 <span class="co">#&gt; promotion_last_5years                 sales                salary </span>
-<span class="co">#&gt;              4.687921             41.615393             29.416582</span></code></pre></div>
+<span class="co">#&gt;              4.098245             41.082905             29.091604</span></code></pre></div>
 <p>But how to understand which factors drive predictions for a single observation?</p>
 <p>With the <code>breakDown</code> package!</p>
 <p>Explanations for the trees votings.</p>
@@ -113,16 +113,16 @@ model &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocume
 explain_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, HR_data[<span class="dv">1159</span>,])
 explain_<span class="dv">1</span>
 <span class="co">#&gt;                            contribution</span>
-<span class="co">#&gt; time_spend_company = 2           0.0490</span>
-<span class="co">#&gt; satisfaction_level = 0.57        0.0440</span>
-<span class="co">#&gt; average_montly_hours = 219       0.0420</span>
-<span class="co">#&gt; last_evaluation = 0.85           0.0400</span>
+<span class="co">#&gt; time_spend_company = 2           0.0420</span>
+<span class="co">#&gt; satisfaction_level = 0.57        0.0410</span>
 <span class="co">#&gt; number_project = 4               0.0380</span>
-<span class="co">#&gt; Work_accident = 1                0.0280</span>
-<span class="co">#&gt; sales = sales                    0.0210</span>
-<span class="co">#&gt; salary = medium                  0.0160</span>
-<span class="co">#&gt; promotion_last_5years = 0        0.0031</span>
-<span class="co">#&gt; final_prognosis                  0.2800</span>
+<span class="co">#&gt; average_montly_hours = 219       0.0370</span>
+<span class="co">#&gt; last_evaluation = 0.85           0.0340</span>
+<span class="co">#&gt; Work_accident = 1                0.0220</span>
+<span class="co">#&gt; sales = sales                    0.0200</span>
+<span class="co">#&gt; salary = medium                  0.0100</span>
+<span class="co">#&gt; promotion_last_5years = 0        0.0016</span>
+<span class="co">#&gt; final_prognosis                  0.2500</span>
 <span class="co">#&gt; baseline:  0.5</span>
 <span class="kw">plot</span>(explain_<span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>( <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">name =</span> <span class="st">"fraction of trees"</span>, <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))
 <span class="co">#&gt; Scale for 'y' is already present. Adding another scale for 'y', which</span>
@@ -132,16 +132,16 @@ explain_<span class="dv">1</span>
 explain_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, HR_data[<span class="dv">10099</span>,])
 explain_<span class="dv">1</span>
 <span class="co">#&gt;                            contribution</span>
-<span class="co">#&gt; time_spend_company = 5           -0.050</span>
-<span class="co">#&gt; average_montly_hours = 266       -0.050</span>
-<span class="co">#&gt; satisfaction_level = 0.73        -0.050</span>
-<span class="co">#&gt; last_evaluation = 0.83           -0.049</span>
-<span class="co">#&gt; number_project = 5               -0.049</span>
-<span class="co">#&gt; salary = low                     -0.026</span>
-<span class="co">#&gt; Work_accident = 0                -0.024</span>
-<span class="co">#&gt; sales = sales                    -0.019</span>
-<span class="co">#&gt; promotion_last_5years = 0        -0.013</span>
-<span class="co">#&gt; final_prognosis                  -0.330</span>
+<span class="co">#&gt; time_spend_company = 5          -0.0440</span>
+<span class="co">#&gt; satisfaction_level = 0.73       -0.0440</span>
+<span class="co">#&gt; average_montly_hours = 266      -0.0440</span>
+<span class="co">#&gt; number_project = 5              -0.0430</span>
+<span class="co">#&gt; last_evaluation = 0.83          -0.0430</span>
+<span class="co">#&gt; salary = low                    -0.0220</span>
+<span class="co">#&gt; sales = sales                   -0.0190</span>
+<span class="co">#&gt; Work_accident = 0               -0.0150</span>
+<span class="co">#&gt; promotion_last_5years = 0       -0.0083</span>
+<span class="co">#&gt; final_prognosis                 -0.2800</span>
 <span class="co">#&gt; baseline:  0.5</span>
 <span class="kw">plot</span>(explain_<span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>( <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">name =</span> <span class="st">"fraction of trees"</span>, <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))
 <span class="co">#&gt; Scale for 'y' is already present. Adding another scale for 'y', which</span>
