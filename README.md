@@ -12,8 +12,9 @@ Modified Waterfall plots for glm, lm and randomForest
 devtools::install_github("pbiecek/breakDown")
 ```
 
-![Cheatsheet](https://raw.githubusercontent.com/pbiecek/breakDown/master/cheatsheets/breakDownCheatsheet.png)
+## Cheatsheets
 
+![Cheatsheet](https://raw.githubusercontent.com/pbiecek/breakDown/master/cheatsheets/breakDownCheatsheet.png)
 
 ## Example for lm model
 
