@@ -1,3 +1,7 @@
+breakDown 0.1.2
+----------------------------------------------------------------
+* `broken.lm` and `broken.glm` are now supporting interactions  ([#7](https://github.com/pbiecek/breakDown/issues/7))
+
 breakDown 0.1.1
 ----------------------------------------------------------------
 * the `baseline` argument is added to the `broken` function  ([#1](https://github.com/pbiecek/breakDown/issues/1))

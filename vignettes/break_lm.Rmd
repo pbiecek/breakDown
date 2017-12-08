@@ -62,4 +62,15 @@ br
 plot(br) + ggtitle("breakDown plot for predicted quality of a wine")
 ```
 
+Works for interactions as well
+
+```{r, fig.width=7}
+model <- lm(quality ~ (alcohol + density  + residual.sugar)^2,
+               data = wine)
+new_observation <- wine[1,]
+
+br <- broken(model, new_observation, baseline = "Intercept")
+br
+plot(br) + ggtitle("breakDown plot for predicted quality of a wine")
+```
 
