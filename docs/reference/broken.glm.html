@@ -144,7 +144,7 @@
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>wine</span>[<span class='fl'>1</span>,]
 <span class='no'>br</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>modelg</span>, <span class='no'>new_observation</span>)
 <span class='no'>logit</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>exp</span>(<span class='no'>x</span>)/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>x</span>))
-<span class='fu'>plot</span>(<span class='no'>br</span>, <span class='no'>logit</span>)</div><div class='img'><img src='broken.glm-31.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>br</span>, <span class='no'>logit</span>)</div><div class='img'><img src='broken.glm-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># example for HR_data</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>left</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR_data</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explain_1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>HR_data</span>[<span class='fl'>1</span>,])
@@ -160,7 +160,7 @@
 #&gt; promotion_last_5years = 0         0.030
 #&gt; sales = sales                     0.014
 #&gt; final_prognosis                   0.120
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>)</div><div class='img'><img src='broken.glm-32.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>exp</span>(<span class='no'>x</span>)/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>x</span>)))</div><div class='img'><img src='broken.glm-33.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>)</div><div class='img'><img src='broken.glm-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>exp</span>(<span class='no'>x</span>)/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>x</span>)))</div><div class='img'><img src='broken.glm-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
