@@ -30,6 +30,14 @@ broken <- function(model, new_observation, ...) {
 broken.lm <- function(model, new_observation, ..., baseline = 0) {
   ny <- predict.lm(model, newdata = new_observation, type="terms")
 
+  # add terms with :
+  labels <- attr(terms(model), "term.labels")
+  ilabels <- grep(labels, patter=":", value = TRUE)
+  for (interact in ilabels) {
+    vars <- strsplit(interact, split = ":")[[1]]
+    new_observation[,interact] <- apply(new_observation[,vars], 1, paste0, collapse=":")
+  }
+
   broken_obj <- data.frame(variable = paste(colnames(ny),  "=",
                                         sapply(new_observation[colnames(ny)], as.character)),
                        contribution = c(ny))
@@ -80,6 +88,14 @@ broken.lm <- function(model, new_observation, ..., baseline = 0) {
 
 broken.glm <- function(model, new_observation, ..., baseline = 0) {
   ny <- predict.glm(model, newdata = new_observation, type="terms")
+
+  # add terms with :
+  labels <- attr(terms(model), "term.labels")
+  ilabels <- grep(labels, patter=":", value = TRUE)
+  for (interact in ilabels) {
+    vars <- strsplit(interact, split = ":")[[1]]
+    new_observation[,interact] <- apply(new_observation[,vars], 1, paste0, collapse=":")
+  }
 
   broken_obj <- data.frame(variable = paste(colnames(ny),  "=",
                                             sapply(new_observation[colnames(ny)], as.character)),
