@@ -76,7 +76,7 @@
       <h1>breakDown plots for the ranger model</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2017-12-09</h4>
+            <h4 class="date">2018-01-02</h4>
           </div>
 
     
@@ -101,11 +101,11 @@ model &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocume
 <p>Variable importance for all trees in the forest.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ranger/topics/importance.ranger">importance</a></span>(model)
 <span class="co">#&gt;    satisfaction_level       last_evaluation        number_project </span>
-<span class="co">#&gt;           1787.934725            620.076235            980.141236 </span>
+<span class="co">#&gt;           1833.409055            616.910745            935.699387 </span>
 <span class="co">#&gt;  average_montly_hours    time_spend_company         Work_accident </span>
-<span class="co">#&gt;            750.686864            993.185110             26.759245 </span>
+<span class="co">#&gt;            755.414201            989.271500             28.037134 </span>
 <span class="co">#&gt; promotion_last_5years                 sales                salary </span>
-<span class="co">#&gt;              4.640304             42.214118             30.223213</span></code></pre></div>
+<span class="co">#&gt;              4.997529             42.910538             30.136999</span></code></pre></div>
 <p>But how to understand which factors drive predictions for a single observation?</p>
 <p>With the <code>breakDown</code> package!</p>
 <p>Explanations for the trees votings.</p>
@@ -113,16 +113,16 @@ model &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocume
 explain_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, HR_data[<span class="dv">1159</span>,])
 explain_<span class="dv">1</span>
 <span class="co">#&gt;                            contribution</span>
-<span class="co">#&gt; time_spend_company = 2           0.0430</span>
-<span class="co">#&gt; satisfaction_level = 0.57        0.0390</span>
-<span class="co">#&gt; average_montly_hours = 219       0.0370</span>
-<span class="co">#&gt; number_project = 4               0.0340</span>
-<span class="co">#&gt; last_evaluation = 0.85           0.0330</span>
-<span class="co">#&gt; Work_accident = 1                0.0300</span>
-<span class="co">#&gt; sales = sales                    0.0190</span>
-<span class="co">#&gt; salary = medium                  0.0120</span>
-<span class="co">#&gt; promotion_last_5years = 0        0.0029</span>
-<span class="co">#&gt; final_prognosis                  0.2500</span>
+<span class="co">#&gt; time_spend_company = 2            0.045</span>
+<span class="co">#&gt; satisfaction_level = 0.57         0.044</span>
+<span class="co">#&gt; average_montly_hours = 219        0.039</span>
+<span class="co">#&gt; number_project = 4                0.038</span>
+<span class="co">#&gt; last_evaluation = 0.85            0.037</span>
+<span class="co">#&gt; Work_accident = 1                 0.030</span>
+<span class="co">#&gt; sales = sales                     0.019</span>
+<span class="co">#&gt; salary = medium                   0.015</span>
+<span class="co">#&gt; promotion_last_5years = 0         0.003</span>
+<span class="co">#&gt; final_prognosis                   0.270</span>
 <span class="co">#&gt; baseline:  0.5</span>
 <span class="kw">plot</span>(explain_<span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>( <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">name =</span> <span class="st">"fraction of trees"</span>, <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))
 <span class="co">#&gt; Scale for 'y' is already present. Adding another scale for 'y', which</span>
@@ -132,15 +132,15 @@ explain_<span class="dv">1</span>
 explain_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, HR_data[<span class="dv">10099</span>,])
 explain_<span class="dv">1</span>
 <span class="co">#&gt;                            contribution</span>
-<span class="co">#&gt; time_spend_company = 5           -0.046</span>
-<span class="co">#&gt; satisfaction_level = 0.73        -0.046</span>
+<span class="co">#&gt; satisfaction_level = 0.73        -0.045</span>
+<span class="co">#&gt; time_spend_company = 5           -0.045</span>
 <span class="co">#&gt; last_evaluation = 0.83           -0.045</span>
-<span class="co">#&gt; average_montly_hours = 266       -0.045</span>
-<span class="co">#&gt; number_project = 5               -0.045</span>
-<span class="co">#&gt; salary = low                     -0.023</span>
-<span class="co">#&gt; Work_accident = 0                -0.023</span>
-<span class="co">#&gt; sales = sales                    -0.018</span>
-<span class="co">#&gt; promotion_last_5years = 0        -0.011</span>
+<span class="co">#&gt; average_montly_hours = 266       -0.044</span>
+<span class="co">#&gt; number_project = 5               -0.043</span>
+<span class="co">#&gt; salary = low                     -0.025</span>
+<span class="co">#&gt; Work_accident = 0                -0.021</span>
+<span class="co">#&gt; sales = sales                    -0.020</span>
+<span class="co">#&gt; promotion_last_5years = 0        -0.012</span>
 <span class="co">#&gt; final_prognosis                  -0.300</span>
 <span class="co">#&gt; baseline:  0.5</span>
 <span class="kw">plot</span>(explain_<span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>( <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">name =</span> <span class="st">"fraction of trees"</span>, <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))

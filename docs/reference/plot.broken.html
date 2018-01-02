@@ -109,7 +109,7 @@
     <pre class="usage"><span class='co'># S3 method for broken</span>
 <span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='no'>I</span>, <span class='no'>...</span>, <span class='kw'>add_contributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>vcolors</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>`-1`</span> <span class='kw'>=</span> <span class='st'>"#d8b365"</span>, <span class='kw'>`0`</span> <span class='kw'>=</span> <span class='st'>"#f5f5f5"</span>, <span class='kw'>`1`</span> <span class='kw'>=</span> <span class='st'>"#5ab4ac"</span>, <span class='kw'>X</span> <span class='kw'>=</span>
-  <span class='st'>"darkgrey"</span>))</pre>
+  <span class='st'>"darkgrey"</span>), <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rounding_function</span> <span class='kw'>=</span> <span class='no'>round</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -133,6 +133,17 @@
     <tr>
       <th>vcolors</th>
       <td><p>named vector with colors</p></td>
+    </tr>
+    <tr>
+      <th>digits</th>
+      <td><p>number of decimal places (round) or significant digits (signif) to be used.
+See the <code>rounding_function</code> argument</p></td>
+    </tr>
+    <tr>
+      <th>rounding_function</th>
+      <td><p>function that is to used for rounding numbers.
+It may be <code>signif()</code> which keeps a specified number of significant digits.
+Or the default <code>round()</code> to have the same precision for all components</p></td>
     </tr>
     </table>
     

@@ -146,18 +146,18 @@
 #&gt;              4.695325             62.792507             41.011149 </div><div class='input'><span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>HR_data</span>[<span class='fl'>10099</span>,]
 <span class='no'>explain_1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>new_observation</span>)
 <span class='no'>explain_1</span></div><div class='output co'>#&gt;                            contribution
-#&gt; sales = sales                    0.0095
-#&gt; average_montly_hours = 266       0.0040
-#&gt; salary = low                     0.0036
-#&gt; satisfaction_level = 0.73        0.0036
-#&gt; last_evaluation = 0.83           0.0036
-#&gt; number_project = 5               0.0033
-#&gt; time_spend_company = 5           0.0029
-#&gt; promotion_last_5years = 0       -0.0020
-#&gt; Work_accident = 0                0.0016
-#&gt; final_prognosis                  0.0300
+#&gt; sales = sales                     0.009
+#&gt; average_montly_hours = 266        0.004
+#&gt; salary = low                      0.004
+#&gt; satisfaction_level = 0.73         0.004
+#&gt; last_evaluation = 0.83            0.004
+#&gt; number_project = 5                0.003
+#&gt; time_spend_company = 5            0.003
+#&gt; promotion_last_5years = 0        -0.002
+#&gt; Work_accident = 0                 0.002
+#&gt; final_prognosis                   0.030
 #&gt; baseline:  0.5 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>) + <span class='fu'>ggtitle</span>(<span class='st'>"breakDown plot for linear predictors of leaving the company"</span>)+ <span class='fu'>scale_y_continuous</span>( <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>1</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"fraction of trees"</span>, <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.1</span>,<span class='fl'>0.1</span>))</div><div class='output co'>#&gt; <span class='message'>Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-#&gt; <span class='message'>replace the existing scale.</span></div><div class='img'><img src='broken.ranger-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+#&gt; <span class='message'>replace the existing scale.</span></div><div class='img'><img src='broken.ranger-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

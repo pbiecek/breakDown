@@ -76,7 +76,7 @@
       <h1>breakDown plots for the linear model</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2017-12-09</h4>
+            <h4 class="date">2018-01-02</h4>
           </div>
 
     
@@ -118,6 +118,23 @@ new_observation &lt;-<span class="st"> </span>wine[<span class="dv">1</span>,]
 br &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, new_observation)
 br
 <span class="co">#&gt;                            contribution</span>
+<span class="co">#&gt; (Intercept)                       5.878</span>
+<span class="co">#&gt; residual.sugar = 20.7             1.166</span>
+<span class="co">#&gt; density = 1.001                  -1.048</span>
+<span class="co">#&gt; alcohol = 8.8                    -0.332</span>
+<span class="co">#&gt; pH = 3                           -0.129</span>
+<span class="co">#&gt; free.sulfur.dioxide = 45          0.036</span>
+<span class="co">#&gt; sulphates = 0.45                 -0.025</span>
+<span class="co">#&gt; volatile.acidity = 0.27           0.015</span>
+<span class="co">#&gt; fixed.acidity = 7                 0.010</span>
+<span class="co">#&gt; total.sulfur.dioxide = 170       -0.009</span>
+<span class="co">#&gt; citric.acid = 0.36                0.001</span>
+<span class="co">#&gt; chlorides = 0.045                 0.000</span>
+<span class="co">#&gt; final_prognosis                   5.563</span>
+<span class="co">#&gt; baseline:  0</span>
+<span class="co"># different roundings</span>
+<span class="kw">print</span>(br, <span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">rounding_function =</span> signif)
+<span class="co">#&gt;                            contribution</span>
 <span class="co">#&gt; (Intercept)                     5.90000</span>
 <span class="co">#&gt; residual.sugar = 20.7           1.20000</span>
 <span class="co">#&gt; density = 1.001                -1.00000</span>
@@ -132,24 +149,40 @@ br
 <span class="co">#&gt; chlorides = 0.045               0.00019</span>
 <span class="co">#&gt; final_prognosis                 5.60000</span>
 <span class="co">#&gt; baseline:  0</span>
+<span class="kw">print</span>(br, <span class="dt">digits =</span> <span class="dv">6</span>, <span class="dt">rounding_function =</span> round)
+<span class="co">#&gt;                            contribution</span>
+<span class="co">#&gt; (Intercept)                    5.877909</span>
+<span class="co">#&gt; residual.sugar = 20.7          1.165904</span>
+<span class="co">#&gt; density = 1.001               -1.047875</span>
+<span class="co">#&gt; alcohol = 8.8                 -0.331669</span>
+<span class="co">#&gt; pH = 3                        -0.129216</span>
+<span class="co">#&gt; free.sulfur.dioxide = 45       0.036178</span>
+<span class="co">#&gt; sulphates = 0.45              -0.025162</span>
+<span class="co">#&gt; volatile.acidity = 0.27        0.015355</span>
+<span class="co">#&gt; fixed.acidity = 7              0.009514</span>
+<span class="co">#&gt; total.sulfur.dioxide = 170    -0.009041</span>
+<span class="co">#&gt; citric.acid = 0.36             0.000570</span>
+<span class="co">#&gt; chlorides = 0.045              0.000191</span>
+<span class="co">#&gt; final_prognosis                5.562658</span>
+<span class="co">#&gt; baseline:  0</span>
 <span class="kw">plot</span>(br) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for predicted quality of a wine"</span>)</code></pre></div>
 <p><img src="break_lm_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 <p>Use the <code>baseline</code> argument to set the origin of plots.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">br &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, new_observation, <span class="dt">baseline =</span> <span class="st">"Intercept"</span>)
 br
 <span class="co">#&gt;                            contribution</span>
-<span class="co">#&gt; residual.sugar = 20.7           1.20000</span>
-<span class="co">#&gt; density = 1.001                -1.00000</span>
-<span class="co">#&gt; alcohol = 8.8                  -0.33000</span>
-<span class="co">#&gt; pH = 3                         -0.13000</span>
-<span class="co">#&gt; free.sulfur.dioxide = 45        0.03600</span>
-<span class="co">#&gt; sulphates = 0.45               -0.02500</span>
-<span class="co">#&gt; volatile.acidity = 0.27         0.01500</span>
-<span class="co">#&gt; fixed.acidity = 7               0.00950</span>
-<span class="co">#&gt; total.sulfur.dioxide = 170     -0.00900</span>
-<span class="co">#&gt; citric.acid = 0.36              0.00057</span>
-<span class="co">#&gt; chlorides = 0.045               0.00019</span>
-<span class="co">#&gt; final_prognosis                -0.32000</span>
+<span class="co">#&gt; residual.sugar = 20.7             1.166</span>
+<span class="co">#&gt; density = 1.001                  -1.048</span>
+<span class="co">#&gt; alcohol = 8.8                    -0.332</span>
+<span class="co">#&gt; pH = 3                           -0.129</span>
+<span class="co">#&gt; free.sulfur.dioxide = 45          0.036</span>
+<span class="co">#&gt; sulphates = 0.45                 -0.025</span>
+<span class="co">#&gt; volatile.acidity = 0.27           0.015</span>
+<span class="co">#&gt; fixed.acidity = 7                 0.010</span>
+<span class="co">#&gt; total.sulfur.dioxide = 170       -0.009</span>
+<span class="co">#&gt; citric.acid = 0.36                0.001</span>
+<span class="co">#&gt; chlorides = 0.045                 0.000</span>
+<span class="co">#&gt; final_prognosis                  -0.315</span>
 <span class="co">#&gt; baseline:  5.877909</span>
 <span class="kw">plot</span>(br) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for predicted quality of a wine"</span>)</code></pre></div>
 <p><img src="break_lm_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
@@ -161,13 +194,13 @@ new_observation &lt;-<span class="st"> </span>wine[<span class="dv">1</span>,]
 br &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, new_observation, <span class="dt">baseline =</span> <span class="st">"Intercept"</span>)
 br
 <span class="co">#&gt;                                     contribution</span>
-<span class="co">#&gt; alcohol = 8.8                              -5.50</span>
-<span class="co">#&gt; density:residual.sugar = 1.001:20.7         5.40</span>
-<span class="co">#&gt; alcohol:density = 8.8:1.001                 4.90</span>
-<span class="co">#&gt; residual.sugar = 20.7                      -3.80</span>
-<span class="co">#&gt; alcohol:residual.sugar = 8.8:20.7          -0.71</span>
-<span class="co">#&gt; density = 1.001                            -0.40</span>
-<span class="co">#&gt; final_prognosis                            -0.14</span>
+<span class="co">#&gt; alcohol = 8.8                             -5.546</span>
+<span class="co">#&gt; density:residual.sugar = 1.001:20.7        5.422</span>
+<span class="co">#&gt; alcohol:density = 8.8:1.001                4.882</span>
+<span class="co">#&gt; residual.sugar = 20.7                     -3.791</span>
+<span class="co">#&gt; alcohol:residual.sugar = 8.8:20.7         -0.705</span>
+<span class="co">#&gt; density = 1.001                           -0.401</span>
+<span class="co">#&gt; final_prognosis                           -0.139</span>
 <span class="co">#&gt; baseline:  5.877909</span>
 <span class="kw">plot</span>(br) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for predicted quality of a wine"</span>)</code></pre></div>
 <p><img src="break_lm_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>

@@ -76,7 +76,7 @@
       <h1>breakDown plots for the generalised linear model</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2017-12-09</h4>
+            <h4 class="date">2018-01-02</h4>
           </div>
 
     
@@ -103,17 +103,17 @@
 explain_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, HR_data[<span class="dv">11</span>,])
 explain_<span class="dv">1</span>
 <span class="co">#&gt;                            contribution</span>
-<span class="co">#&gt; (Intercept)                      -1.600</span>
-<span class="co">#&gt; satisfaction_level = 0.45         0.670</span>
-<span class="co">#&gt; number_project = 2                0.570</span>
-<span class="co">#&gt; salary = low                      0.390</span>
-<span class="co">#&gt; average_montly_hours = 135       -0.290</span>
-<span class="co">#&gt; Work_accident = 0                 0.220</span>
-<span class="co">#&gt; time_spend_company = 3           -0.130</span>
-<span class="co">#&gt; last_evaluation = 0.54           -0.130</span>
+<span class="co">#&gt; (Intercept)                      -1.601</span>
+<span class="co">#&gt; satisfaction_level = 0.45         0.673</span>
+<span class="co">#&gt; number_project = 2                0.568</span>
+<span class="co">#&gt; salary = low                      0.388</span>
+<span class="co">#&gt; average_montly_hours = 135       -0.295</span>
+<span class="co">#&gt; Work_accident = 0                 0.221</span>
+<span class="co">#&gt; time_spend_company = 3           -0.133</span>
+<span class="co">#&gt; last_evaluation = 0.54           -0.129</span>
 <span class="co">#&gt; promotion_last_5years = 0         0.030</span>
 <span class="co">#&gt; sales = sales                     0.014</span>
-<span class="co">#&gt; final_prognosis                  -0.260</span>
+<span class="co">#&gt; final_prognosis                  -0.262</span>
 <span class="co">#&gt; baseline:  0</span>
 <span class="kw">plot</span>(explain_<span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for linear predictors"</span>)</code></pre></div>
 <p><img src="break_glm_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
@@ -121,16 +121,16 @@ explain_<span class="dv">1</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">explain_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, HR_data[<span class="dv">11</span>,], <span class="dt">baseline =</span> <span class="st">"intercept"</span>)
 explain_<span class="dv">1</span>
 <span class="co">#&gt;                            contribution</span>
-<span class="co">#&gt; satisfaction_level = 0.45         0.670</span>
-<span class="co">#&gt; number_project = 2                0.570</span>
-<span class="co">#&gt; salary = low                      0.390</span>
-<span class="co">#&gt; average_montly_hours = 135       -0.290</span>
-<span class="co">#&gt; Work_accident = 0                 0.220</span>
-<span class="co">#&gt; time_spend_company = 3           -0.130</span>
-<span class="co">#&gt; last_evaluation = 0.54           -0.130</span>
+<span class="co">#&gt; satisfaction_level = 0.45         0.673</span>
+<span class="co">#&gt; number_project = 2                0.568</span>
+<span class="co">#&gt; salary = low                      0.388</span>
+<span class="co">#&gt; average_montly_hours = 135       -0.295</span>
+<span class="co">#&gt; Work_accident = 0                 0.221</span>
+<span class="co">#&gt; time_spend_company = 3           -0.133</span>
+<span class="co">#&gt; last_evaluation = 0.54           -0.129</span>
 <span class="co">#&gt; promotion_last_5years = 0         0.030</span>
 <span class="co">#&gt; sales = sales                     0.014</span>
-<span class="co">#&gt; final_prognosis                   1.300</span>
+<span class="co">#&gt; final_prognosis                   1.339</span>
 <span class="co">#&gt; baseline:  -1.601457</span>
 <span class="kw">plot</span>(explain_<span class="dv">1</span>, 
      <span class="dt">trans =</span> <span class="cf">function</span>(x) <span class="kw">exp</span>(x)<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(x))) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Predicted probability of leaving the company"</span>)<span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>( <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">name =</span> <span class="st">"probability"</span>, <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))
