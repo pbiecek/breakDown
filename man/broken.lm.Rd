@@ -26,4 +26,10 @@ model <- lm(Sepal.Length~., data=iris)
 new_observation <- iris[1,]
 br <- broken(model, new_observation)
 plot(br)
+
+# works for interactions as well
+model <- lm(Sepal.Length~Petal.Width*Species, data=iris)
+new_observation <- iris[1,]
+br <- broken(model, new_observation)
+plot(br)
 }

@@ -6,7 +6,7 @@
 \usage{
 \method{plot}{broken}(x, trans = I, ..., add_contributions = TRUE,
   vcolors = c(`-1` = "#d8b365", `0` = "#f5f5f5", `1` = "#5ab4ac", X =
-  "darkgrey"))
+  "darkgrey"), digits = 3, rounding_function = round)
 }
 \arguments{
 \item{x}{the model model of 'broken' class}
@@ -18,6 +18,13 @@
 \item{add_contributions}{shall variable contributions to be added on plot?}
 
 \item{vcolors}{named vector with colors}
+
+\item{digits}{number of decimal places (round) or significant digits (signif) to be used.
+See the \code{rounding_function} argument}
+
+\item{rounding_function}{function that is to used for rounding numbers.
+It may be \code{signif()} which keeps a specified number of significant digits.
+Or the default \code{round()} to have the same precision for all components}
 }
 \value{
 a ggplot2 object

@@ -5,13 +5,19 @@
 #' @param ... other parameters
 #' @param add_contributions shall variable contributions to be added on plot?
 #' @param vcolors named vector with colors
+#' @param digits number of decimal places (round) or significant digits (signif) to be used.
+#' See the \code{rounding_function} argument
+#' @param rounding_function function that is to used for rounding numbers.
+#' It may be \code{signif()} which keeps a specified number of significant digits.
+#' Or the default \code{round()} to have the same precision for all components
 #'
 #' @return a ggplot2 object
 #' @import ggplot2
 #'
 #' @export
 plot.broken <- function(x, trans = I, ..., add_contributions = TRUE,
-                        vcolors = c("-1" = "#d8b365", "0" = "#f5f5f5", "1" = "#5ab4ac", "X" = "darkgrey")) {
+                        vcolors = c("-1" = "#d8b365", "0" = "#f5f5f5", "1" = "#5ab4ac", "X" = "darkgrey"),
+                        digits = 3, rounding_function = round) {
   broken_cumm <- x
   constant <- attr(broken_cumm, "baseline")
   broken_cumm$prev <- trans(constant + broken_cumm$cummulative - broken_cumm$contribution)
@@ -23,7 +29,7 @@ plot.broken <- function(x, trans = I, ..., add_contributions = TRUE,
                           xmin = position, xmax=position + 0.95,
                           ymin = cummulative, ymax = prev,
                           fill = sign,
-                          label = sapply(trans_contribution, function(tmp) as.character(signif(tmp, 2))))) +
+                          label = sapply(trans_contribution, function(tmp) as.character(rounding_function(tmp, digits))))) +
     geom_errorbarh(data=broken_cumm[-nrow(broken_cumm),],
                    aes(xmax = position,
                       xmin = position + 2,

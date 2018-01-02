@@ -51,6 +51,9 @@ library(ggplot2)
 new_observation <- wine[1,]
 br <- broken(model, new_observation)
 br
+# different roundings
+print(br, digits = 2, rounding_function = signif)
+print(br, digits = 6, rounding_function = round)
 plot(br) + ggtitle("breakDown plot for predicted quality of a wine")
 ```
 
