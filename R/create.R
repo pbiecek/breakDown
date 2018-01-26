@@ -1,5 +1,7 @@
 #' Clean the object of the broken class
 #' Internal function
+#' @param broken_intercept list with variable contributions
+#' @param baseline level on which the baseline line shall be plotted
 #'
 #' @return enriched broken class
 #'

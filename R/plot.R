@@ -18,6 +18,8 @@
 plot.broken <- function(x, trans = I, ..., add_contributions = TRUE,
                         vcolors = c("-1" = "#d8b365", "0" = "#f5f5f5", "1" = "#5ab4ac", "X" = "darkgrey"),
                         digits = 3, rounding_function = round) {
+  position <- cummulative <- prev <- trans_contribution <- NULL
+
   broken_cumm <- x
   constant <- attr(broken_cumm, "baseline")
   broken_cumm$prev <- trans(constant + broken_cumm$cummulative - broken_cumm$contribution)

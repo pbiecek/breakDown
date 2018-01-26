@@ -3,5 +3,7 @@
 ^arepo.*$
 ^misc.*$
 ^cheatsheet$
+^cheatsheets$
 ^docs$
+^README.md$
 ^_pkgdown\.yml$

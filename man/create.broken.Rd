@@ -7,6 +7,11 @@ Internal function}
 \usage{
 create.broken(broken_intercept, baseline = 0)
 }
+\arguments{
+\item{broken_intercept}{list with variable contributions}
+
+\item{baseline}{level on which the baseline line shall be plotted}
+}
 \value{
 enriched broken class
 }

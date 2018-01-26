@@ -22,10 +22,11 @@ an object of the broken class
 Create the broken object for glm models
 }
 \examples{
-url <- 'https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv'
-wine <- read.table(url, header = T, sep=";")
+# example for wine data
 wine$qualityb <- factor(wine$quality > 5.5, labels = c("bad", "good"))
-modelg <- glm(qualityb~fixed.acidity + volatile.acidity + citric.acid + residual.sugar + chlorides + free.sulfur.dioxide + total.sulfur.dioxide + density + pH + sulphates + alcohol,
+modelg <- glm(qualityb~fixed.acidity + volatile.acidity + citric.acid +
+              residual.sugar + chlorides + free.sulfur.dioxide +
+              total.sulfur.dioxide + density + pH + sulphates + alcohol,
     data=wine, family = "binomial")
 new_observation <- wine[1,]
 br <- broken(modelg, new_observation)
