@@ -22,6 +22,7 @@ an object of the broken class
 Create the broken object for ranger models
 }
 \examples{
+\dontrun{
 library("ranger")
 library("ggplot2")
 model <- ranger(factor(left) ~ ., data = HR_data, importance = 'impurity')
@@ -32,5 +33,6 @@ explain_1
 plot(explain_1) +
    ggtitle("breakDown plot for linear predictors of leaving the company") +
    scale_y_continuous( limits = c(0,1), name = "fraction of trees", expand = c(0.1,0.1))
+ }
 
 }

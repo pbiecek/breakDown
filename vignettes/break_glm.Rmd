@@ -4,7 +4,7 @@ author: "Przemyslaw Biecek"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{breakDown plots for the linear model}
+  %\VignetteIndexEntry{breakDown plots for the generalised linear model}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
