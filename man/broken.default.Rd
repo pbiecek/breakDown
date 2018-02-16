@@ -30,4 +30,16 @@ Create the model agnostic broken object
 }
 \examples{
 
+library("breakDown")
+library("randomForest")
+library("ggplot2")
+set.seed(1313)
+model <- randomForest(factor(left)~., data = HR_data, family = "binomial", maxnodes = 5)
+predict.function <- function(model, new_observation) predict(model, new_observation, type="prob")[,2]
+predict.function(model, HR_data[11,-7])
+explain_1 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
+predict.function = predict.function, direction = "down")
+explain_1
+plot(explain_1) + ggtitle("breakDown plot (direction=down) for randomForest model")
+
 }
