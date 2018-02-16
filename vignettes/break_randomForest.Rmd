@@ -1,0 +1,79 @@
+---
+title: "breakDown plots for the model agnostic contributions"
+author: "Przemyslaw Biecek"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{breakDown plots for the model agnostic contributions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Here we will use the HR churn data  (https://www.kaggle.com/ludobenistant/hr-analytics/data) to present the breakDown package for `glm` models.
+
+The data is in the `breakDown` package
+
+```{r}
+set.seed(1313)
+
+library(breakDown)
+head(HR_data, 3)
+```
+
+Now let's create a logistic regression model for churn, the `left` variable.
+
+```{r}
+library("randomForest")
+model <- randomForest(factor(left)~., data = HR_data, family = "binomial")
+```
+
+But how to understand which factors drive predictions for a single observation? 
+
+With the `breakDown` package!
+
+Explanations for the linear predictor.
+
+```{r, fig.width=7}
+library(ggplot2)
+
+predict.function <- function(model, new_observation) predict(model, new_observation, type="prob")[,2]
+predict.function(model, HR_data[11,])
+
+explain_1 <- broken(model, HR_data[11,], data = HR_data,
+                    predict.function = predict.function, 
+                    direction = "down")
+explain_1
+plot(explain_1) + ggtitle("breakDown plot for randomForest model")
+
+explain_1 <- broken(model, HR_data[11,], data = HR_data,
+                    predict.function = predict.function, 
+                    direction = "down",
+                    baseline = "intercept")
+explain_1
+plot(explain_1) + ggtitle("breakDown plot for randomForest model")
+
+
+explain_1 <- broken(model, HR_data[11,], data = HR_data,
+                    predict.function = predict.function, 
+                    direction = "down",
+                    baseline = 0.5)
+explain_1
+plot(explain_1) + ggtitle("breakDown plot for randomForest model")
+
+
+explain_2 <- broken(model, HR_data[11,], data = HR_data,
+                    predict.function = predict.function, 
+                    direction = "up")
+explain_2
+plot(explain_2) + ggtitle("breakDown plot for randomForest model")
+
+```
+
+
