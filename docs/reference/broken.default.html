@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create the broken object for glm models — broken.glm • breakDown</title>
+<title>Create the model agnostic broken object — broken.default • breakDown</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -102,26 +102,35 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create the broken object for glm models</h1>
+    <h1>Create the model agnostic broken object</h1>
     </div>
 
     
-    <p>Create the broken object for glm models</p>
+    <p>Create the model agnostic broken object</p>
     
 
-    <pre class="usage"><span class='co'># S3 method for glm</span>
-<span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>new_observation</span>, <span class='no'>...</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for default</span>
+<span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>new_observation</span>, <span class='no'>data</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"up"</span>, <span class='no'>...</span>,
+  <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>predict.function</span> <span class='kw'>=</span> <span class='no'>predict</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>a glm model</p></td>
+      <td><p>a ranger model</p></td>
     </tr>
     <tr>
       <th>new_observation</th>
       <td><p>a new observation with collumns that corresponds to variables used in the model</p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>the original data used for model fitting, should have same collumns as the 'new_observation'.</p></td>
+    </tr>
+    <tr>
+      <th>direction</th>
+      <td><p>either 'up' or 'down' determined the exploration strategy</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -131,6 +140,10 @@
       <th>baseline</th>
       <td><p>the orgin/baseline for the breakDown plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.</p></td>
     </tr>
+    <tr>
+      <th>predict.function</th>
+      <td><p>function that will calculate predictions out of model. It shall return a single numeric value per observation. For classification it may be a probability of the default class.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -139,32 +152,7 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># example for wine data</span>
-<span class='no'>wine</span>$<span class='no'>qualityb</span> <span class='kw'>&lt;-</span> <span class='fu'>factor</span>(<span class='no'>wine</span>$<span class='no'>quality</span> <span class='kw'>&gt;</span> <span class='fl'>5.5</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"bad"</span>, <span class='st'>"good"</span>))
-<span class='no'>modelg</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>qualityb</span>~<span class='no'>fixed.acidity</span> + <span class='no'>volatile.acidity</span> + <span class='no'>citric.acid</span> +
-              <span class='no'>residual.sugar</span> + <span class='no'>chlorides</span> + <span class='no'>free.sulfur.dioxide</span> +
-              <span class='no'>total.sulfur.dioxide</span> + <span class='no'>density</span> + <span class='no'>pH</span> + <span class='no'>sulphates</span> + <span class='no'>alcohol</span>,
-    <span class='kw'>data</span><span class='kw'>=</span><span class='no'>wine</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
-<span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>wine</span>[<span class='fl'>1</span>,]
-<span class='no'>br</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>modelg</span>, <span class='no'>new_observation</span>)
-<span class='no'>logit</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>exp</span>(<span class='no'>x</span>)/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>x</span>))
-<span class='fu'>plot</span>(<span class='no'>br</span>, <span class='no'>logit</span>)</div><div class='img'><img src='broken.glm-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-<span class='co'># example for HR_data</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>left</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR_data</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
-<span class='no'>explain_1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>HR_data</span>[<span class='fl'>1</span>,])
-<span class='no'>explain_1</span></div><div class='output co'>#&gt;                            contribution
-#&gt; (Intercept)                      -1.601
-#&gt; satisfaction_level = 0.38         0.963
-#&gt; number_project = 2                0.568
-#&gt; salary = low                      0.388
-#&gt; Work_accident = 0                 0.221
-#&gt; average_montly_hours = 157       -0.196
-#&gt; last_evaluation = 0.53           -0.136
-#&gt; time_spend_company = 3           -0.133
-#&gt; promotion_last_5years = 0         0.030
-#&gt; sales = sales                     0.014
-#&gt; final_prognosis                   0.118
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>)</div><div class='img'><img src='broken.glm-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>exp</span>(<span class='no'>x</span>)/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>x</span>)))</div><div class='img'><img src='broken.glm-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <pre class="examples"><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
