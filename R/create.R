@@ -13,6 +13,8 @@ create.broken <- function(broken_intercept, baseline = 0) {
   broken_cumm <- rbind(broken_cumm,
                        data.frame(variable = "final_prognosis",
                                   contribution = sum(broken_cumm$contribution),
+                                  variable_name = "",
+                                  variable_value = "",
                                   cummulative = sum(broken_cumm$contribution),
                                   sign = "X",
                                   position = max(broken_cumm$position)+1))
