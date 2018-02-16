@@ -141,76 +141,6 @@ broken.glm <- function(model, new_observation, ..., baseline = 0) {
 }
 
 
-#' Create the broken object for ranger models
-#'
-#' @param model a ranger model
-#' @param new_observation a new observation with collumns that corresponds to variables used in the model
-#' @param ... other parameters
-#' @param baseline the orgin/baseline for the breakDown plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.
-#'
-#' @return an object of the broken class
-#' @import ranger
-#' @importFrom stats predict
-#'
-#' @examples
-#' \dontrun{
-#' library("ranger")
-#' library("ggplot2")
-#' model <- ranger(factor(left) ~ ., data = HR_data, importance = 'impurity')
-#' importance(model)
-#' new_observation <- HR_data[10099,]
-#' explain_1 <- broken(model, new_observation)
-#' explain_1
-#' plot(explain_1) +
-#'    ggtitle("breakDown plot for linear predictors of leaving the company") +
-#'    scale_y_continuous( limits = c(0,1), name = "fraction of trees", expand = c(0.1,0.1))
-#'  }
-#'
-#' @export
-
-broken.ranger <- function(model, new_observation, ..., baseline = 0) {
-
-  yhat <- predict(model, new_observation, predict.all=TRUE)
-  terminalNodes <- predict(model, new_observation, type="terminalNodes")$predictions
-  varNames <- model$forest$independent.variable.names
-  # find variables on the path
-  selectedVarsForAllTrees <- lapply(seq_along(terminalNodes), function(i){
-    nodesLeft <- model$forest$child.nodeIDs[[i]][[1]]
-    nodesRight <- model$forest$child.nodeIDs[[i]][[2]]
-    nonZeroLeft <- which(nodesLeft > 0)
-    nonZeroRight <- which(nodesRight > 0)
-    parents <- numeric(length(nodesLeft))
-    parents[nodesLeft[nonZeroLeft] + 1] <- nonZeroLeft
-    parents[nodesRight[nonZeroRight] + 1] <- nonZeroRight
-
-    startSearch <- terminalNodes[i] + 1
-    allVars <- model$forest$split.varIDs[[i]]
-    selectedVars <- numeric(length(varNames))
-    while (parents[startSearch] > 0) {
-      selectedVars[allVars[parents[startSearch]]] <- 1
-      startSearch <- parents[startSearch]
-    }
-    selectedVars/sum(selectedVars)
-  })
-
-  varImportance <- matrix(0, nrow = 2, ncol = length(varNames))
-  for (j in seq_along(yhat$predictions[1,])) {
-    wclass <- yhat$predictions[1,j]
-    varImportance[wclass,] <- varImportance[wclass,] + selectedVarsForAllTrees[[j]]
-  }
-  colnames(varImportance) <- varNames
-
-  broken_obj <- data.frame(variable = paste(varNames,  "=",
-                                            sapply(new_observation[varNames], as.character)),
-                           contribution = (varImportance[1,] - varImportance[2,])/(2*sum(varImportance)))
-  broken_sorted <- broken_obj[order(-abs(broken_obj$contribution)),]
-
-  baseline <- 0.5
-
-  create.broken(broken_sorted, baseline)
-}
-
-
 #' Create the model agnostic broken object
 #'
 #' @param model a ranger model
@@ -264,6 +194,7 @@ broken_go_up <- function(model, new_observation, data,
 
   # set target
   target_yhat <- predict.function(model, new_observation)
+  baseline_yhat <- mean(predict.function(model, data))
 
   # set variable indicators
   open_variables <- 1:ncol(data)
@@ -278,7 +209,7 @@ broken_go_up <- function(model, new_observation, data,
       current_data <- data
       current_data[,tmp_variable] <- new_data[,tmp_variable]
       yhats[[tmp_variable]] <- predict.function(model, current_data)
-      yhats_diff[tmp_variable] <- abs(target_yhat - mean(yhats[[tmp_variable]]))
+      yhats_diff[tmp_variable] <- abs(baseline_yhat - mean(yhats[[tmp_variable]]))
     }
     important_variables[i] <- which.max(yhats_diff)
     important_yhats[[i]] <- yhats[[which.max(yhats_diff)]]
@@ -288,9 +219,9 @@ broken_go_up <- function(model, new_observation, data,
 
   varNames <- colnames(data)[important_variables]
   varValues <- sapply(new_observation[,important_variables], as.character)
-  contributions <- diff(c(sapply(important_yhats, mean), target_yhat))
+  contributions <- diff(c(baseline_yhat, sapply(important_yhats, mean)))
 
-  broken_sorted <- data.frame(variable = paste(varNames,  "=", varValues),
+  broken_sorted <- data.frame(variable = paste("+", varNames,  "=", varValues),
                               contribution = contributions,
                               variable_name = varNames,
                               variable_value = varValues)
@@ -332,7 +263,7 @@ broken_go_down <- function(model, new_observation, data,
   varValues <- sapply(rev(new_observation[,important_variables]), as.character)
   contributions <- diff(c(baseline_yhat, rev(sapply(important_yhats, mean))))
 
-  broken_sorted <- data.frame(variable = paste(varNames,  "=", varValues),
+  broken_sorted <- data.frame(variable = paste("-", varNames,  "=", varValues),
                               contribution = contributions,
                               variable_name = varNames,
                               variable_value = varValues)
