@@ -31,7 +31,7 @@ Now let's create a logistic regression model for churn, the `left` variable.
 
 ```{r}
 library("randomForest")
-model <- randomForest(factor(left)~., data = HR_data, family = "binomial")
+model <- randomForest(factor(left)~., data = HR_data, family = "binomial", maxnodes = 5)
 ```
 
 But how to understand which factors drive predictions for a single observation? 
@@ -44,35 +44,19 @@ Explanations for the linear predictor.
 library(ggplot2)
 
 predict.function <- function(model, new_observation) predict(model, new_observation, type="prob")[,2]
-predict.function(model, HR_data[11,])
+predict.function(model, HR_data[11,-7])
 
-explain_1 <- broken(model, HR_data[11,], data = HR_data,
+explain_1 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
                     predict.function = predict.function, 
                     direction = "down")
 explain_1
-plot(explain_1) + ggtitle("breakDown plot for randomForest model")
+plot(explain_1) + ggtitle("breakDown plot  (direction=down) for randomForest model")
 
-explain_1 <- broken(model, HR_data[11,], data = HR_data,
-                    predict.function = predict.function, 
-                    direction = "down",
-                    baseline = "intercept")
-explain_1
-plot(explain_1) + ggtitle("breakDown plot for randomForest model")
-
-
-explain_1 <- broken(model, HR_data[11,], data = HR_data,
-                    predict.function = predict.function, 
-                    direction = "down",
-                    baseline = 0.5)
-explain_1
-plot(explain_1) + ggtitle("breakDown plot for randomForest model")
-
-
-explain_2 <- broken(model, HR_data[11,], data = HR_data,
+explain_2 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
                     predict.function = predict.function, 
                     direction = "up")
 explain_2
-plot(explain_2) + ggtitle("breakDown plot for randomForest model")
+plot(explain_2) + ggtitle("breakDown plot (direction=up) for randomForest model")
 
 ```
 
