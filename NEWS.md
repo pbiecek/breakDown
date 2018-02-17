@@ -1,3 +1,13 @@
+breakDown 0.1.4
+----------------------------------------------------------------
+* `broken.default` is now model agnostic!
+* `broken.ranger` is removed since `broken.default` is much better
+* small fixes in `print` and `plot` functions, a new vigniette for model agnostic plots
+
+breakDown 0.1.3
+----------------------------------------------------------------
+* small fixes and submission to CRAN
+
 breakDown 0.1.2
 ----------------------------------------------------------------
 * `broken.lm` and `broken.glm` are now supporting interactions  ([#7](https://github.com/pbiecek/breakDown/issues/7))
@@ -12,4 +22,4 @@ breakDown 0.1
 ----------------------------------------------------------------
 * waterfall like plots and support for lm models
 * waterfall like plots and support for glm models
-* HRdataset added
+* HR dataset added

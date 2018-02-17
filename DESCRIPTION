@@ -1,6 +1,6 @@
 Package: breakDown
 Title: Break Down Plots
-Version: 0.1.3
+Version: 0.1.4
 Authors@R: person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre"))
 Description: Break Down Plots are inspired by waterfall plots created by 'xgboostExplainer' package
     (see <https://github.com/AppliedDataSciencePartners/xgboostExplainer>). 
@@ -8,7 +8,7 @@ Description: Break Down Plots are inspired by waterfall plots created by 'xgboos
     Break Down Plots show the contribution of every variable present in the model. 
     Such plots will work for binary classifiers and general regression models. 
 Depends: R (>= 3.0)
-Date: 2018-01-27
+Date: 2018-02-15
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
