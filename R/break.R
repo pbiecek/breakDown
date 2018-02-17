@@ -171,6 +171,11 @@ broken.glm <- function(model, new_observation, ..., baseline = 0) {
 
 broken.default <- function(model, new_observation, data, direction = "up", ..., baseline = 0,
                           predict.function = predict) {
+  # just in case only some variables are specified
+  common_variables <- intersect(colnames(new_observation), colnames(data))
+  new_observation <- new_observation[,common_variables]
+  data <- data[,common_variables]
+
   if (direction == "up") {
     broken_sorted <- broken_go_up(model, new_observation, data,
                                     predict.function)
