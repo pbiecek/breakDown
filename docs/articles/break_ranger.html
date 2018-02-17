@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>breakDown plots for the ranger model • breakDown</title>
+<title>model agnostic breakDown plots for ranger • breakDown</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -47,16 +47,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/break_glm.html">breakDown plots for the generalised linear model</a>
+      <a href="../articles/break_glm.html">breakDown plots for the generalised linear models</a>
     </li>
     <li>
-      <a href="../articles/break_lm.html">breakDown plots for the linear model</a>
+      <a href="../articles/break_lm.html">breakDown plots for the linear models</a>
     </li>
     <li>
-      <a href="../articles/break_randomForest.html">breakDown plots for the model agnostic contributions</a>
+      <a href="../articles/break_randomForest.html">model agnostic breakDown plots for randomForest</a>
     </li>
     <li>
-      <a href="../articles/break_ranger.html">breakDown plots for the ranger model</a>
+      <a href="../articles/break_ranger.html">model agnostic breakDown plots for ranger</a>
     </li>
   </ul>
 </li>
@@ -76,7 +76,7 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>breakDown plots for the ranger model</h1>
+      <h1>model agnostic breakDown plots for ranger</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
             <h4 class="date">2018-02-16</h4>
@@ -107,7 +107,7 @@ predict.function &lt;-<span class="st"> </span><span class="cf">function</span>(
 
 <span class="kw">predict.function</span>(model, HR_data[<span class="dv">11</span>,])
 <span class="co">#&gt;         1 </span>
-<span class="co">#&gt; 0.8710377</span></code></pre></div>
+<span class="co">#&gt; 0.8682287</span></code></pre></div>
 <p>But how to understand which factors drive predictions for a single observation?</p>
 <p>With the <code>breakDown</code> package!</p>
 <p>Explanations for the trees votings.</p>
@@ -120,15 +120,15 @@ explain_<span class="dv">1</span>
 <span class="co">#&gt;                              contribution</span>
 <span class="co">#&gt; (Intercept)                         0.238</span>
 <span class="co">#&gt; - satisfaction_level = 0.45         0.000</span>
-<span class="co">#&gt; - number_project = 2                0.059</span>
-<span class="co">#&gt; - last_evaluation = 0.54            0.272</span>
-<span class="co">#&gt; - average_montly_hours = 135        0.129</span>
-<span class="co">#&gt; - time_spend_company = 3            0.086</span>
-<span class="co">#&gt; - Work_accident = 0                 0.073</span>
-<span class="co">#&gt; - salary = low                      0.009</span>
-<span class="co">#&gt; - promotion_last_5years = 0         0.004</span>
+<span class="co">#&gt; - number_project = 2                0.061</span>
+<span class="co">#&gt; - last_evaluation = 0.54            0.236</span>
+<span class="co">#&gt; - average_montly_hours = 135        0.130</span>
+<span class="co">#&gt; - time_spend_company = 3            0.104</span>
+<span class="co">#&gt; - Work_accident = 0                 0.086</span>
+<span class="co">#&gt; - salary = low                      0.011</span>
+<span class="co">#&gt; - promotion_last_5years = 0         0.003</span>
 <span class="co">#&gt; - sales = sales                     0.000</span>
-<span class="co">#&gt; final_prognosis                     0.871</span>
+<span class="co">#&gt; final_prognosis                     0.868</span>
 <span class="co">#&gt; baseline:  0</span>
 <span class="kw">plot</span>(explain_<span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot  (direction=down) for ranger model"</span>)</code></pre></div>
 <p><img src="break_ranger_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
@@ -139,16 +139,16 @@ explain_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw"
 explain_<span class="dv">2</span>
 <span class="co">#&gt;                              contribution</span>
 <span class="co">#&gt; (Intercept)                         0.238</span>
-<span class="co">#&gt; + satisfaction_level = 0.45         0.059</span>
-<span class="co">#&gt; + number_project = 2                0.272</span>
-<span class="co">#&gt; + last_evaluation = 0.54            0.129</span>
-<span class="co">#&gt; + average_montly_hours = 135        0.086</span>
-<span class="co">#&gt; + time_spend_company = 3            0.073</span>
-<span class="co">#&gt; + Work_accident = 0                 0.009</span>
-<span class="co">#&gt; + salary = low                      0.004</span>
+<span class="co">#&gt; + satisfaction_level = 0.45         0.061</span>
+<span class="co">#&gt; + number_project = 2                0.236</span>
+<span class="co">#&gt; + last_evaluation = 0.54            0.130</span>
+<span class="co">#&gt; + average_montly_hours = 135        0.104</span>
+<span class="co">#&gt; + time_spend_company = 3            0.086</span>
+<span class="co">#&gt; + Work_accident = 0                 0.011</span>
+<span class="co">#&gt; + salary = low                      0.003</span>
 <span class="co">#&gt; + promotion_last_5years = 0         0.000</span>
 <span class="co">#&gt; + sales = sales                     0.000</span>
-<span class="co">#&gt; final_prognosis                     0.871</span>
+<span class="co">#&gt; final_prognosis                     0.868</span>
 <span class="co">#&gt; baseline:  0</span>
 <span class="kw">plot</span>(explain_<span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot (direction=up) for ranger model"</span>)</code></pre></div>
 <p><img src="break_ranger_files/figure-html/unnamed-chunk-3-2.png" width="672"></p>
