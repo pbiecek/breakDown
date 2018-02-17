@@ -1,10 +1,10 @@
 ---
-title: "breakDown plots for the model agnostic contributions"
+title: "model agnostic breakDown plots for randomForest"
 author: "Przemyslaw Biecek"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{breakDown plots for the model agnostic contributions}
+  %\VignetteIndexEntry{model agnostic breakDown plots for randomForest}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

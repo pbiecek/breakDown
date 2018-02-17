@@ -1,10 +1,10 @@
 ---
-title: "breakDown plots for the ranger model"
+title: "model agnostic breakDown plots for ranger"
 author: "Przemyslaw Biecek"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{breakDown plots for the ranger model}
+  %\VignetteIndexEntry{model agnostic breakDown plots for ranger}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

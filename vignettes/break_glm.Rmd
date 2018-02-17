@@ -1,5 +1,5 @@
 ---
-title: "breakDown plots for the generalised linear model"
+title: "breakDown plots for the generalised linear models"
 author: "Przemyslaw Biecek"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
