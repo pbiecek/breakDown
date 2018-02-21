@@ -178,14 +178,14 @@ broken.default <- function(model, new_observation, data, direction = "up", ..., 
 
   if (direction == "up") {
     broken_sorted <- broken_go_up(model, new_observation, data,
-                                    predict.function)
+                                    predict.function, ...)
   } else {
     broken_sorted <- broken_go_down(model, new_observation, data,
-                                    predict.function)
+                                    predict.function, ...)
   }
 
   if (tolower(baseline) == "intercept") {
-    baseline <- mean(predict.function(model, data))
+    baseline <- mean(predict.function(model, data, ...))
     broken_sorted <- rbind(
       data.frame(variable = "(Intercept)",
                  contribution = 0,
@@ -195,7 +195,7 @@ broken.default <- function(model, new_observation, data, direction = "up", ..., 
   } else {
     broken_sorted <- rbind(
       data.frame(variable = "(Intercept)",
-                 contribution = mean(predict.function(model, data)) - baseline,
+                 contribution = mean(predict.function(model, data, ...)) - baseline,
                  variable_name = "Intercept",
                  variable_value = 1),
       broken_sorted)
@@ -205,13 +205,13 @@ broken.default <- function(model, new_observation, data, direction = "up", ..., 
 }
 
 broken_go_up <- function(model, new_observation, data,
-                           predict.function = predict) {
+                           predict.function = predict, ...) {
   # set target distribution
   new_data <- new_observation[rep(1,nrow(data)),]
 
   # set target
-  target_yhat <- predict.function(model, new_observation)
-  baseline_yhat <- mean(predict.function(model, data))
+  target_yhat <- predict.function(model, new_observation, ...)
+  baseline_yhat <- mean(predict.function(model, data, ...))
 
   # set variable indicators
   open_variables <- 1:ncol(data)
@@ -225,7 +225,7 @@ broken_go_up <- function(model, new_observation, data,
     for (tmp_variable in open_variables) {
       current_data <- data
       current_data[,tmp_variable] <- new_data[,tmp_variable]
-      yhats[[tmp_variable]] <- predict.function(model, current_data)
+      yhats[[tmp_variable]] <- predict.function(model, current_data, ...)
       yhats_diff[tmp_variable] <- abs(baseline_yhat - mean(yhats[[tmp_variable]]))
     }
     important_variables[i] <- which.max(yhats_diff)
@@ -247,13 +247,13 @@ broken_go_up <- function(model, new_observation, data,
 }
 
 broken_go_down <- function(model, new_observation, data,
-                           predict.function = predict) {
+                           predict.function = predict, ...) {
   # set target distribution
   new_data <- new_observation[rep(1,nrow(data)),]
 
   # set target
-  target_yhat <- predict.function(model, new_observation)
-  baseline_yhat <- mean(predict.function(model, data))
+  target_yhat <- predict.function(model, new_observation, ...)
+  baseline_yhat <- mean(predict.function(model, data, ...))
 
   # set variable indicators
   open_variables <- 1:ncol(data)
@@ -267,7 +267,7 @@ broken_go_down <- function(model, new_observation, data,
     for (tmp_variable in open_variables) {
       current_data <- new_data
       current_data[,tmp_variable] <- data[,tmp_variable]
-      yhats[[tmp_variable]] <- predict.function(model, current_data)
+      yhats[[tmp_variable]] <- predict.function(model, current_data, ...)
       yhats_diff[tmp_variable] <- abs(target_yhat - mean(yhats[[tmp_variable]]))
     }
     important_variables[i] <- which.min(yhats_diff)
