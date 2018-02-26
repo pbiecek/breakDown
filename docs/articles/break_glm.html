@@ -47,6 +47,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/break_caret.html">How to use breakDown package for models created with caret</a>
+    </li>
+    <li>
       <a href="../articles/break_glm.html">breakDown plots for the generalised linear models</a>
     </li>
     <li>
@@ -79,7 +82,7 @@
       <h1>breakDown plots for the generalised linear models</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2018-02-16</h4>
+            <h4 class="date">2018-02-26</h4>
           </div>
 
     
@@ -88,7 +91,6 @@
 <p>Here we will use the HR churn data (<a href="https://www.kaggle.com/ludobenistant/hr-analytics/data" class="uri">https://www.kaggle.com/ludobenistant/hr-analytics/data</a>) to present the breakDown package for <code>glm</code> models.</p>
 <p>The data is in the <code>breakDown</code> package</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(breakDown)
-<span class="co">#&gt; Warning: S3 method 'broken.ranger' was declared in NAMESPACE but not found</span>
 <span class="kw">head</span>(HR_data, <span class="dv">3</span>)
 <span class="co">#&gt;   satisfaction_level last_evaluation number_project average_montly_hours</span>
 <span class="co">#&gt; 1               0.38            0.53              2                  157</span>
