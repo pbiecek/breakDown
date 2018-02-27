@@ -19,6 +19,7 @@ broken <- function(model, new_observation, ...) {
 #'
 #' @return an object of the broken class
 #' @export
+#' @importFrom stats predict
 #' @importFrom stats predict.lm
 #' @importFrom stats predict.glm
 #' @importFrom stats terms
@@ -154,13 +155,13 @@ broken.glm <- function(model, new_observation, ..., baseline = 0) {
 #' @return an object of the broken class
 #'
 #' @examples
-#'
-#' library("breakDown")
-#' library("randomForest")
-#' library("ggplot2")
+#' library(breakDown)
+#' library(randomForest)
+#' library(ggplot2)
 #' set.seed(1313)
 #' model <- randomForest(factor(left)~., data = HR_data, family = "binomial", maxnodes = 5)
-#' predict.function <- function(model, new_observation) predict(model, new_observation, type="prob")[,2]
+#' predict.function <- function(model, new_observation)
+#'       predict(model, new_observation, type="prob")[,2]
 #' predict.function(model, HR_data[11,-7])
 #' explain_1 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
 #' predict.function = predict.function, direction = "down")
