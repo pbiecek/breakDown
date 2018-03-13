@@ -1,7 +1,7 @@
 #' Create the broken object
 #'
 #' @param model a model
-#' @param new_observation a new observation with collumns that corresponds to variables used in the model
+#' @param new_observation a new observation with columns that corresponds to variables used in the model
 #' @param ... other parameters
 #'
 #' @export
@@ -13,7 +13,7 @@ broken <- function(model, new_observation, ...) {
 #' Create the broken object for lm models
 #'
 #' @param model a lm model
-#' @param new_observation a new observation with collumns that corresponds to variables used in the model
+#' @param new_observation a new observation with columns that corresponds to variables used in the model
 #' @param ... other parameters
 #' @param baseline the orgin/baseline for the breakDown plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.
 #'
@@ -73,7 +73,7 @@ broken.lm <- function(model, new_observation, ..., baseline = 0) {
 #' Create the broken object for glm models
 #'
 #' @param model a glm model
-#' @param new_observation a new observation with collumns that corresponds to variables used in the model
+#' @param new_observation a new observation with columns that corresponds to variables used in the model
 #' @param ... other parameters
 #' @param baseline the orgin/baseline for the breakDown plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.
 #'
@@ -145,7 +145,7 @@ broken.glm <- function(model, new_observation, ..., baseline = 0) {
 #' Create the model agnostic broken object
 #'
 #' @param model a ranger model
-#' @param new_observation a new observation with collumns that corresponds to variables used in the model
+#' @param new_observation a new observation with columns that corresponds to variables used in the model
 #' @param data the original data used for model fitting, should have same collumns as the 'new_observation'.
 #' @param direction either 'up' or 'down' determined the exploration strategy
 #' @param ... other parameters
