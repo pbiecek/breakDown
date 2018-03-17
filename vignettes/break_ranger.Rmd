@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Here we will use the HR churn data  (https://www.kaggle.com/ludobenistant/hr-analytics/data) to present the `breakDown` package for `ranger` models.
+Here we will use the HR churn data  (https://www.kaggle.com/) to present the `breakDown` package for `ranger` models.
 
 The data is in the `breakDown` package
 

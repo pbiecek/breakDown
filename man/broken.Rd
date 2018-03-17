@@ -9,7 +9,7 @@ broken(model, new_observation, ...)
 \arguments{
 \item{model}{a model}
 
-\item{new_observation}{a new observation with collumns that corresponds to variables used in the model}
+\item{new_observation}{a new observation with columns that corresponds to variables used in the model}
 
 \item{...}{other parameters}
 }

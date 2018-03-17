@@ -5,5 +5,5 @@
 ^cheatsheet$
 ^cheatsheets$
 ^docs$
-^README.md$
+^.*README.*$
 ^_pkgdown\.yml$

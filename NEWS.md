@@ -1,3 +1,7 @@
+breakDown 0.1.5
+----------------------------------------------------------------
+* small changes in `broken.default` to make it work with `xgboost` and other non `data.frame` data
+
 breakDown 0.1.4
 ----------------------------------------------------------------
 * `broken.default` is now model agnostic!

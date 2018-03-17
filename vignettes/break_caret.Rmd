@@ -4,7 +4,7 @@ author: "Przemyslaw Biecek"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{model agnostic breakDown plots for randomForest}
+  %\VignetteIndexEntry{model agnostic breakDown plots for caret}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This example demonstrates how to use the `breakDown` package for models created with the [caret](https://cran.r-project.org/web/packages/caret/index.html) package. 
+This example demonstrates how to use the `breakDown` package for models created with the [caret](https://CRAN.R-project.org/package=caret) package. 
 
 First we will generate some data.
 

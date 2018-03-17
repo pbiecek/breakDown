@@ -5,11 +5,11 @@
 \title{Why are our best and most experienced employees leaving prematurely?}
 \format{A data frame with 14999 rows and 10 variables}
 \source{
-\url{https://www.kaggle.com/ludobenistant/hr-analytics/data}
+Dataset hr-analytics from \url{https://www.kaggle.com}
 }
 \description{
 A dataset from Kaggle competition Human Resources Analytics.
-https://www.kaggle.com/ludobenistant/hr-analytics/data
+https://www.kaggle.com/
 }
 \details{
 \itemize{

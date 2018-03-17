@@ -1,0 +1,53 @@
+---
+title: "How to use breakDown package for models created with xgboost"
+author: "Przemyslaw Biecek"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{model agnostic breakDown plots for xgboost}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This example demonstrates how to use the `breakDown` package for models created with the [xgboost](https://CRAN.R-project.org/package=xgboost) package. 
+
+
+```{r}
+library("breakDown")
+library("xgboost")
+
+model_martix_train <- model.matrix(left ~ . - 1, HR_data)
+data_train <- xgb.DMatrix(model_martix_train, label = HR_data$left)
+param <- list(max_depth = 2, eta = 1, silent = 1, nthread = 2,
+              objective = "binary:logistic", eval_metric = "auc")
+
+HR_xgb_model <- xgb.train(param, data_train, nrounds = 50)
+HR_xgb_model
+```
+
+Now we are ready to call the `broken()` function.
+
+```{r}
+library("breakDown")
+nobs <- model_martix_train[1L, , drop = FALSE]
+
+explain_2 <- broken(HR_xgb_model, new_observation = nobs, 
+                    data = model_martix_train)
+explain_2
+```
+
+And plot it.
+
+```{r, fig.width=7}
+library(ggplot2)
+plot(explain_2) + ggtitle("breakDown plot for xgboost model")
+```
+
+

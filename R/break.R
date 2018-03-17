@@ -173,9 +173,12 @@ broken.glm <- function(model, new_observation, ..., baseline = 0) {
 broken.default <- function(model, new_observation, data, direction = "up", ..., baseline = 0,
                           predict.function = predict) {
   # just in case only some variables are specified
-  common_variables <- intersect(colnames(new_observation), colnames(data))
-  new_observation <- new_observation[,common_variables]
-  data <- data[,common_variables]
+  # this will work only for data.frames
+  if ("data.frame" %in% class(data)) {
+    common_variables <- intersect(colnames(new_observation), colnames(data))
+    new_observation <- new_observation[,common_variables, drop = FALSE]
+    data <- data[,common_variables, drop = FALSE]
+  }
 
   if (direction == "up") {
     broken_sorted <- broken_go_up(model, new_observation, data,
@@ -208,7 +211,7 @@ broken.default <- function(model, new_observation, data, direction = "up", ..., 
 broken_go_up <- function(model, new_observation, data,
                            predict.function = predict, ...) {
   # set target distribution
-  new_data <- new_observation[rep(1,nrow(data)),]
+  new_data <- new_observation[rep(1L, nrow(data)),]
 
   # set target
   target_yhat <- predict.function(model, new_observation, ...)
@@ -250,7 +253,7 @@ broken_go_up <- function(model, new_observation, data,
 broken_go_down <- function(model, new_observation, data,
                            predict.function = predict, ...) {
   # set target distribution
-  new_data <- new_observation[rep(1,nrow(data)),]
+  new_data <- new_observation[rep(1L, nrow(data)),]
 
   # set target
   target_yhat <- predict.function(model, new_observation, ...)
