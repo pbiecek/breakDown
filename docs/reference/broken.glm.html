@@ -116,7 +116,8 @@
     
 
     <pre class="usage"><span class='co'># S3 method for glm</span>
-<span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>new_observation</span>, <span class='no'>...</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+<span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>new_observation</span>, <span class='no'>...</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>predict.function</span> <span class='kw'>=</span> <span class='no'>predict</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -135,7 +136,11 @@
     </tr>
     <tr>
       <th>baseline</th>
-      <td><p>the orgin/baseline for the breakDown plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.</p></td>
+      <td><p>the origin/baseline for the breakDown plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.</p></td>
+    </tr>
+    <tr>
+      <th>predict.function</th>
+      <td><p>function that will calculate predictions out of model (typically <code>predict</code> or <code>betas</code>)</p></td>
     </tr>
     </table>
     
@@ -154,7 +159,7 @@
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>wine</span>[<span class='fl'>1</span>,]
 <span class='no'>br</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>modelg</span>, <span class='no'>new_observation</span>)
 <span class='no'>logit</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>exp</span>(<span class='no'>x</span>)/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>x</span>))
-<span class='fu'>plot</span>(<span class='no'>br</span>, <span class='no'>logit</span>)</div><div class='img'><img src='broken.glm-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>br</span>, <span class='no'>logit</span>)</div><div class='img'><img src='broken.glm-12.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># example for HR_data</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>left</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR_data</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explain_1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>HR_data</span>[<span class='fl'>1</span>,])
@@ -170,8 +175,21 @@
 #&gt; promotion_last_5years = 0         0.030
 #&gt; sales = sales                     0.014
 #&gt; final_prognosis                   0.118
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>)</div><div class='img'><img src='broken.glm-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>exp</span>(<span class='no'>x</span>)/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>x</span>)))</div><div class='img'><img src='broken.glm-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-</div></pre>
+#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>)</div><div class='img'><img src='broken.glm-13.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>exp</span>(<span class='no'>x</span>)/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>x</span>)))</div><div class='img'><img src='broken.glm-14.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='no'>explain_2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>HR_data</span>[<span class='fl'>1</span>,], <span class='kw'>predict.function</span> <span class='kw'>=</span> <span class='no'>betas</span>)
+<span class='no'>explain_2</span></div><div class='output co'>#&gt;                            contribution
+#&gt; (Intercept)                      -1.476
+#&gt; salary = low                      1.944
+#&gt; satisfaction_level = 0.38        -1.572
+#&gt; time_spend_company = 3            0.803
+#&gt; average_montly_hours = 157        0.700
+#&gt; number_project = 2               -0.630
+#&gt; last_evaluation = 0.53            0.387
+#&gt; sales = sales                    -0.039
+#&gt; Work_accident = 0                 0.000
+#&gt; promotion_last_5years = 0         0.000
+#&gt; final_prognosis                   0.118
+#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_2</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>exp</span>(<span class='no'>x</span>)/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>x</span>)))</div><div class='img'><img src='broken.glm-15.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

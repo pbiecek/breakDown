@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • breakDown</title>
+<title>Extract betas values of a model for specific observations — betas • breakDown</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -37,7 +37,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top navbar-mi2" role="navigation">
   <div class="container">
@@ -106,101 +106,46 @@
       </header>
 
       <div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;0.1.5</small>
-      </h1>
+    <h1>Extract betas values of a model for specific observations</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    
+    <p>Extract betas values of a model for specific observations</p>
+    
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <pre class="usage"><span class='fu'>betas</span>(<span class='no'>object</span>, <span class='no'>newdata</span>, <span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p>a model</p></td>
+    </tr>
+    <tr>
+      <th>newdata</th>
+      <td><p>new observation(s) with columns that correspond to variables used in the model</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>unused additional parameters</p></td>
+    </tr>
+    </table>
+    
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="betas.html">betas</a></code> </p>
-          </td>
-          <td><p>Extract betas values of a model for specific observations</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="broken.default.html">broken</a></code> </p>
-          </td>
-          <td><p>Create the model agnostic broken object</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="broken.glm.html">broken</a></code> </p>
-          </td>
-          <td><p>Create the broken object for glm models</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="broken.lm.html">broken</a></code> </p>
-          </td>
-          <td><p>Create the broken object for lm models</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="broken.html">broken</a></code> </p>
-          </td>
-          <td><p>Create the broken object</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="create.broken.html">create.broken</a></code> </p>
-          </td>
-          <td><p>Clean the object of the broken class
-Internal function</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="HR_data.html">HR_data</a></code> </p>
-          </td>
-          <td><p>Why are our best and most experienced employees leaving prematurely?</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plot.broken.html">plot</a></code> </p>
-          </td>
-          <td><p>Break Down PLot</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="print.broken.html">print</a></code> </p>
-          </td>
-          <td><p>Break Down Print</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="wine.html">wine</a></code> </p>
-          </td>
-          <td><p>White Wine Quality Data</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked contents-mi2">
-      <li><a href="#section-all-functions">All functions</a></li>
-    </ul>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
+
+    <h2>Author</h2>
+    
+Joseph Larmarange
+
   </div>
 </div>
 
