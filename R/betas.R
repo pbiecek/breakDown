@@ -3,6 +3,7 @@
 #' @param object a model
 #' @param newdata new observation(s) with columns that correspond to variables used in the model
 #' @param ... unused additional parameters
+#' @author Joseph Larmarange
 #' @export
 
 betas <- function (object, newdata, ...)

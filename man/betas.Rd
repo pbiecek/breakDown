@@ -16,3 +16,6 @@ betas(object, newdata, ...)
 \description{
 Extract betas values of a model for specific observations
 }
+\author{
+Joseph Larmarange
+}

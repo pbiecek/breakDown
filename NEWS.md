@@ -1,6 +1,7 @@
 breakDown 0.1.5
 ----------------------------------------------------------------
 * small changes in `broken.default` to make it work with `xgboost` and other non `data.frame` data
+* `broken.lm` supports unnormalized coefficients (thanks to Joseph Larmarange) just add `predict.function = betas`  [#9](https://github.com/pbiecek/breakDown/issues/9)
 
 breakDown 0.1.4
 ----------------------------------------------------------------
