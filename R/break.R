@@ -16,6 +16,7 @@ broken <- function(model, new_observation, ...) {
 #' @param new_observation a new observation with columns that corresponds to variables used in the model
 #' @param ... other parameters
 #' @param baseline the orgin/baseline for the breakDown plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.
+#' @param predict.function function that will calculate predictions out of model (typically \code{predict} or \code{betas})
 #'
 #' @return an object of the broken class
 #' @export
@@ -35,9 +36,12 @@ broken <- function(model, new_observation, ...) {
 #' new_observation <- iris[1,]
 #' br <- broken(model, new_observation)
 #' plot(br)
+#'
+#' br2 <- broken(model, new_observation, predict.function = betas)
+#' plot(br2)
 
-broken.lm <- function(model, new_observation, ..., baseline = 0) {
-  ny <- predict.lm(model, newdata = new_observation, type = "terms")
+broken.lm <- function(model, new_observation, ..., baseline = 0, predict.function = predict) {
+  ny <- predict.function(model, newdata = new_observation, type = "terms")
   terms <- NULL
 
   # add terms with :
@@ -75,7 +79,8 @@ broken.lm <- function(model, new_observation, ..., baseline = 0) {
 #' @param model a glm model
 #' @param new_observation a new observation with columns that corresponds to variables used in the model
 #' @param ... other parameters
-#' @param baseline the orgin/baseline for the breakDown plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.
+#' @param baseline the origin/baseline for the breakDown plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.
+#' @param predict.function function that will calculate predictions out of model (typically \code{predict} or \code{betas})
 #'
 #' @return an object of the broken class
 #' @importFrom stats predict.lm
@@ -99,10 +104,13 @@ broken.lm <- function(model, new_observation, ..., baseline = 0) {
 #' plot(explain_1)
 #' plot(explain_1, trans = function(x) exp(x)/(1+exp(x)))
 #'
+#' explain_2 <- broken(model, HR_data[1,], predict.function = betas)
+#' explain_2
+#' plot(explain_2, trans = function(x) exp(x)/(1+exp(x)))
 #' @export
 
-broken.glm <- function(model, new_observation, ..., baseline = 0) {
-  ny <- predict.glm(model, newdata = new_observation, type = "terms")
+broken.glm <- function(model, new_observation, ..., baseline = 0, predict.function = predict) {
+  ny <- predict.function(model, newdata = new_observation, type = "terms")
   terms <- NULL
 
   # add terms with :
