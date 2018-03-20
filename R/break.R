@@ -294,7 +294,7 @@ broken_go_down <- function(model, new_observation, data,
 
   varNames <- rev(colnames(data)[important_variables])
   varValues <- sapply(rev(new_observation[,important_variables]), as.character)
-  contributions <- diff(c(baseline_yhat, rev(sapply(important_yhats, mean))))
+  contributions <- diff(c(rev(sapply(important_yhats, mean)), target_yhat))
 
   broken_sorted <- data.frame(variable = c(paste("-", varNames,  "=", varValues)),
                               contribution = contributions,
