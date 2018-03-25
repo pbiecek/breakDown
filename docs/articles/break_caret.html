@@ -62,6 +62,9 @@
       <a href="../articles/break_ranger.html">model agnostic breakDown plots for ranger</a>
     </li>
     <li>
+      <a href="../articles/break_svm.html">How to use breakDown package for SVM models</a>
+    </li>
+    <li>
       <a href="../articles/break_xgboost.html">How to use breakDown package for models created with xgboost</a>
     </li>
   </ul>
@@ -85,7 +88,7 @@
       <h1>How to use breakDown package for models created with caret</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2018-03-19</h4>
+            <h4 class="date">2018-03-25</h4>
           </div>
 
     
@@ -93,78 +96,78 @@
 <div class="contents">
 <p>This example demonstrates how to use the <code>breakDown</code> package for models created with the <a href="https://CRAN.R-project.org/package=caret">caret</a> package.</p>
 <p>First we will generate some data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(caret)
-
-<span class="kw">set.seed</span>(<span class="dv">2</span>)
-training &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/caret/topics/twoClassSim">twoClassSim</a></span>(<span class="dv">50</span>, <span class="dt">linearVars =</span> <span class="dv">2</span>)
-trainX &lt;-<span class="st"> </span>training[, <span class="op">-</span><span class="kw">ncol</span>(training)]
-trainY &lt;-<span class="st"> </span>training<span class="op">$</span>Class
-
-<span class="kw">head</span>(training)
-<span class="co">#&gt;   TwoFactor1 TwoFactor2    Linear1    Linear2 Nonlinear1 Nonlinear2</span>
-<span class="co">#&gt; 1 -0.6561702 -1.6480450  1.0744594  0.9758906  0.2342843  0.6805653</span>
-<span class="co">#&gt; 2 -0.9849973  1.4598834  0.2605978 -0.1694232  0.1381283  0.7460168</span>
-<span class="co">#&gt; 3  2.3722541  1.7069944 -0.3142720  0.7221918 -0.6920591  0.4642024</span>
-<span class="co">#&gt; 4 -2.2067173 -0.6972704 -0.7496301 -0.8444186 -0.9303336  0.1374181</span>
-<span class="co">#&gt; 5  0.5166671 -0.7228376 -0.8621983  1.2772937  0.9959069  0.8143796</span>
-<span class="co">#&gt; 6  1.3331262 -0.9929323  2.0480403 -1.3431105  0.6711474  0.8321613</span>
-<span class="co">#&gt;   Nonlinear3  Class</span>
-<span class="co">#&gt; 1  0.6920055 Class1</span>
-<span class="co">#&gt; 2  0.5599569 Class2</span>
-<span class="co">#&gt; 3  0.3426912 Class1</span>
-<span class="co">#&gt; 4  0.2344975 Class2</span>
-<span class="co">#&gt; 5  0.4296028 Class1</span>
-<span class="co">#&gt; 6  0.7367007 Class1</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(caret)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">set.seed</span>(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">training &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/caret/topics/twoClassSim">twoClassSim</a></span>(<span class="dv">50</span>, <span class="dt">linearVars =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">trainX &lt;-<span class="st"> </span>training[, <span class="op">-</span><span class="kw">ncol</span>(training)]</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">trainY &lt;-<span class="st"> </span>training<span class="op">$</span>Class</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw">head</span>(training)</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">#&gt;   TwoFactor1 TwoFactor2    Linear1    Linear2 Nonlinear1 Nonlinear2</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#&gt; 1 -0.6561702 -1.6480450  1.0744594  0.9758906  0.2342843  0.6805653</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt; 2 -0.9849973  1.4598834  0.2605978 -0.1694232  0.1381283  0.7460168</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt; 3  2.3722541  1.7069944 -0.3142720  0.7221918 -0.6920591  0.4642024</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt; 4 -2.2067173 -0.6972704 -0.7496301 -0.8444186 -0.9303336  0.1374181</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; 5  0.5166671 -0.7228376 -0.8621983  1.2772937  0.9959069  0.8143796</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt; 6  1.3331262 -0.9929323  2.0480403 -1.3431105  0.6711474  0.8321613</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt;   Nonlinear3  Class</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt; 1  0.6920055 Class1</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt; 2  0.5599569 Class2</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt; 3  0.3426912 Class1</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt; 4  0.2344975 Class2</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#&gt; 5  0.4296028 Class1</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt; 6  0.7367007 Class1</span></a></code></pre></div>
 <p>Now we are ready to train a model. Let’s train a <code>glm</code> model with <code>caret</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cctrl1 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/caret/topics/trainControl">trainControl</a></span>(<span class="dt">method =</span> <span class="st">"cv"</span>, <span class="dt">number =</span> <span class="dv">3</span>, <span class="dt">returnResamp =</span> <span class="st">"all"</span>,
-                       <span class="dt">classProbs =</span> <span class="ot">TRUE</span>, 
-                       <span class="dt">summaryFunction =</span> twoClassSummary)
-
-test_class_cv_model &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/caret/topics/train">train</a></span>(trainX, trainY, 
-                             <span class="dt">method =</span> <span class="st">"glm"</span>, 
-                             <span class="dt">trControl =</span> cctrl1,
-                             <span class="dt">metric =</span> <span class="st">"ROC"</span>, 
-                             <span class="dt">preProc =</span> <span class="kw">c</span>(<span class="st">"center"</span>, <span class="st">"scale"</span>))
-test_class_cv_model
-<span class="co">#&gt; Generalized Linear Model </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; 50 samples</span>
-<span class="co">#&gt;  7 predictor</span>
-<span class="co">#&gt;  2 classes: 'Class1', 'Class2' </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Pre-processing: centered (7), scaled (7) </span>
-<span class="co">#&gt; Resampling: Cross-Validated (3 fold) </span>
-<span class="co">#&gt; Summary of sample sizes: 33, 33, 34 </span>
-<span class="co">#&gt; Resampling results</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   ROC       Sens       Spec       ROC SD      Sens SD     Spec SD   </span>
-<span class="co">#&gt;   0.728588  0.6805556  0.6805556  0.07234259  0.06364688  0.06364688</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">cctrl1 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/caret/topics/trainControl">trainControl</a></span>(<span class="dt">method =</span> <span class="st">"cv"</span>, <span class="dt">number =</span> <span class="dv">3</span>, <span class="dt">returnResamp =</span> <span class="st">"all"</span>,</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">                       <span class="dt">classProbs =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">                       <span class="dt">summaryFunction =</span> twoClassSummary)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">test_class_cv_model &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/caret/topics/train">train</a></span>(trainX, trainY, </a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">                             <span class="dt">method =</span> <span class="st">"glm"</span>, </a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">                             <span class="dt">trControl =</span> cctrl1,</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">                             <span class="dt">metric =</span> <span class="st">"ROC"</span>, </a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">                             <span class="dt">preProc =</span> <span class="kw">c</span>(<span class="st">"center"</span>, <span class="st">"scale"</span>))</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">test_class_cv_model</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; Generalized Linear Model </span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; 50 samples</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt;  7 predictor</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt;  2 classes: 'Class1', 'Class2' </span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; Pre-processing: centered (7), scaled (7) </span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; Resampling: Cross-Validated (3 fold) </span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; Summary of sample sizes: 33, 33, 34 </span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; Resampling results</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt;   ROC       Sens       Spec       ROC SD      Sens SD     Spec SD   </span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt;   0.728588  0.6805556  0.6805556  0.07234259  0.06364688  0.06364688</span></a>
+<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#&gt; </span></a></code></pre></div>
 <p>To use <code>breakDown</code> we need a function that will calculate scores/predictions for a single observation. By default the <code>predict()</code> function returns predicted class.</p>
 <p>So we are adding <code>type = "prob"</code> argument to get scores. And since there will be two scores for each observarion we need to extract one of them.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">predict.fun &lt;-<span class="st"> </span><span class="cf">function</span>(model, x) <span class="kw">predict</span>(model, x, <span class="dt">type =</span> <span class="st">"prob"</span>)[,<span class="dv">1</span>]
-testing &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/caret/topics/twoClassSim">twoClassSim</a></span>(<span class="dv">10</span>, <span class="dt">linearVars =</span> <span class="dv">2</span>)
-<span class="kw">predict.fun</span>(test_class_cv_model, testing[<span class="dv">1</span>,])
-<span class="co">#&gt; [1] 0.1997649</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">predict.fun &lt;-<span class="st"> </span><span class="cf">function</span>(model, x) <span class="kw">predict</span>(model, x, <span class="dt">type =</span> <span class="st">"prob"</span>)[,<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">testing &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/caret/topics/twoClassSim">twoClassSim</a></span>(<span class="dv">10</span>, <span class="dt">linearVars =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">predict.fun</span>(test_class_cv_model, testing[<span class="dv">1</span>,])</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; [1] 0.1997649</span></a></code></pre></div>
 <p>Now we are ready to call the <code><a href="../reference/broken.html">broken()</a></code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"breakDown"</span>)
-explain_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(test_class_cv_model, testing[<span class="dv">1</span>,], <span class="dt">data =</span> trainX, <span class="dt">predict.function =</span> predict.fun)
-explain_<span class="dv">2</span>
-<span class="co">#&gt;                                  contribution</span>
-<span class="co">#&gt; (Intercept)                             0.500</span>
-<span class="co">#&gt; + TwoFactor2 = 1.0795496599768         -0.184</span>
-<span class="co">#&gt; + TwoFactor1 = -0.47479191451519       -0.135</span>
-<span class="co">#&gt; + Linear2 = -0.787000382007838         -0.083</span>
-<span class="co">#&gt; + Nonlinear3 = 0.614545789547265       -0.016</span>
-<span class="co">#&gt; + Linear1 = 0.75131230478348           -0.012</span>
-<span class="co">#&gt; + Nonlinear1 = 0.915338645223528        0.022</span>
-<span class="co">#&gt; + Nonlinear2 = 0.983319560531527        0.108</span>
-<span class="co">#&gt; final_prognosis                         0.200</span>
-<span class="co">#&gt; baseline:  0</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"breakDown"</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">explain_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(test_class_cv_model, testing[<span class="dv">1</span>,], <span class="dt">data =</span> trainX, <span class="dt">predict.function =</span> predict.fun)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">explain_<span class="dv">2</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;                                  contribution</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; (Intercept)                             0.500</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; + TwoFactor2 = 1.0795496599768         -0.184</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; + TwoFactor1 = -0.47479191451519       -0.135</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; + Linear2 = -0.787000382007838         -0.083</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; + Nonlinear3 = 0.614545789547265       -0.016</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; + Linear1 = 0.75131230478348           -0.012</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; + Nonlinear1 = 0.915338645223528        0.022</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; + Nonlinear2 = 0.983319560531527        0.108</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; final_prognosis                         0.200</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; baseline:  0</span></a></code></pre></div>
 <p>And plot it.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-<span class="kw">plot</span>(explain_<span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for caret/glm model"</span>)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">plot</span>(explain_<span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for caret/glm model"</span>)</a></code></pre></div>
 <p><img src="break_caret_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 </div>
   </div>

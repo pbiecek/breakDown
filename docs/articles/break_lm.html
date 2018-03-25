@@ -62,6 +62,9 @@
       <a href="../articles/break_ranger.html">model agnostic breakDown plots for ranger</a>
     </li>
     <li>
+      <a href="../articles/break_svm.html">How to use breakDown package for SVM models</a>
+    </li>
+    <li>
       <a href="../articles/break_xgboost.html">How to use breakDown package for models created with xgboost</a>
     </li>
   </ul>
@@ -85,7 +88,7 @@
       <h1>breakDown plots for the linear models</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2018-03-19</h4>
+            <h4 class="date">2018-03-25</h4>
           </div>
 
     
@@ -93,125 +96,125 @@
 <div class="contents">
 <p>Here we will use the wine quality data (<a href="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv" class="uri">https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv</a>) to present the breakDown package for <code>lm</code> models.</p>
 <p>First, let’s download the data from URL</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">url &lt;-<span class="st"> 'https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv'</span>
-wine &lt;-<span class="st"> </span><span class="kw">read.table</span>(url, <span class="dt">header =</span> T, <span class="dt">sep=</span><span class="st">";"</span>)
-<span class="kw">head</span>(wine, <span class="dv">3</span>)
-<span class="co">#&gt;   fixed.acidity volatile.acidity citric.acid residual.sugar chlorides</span>
-<span class="co">#&gt; 1           7.0             0.27        0.36           20.7     0.045</span>
-<span class="co">#&gt; 2           6.3             0.30        0.34            1.6     0.049</span>
-<span class="co">#&gt; 3           8.1             0.28        0.40            6.9     0.050</span>
-<span class="co">#&gt;   free.sulfur.dioxide total.sulfur.dioxide density   pH sulphates alcohol</span>
-<span class="co">#&gt; 1                  45                  170  1.0010 3.00      0.45     8.8</span>
-<span class="co">#&gt; 2                  14                  132  0.9940 3.30      0.49     9.5</span>
-<span class="co">#&gt; 3                  30                   97  0.9951 3.26      0.44    10.1</span>
-<span class="co">#&gt;   quality</span>
-<span class="co">#&gt; 1       6</span>
-<span class="co">#&gt; 2       6</span>
-<span class="co">#&gt; 3       6</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">url &lt;-<span class="st"> 'https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv'</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">wine &lt;-<span class="st"> </span><span class="kw">read.table</span>(url, <span class="dt">header =</span> T, <span class="dt">sep=</span><span class="st">";"</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">head</span>(wine, <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt;   fixed.acidity volatile.acidity citric.acid residual.sugar chlorides</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; 1           7.0             0.27        0.36           20.7     0.045</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt; 2           6.3             0.30        0.34            1.6     0.049</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">#&gt; 3           8.1             0.28        0.40            6.9     0.050</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">#&gt;   free.sulfur.dioxide total.sulfur.dioxide density   pH sulphates alcohol</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">#&gt; 1                  45                  170  1.0010 3.00      0.45     8.8</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#&gt; 2                  14                  132  0.9940 3.30      0.49     9.5</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt; 3                  30                   97  0.9951 3.26      0.44    10.1</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt;   quality</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt; 1       6</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; 2       6</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt; 3       6</span></a></code></pre></div>
 <p>Now let’s create a liner model for <code>quality</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>(quality <span class="op">~</span><span class="st"> </span>fixed.acidity <span class="op">+</span><span class="st"> </span>volatile.acidity <span class="op">+</span><span class="st"> </span>citric.acid <span class="op">+</span><span class="st"> </span>residual.sugar <span class="op">+</span><span class="st"> </span>chlorides <span class="op">+</span><span class="st"> </span>free.sulfur.dioxide <span class="op">+</span><span class="st"> </span>total.sulfur.dioxide <span class="op">+</span><span class="st"> </span>density <span class="op">+</span><span class="st"> </span>pH <span class="op">+</span><span class="st"> </span>sulphates <span class="op">+</span><span class="st"> </span>alcohol,
-               <span class="dt">data =</span> wine)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">model &lt;-<span class="st"> </span><span class="kw">lm</span>(quality <span class="op">~</span><span class="st"> </span>fixed.acidity <span class="op">+</span><span class="st"> </span>volatile.acidity <span class="op">+</span><span class="st"> </span>citric.acid <span class="op">+</span><span class="st"> </span>residual.sugar <span class="op">+</span><span class="st"> </span>chlorides <span class="op">+</span><span class="st"> </span>free.sulfur.dioxide <span class="op">+</span><span class="st"> </span>total.sulfur.dioxide <span class="op">+</span><span class="st"> </span>density <span class="op">+</span><span class="st"> </span>pH <span class="op">+</span><span class="st"> </span>sulphates <span class="op">+</span><span class="st"> </span>alcohol,</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">               <span class="dt">data =</span> wine)</a></code></pre></div>
 <p>The common goodness-of-fit parameteres for lm model are R^2, adjusted R^2, AIC or BIC coefficients.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(model)<span class="op">$</span>r.squared
-<span class="co">#&gt; [1] 0.2818704</span>
-<span class="kw">summary</span>(model)<span class="op">$</span>adj.r.squared
-<span class="co">#&gt; [1] 0.2802536</span>
-<span class="kw">BIC</span>(model)
-<span class="co">#&gt; [1] 11197.94</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">summary</span>(model)<span class="op">$</span>r.squared</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; [1] 0.2818704</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">summary</span>(model)<span class="op">$</span>adj.r.squared</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; [1] 0.2802536</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw">BIC</span>(model)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; [1] 11197.94</span></a></code></pre></div>
 <p>They assess the overall quality of fit. But how to understand the factors that drive predictions for a single observation?</p>
 <p>With the <code>breakDown</code> package!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(breakDown)
-<span class="kw">library</span>(ggplot2)
-
-new_observation &lt;-<span class="st"> </span>wine[<span class="dv">1</span>,]
-br &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, new_observation)
-br
-<span class="co">#&gt;                            contribution</span>
-<span class="co">#&gt; (Intercept)                       5.878</span>
-<span class="co">#&gt; residual.sugar = 20.7             1.166</span>
-<span class="co">#&gt; density = 1.001                  -1.048</span>
-<span class="co">#&gt; alcohol = 8.8                    -0.332</span>
-<span class="co">#&gt; pH = 3                           -0.129</span>
-<span class="co">#&gt; free.sulfur.dioxide = 45          0.036</span>
-<span class="co">#&gt; sulphates = 0.45                 -0.025</span>
-<span class="co">#&gt; volatile.acidity = 0.27           0.015</span>
-<span class="co">#&gt; fixed.acidity = 7                 0.010</span>
-<span class="co">#&gt; total.sulfur.dioxide = 170       -0.009</span>
-<span class="co">#&gt; citric.acid = 0.36                0.001</span>
-<span class="co">#&gt; chlorides = 0.045                 0.000</span>
-<span class="co">#&gt; final_prognosis                   5.563</span>
-<span class="co">#&gt; baseline:  0</span>
-<span class="co"># different roundings</span>
-<span class="kw">print</span>(br, <span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">rounding_function =</span> signif)
-<span class="co">#&gt;                            contribution</span>
-<span class="co">#&gt; (Intercept)                     5.90000</span>
-<span class="co">#&gt; residual.sugar = 20.7           1.20000</span>
-<span class="co">#&gt; density = 1.001                -1.00000</span>
-<span class="co">#&gt; alcohol = 8.8                  -0.33000</span>
-<span class="co">#&gt; pH = 3                         -0.13000</span>
-<span class="co">#&gt; free.sulfur.dioxide = 45        0.03600</span>
-<span class="co">#&gt; sulphates = 0.45               -0.02500</span>
-<span class="co">#&gt; volatile.acidity = 0.27         0.01500</span>
-<span class="co">#&gt; fixed.acidity = 7               0.00950</span>
-<span class="co">#&gt; total.sulfur.dioxide = 170     -0.00900</span>
-<span class="co">#&gt; citric.acid = 0.36              0.00057</span>
-<span class="co">#&gt; chlorides = 0.045               0.00019</span>
-<span class="co">#&gt; final_prognosis                 5.60000</span>
-<span class="co">#&gt; baseline:  0</span>
-<span class="kw">print</span>(br, <span class="dt">digits =</span> <span class="dv">6</span>, <span class="dt">rounding_function =</span> round)
-<span class="co">#&gt;                            contribution</span>
-<span class="co">#&gt; (Intercept)                    5.877909</span>
-<span class="co">#&gt; residual.sugar = 20.7          1.165904</span>
-<span class="co">#&gt; density = 1.001               -1.047875</span>
-<span class="co">#&gt; alcohol = 8.8                 -0.331669</span>
-<span class="co">#&gt; pH = 3                        -0.129216</span>
-<span class="co">#&gt; free.sulfur.dioxide = 45       0.036178</span>
-<span class="co">#&gt; sulphates = 0.45              -0.025162</span>
-<span class="co">#&gt; volatile.acidity = 0.27        0.015355</span>
-<span class="co">#&gt; fixed.acidity = 7              0.009514</span>
-<span class="co">#&gt; total.sulfur.dioxide = 170    -0.009041</span>
-<span class="co">#&gt; citric.acid = 0.36             0.000570</span>
-<span class="co">#&gt; chlorides = 0.045              0.000191</span>
-<span class="co">#&gt; final_prognosis                5.562658</span>
-<span class="co">#&gt; baseline:  0</span>
-<span class="kw">plot</span>(br) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for predicted quality of a wine"</span>)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(breakDown)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">new_observation &lt;-<span class="st"> </span>wine[<span class="dv">1</span>,]</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">br &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, new_observation)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">br</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt;                            contribution</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; (Intercept)                       5.878</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; residual.sugar = 20.7             1.166</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; density = 1.001                  -1.048</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; alcohol = 8.8                    -0.332</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; pH = 3                           -0.129</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; free.sulfur.dioxide = 45          0.036</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; sulphates = 0.45                 -0.025</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; volatile.acidity = 0.27           0.015</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; fixed.acidity = 7                 0.010</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; total.sulfur.dioxide = 170       -0.009</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; citric.acid = 0.36                0.001</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; chlorides = 0.045                 0.000</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; final_prognosis                   5.563</span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt; baseline:  0</span></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co"># different roundings</span></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="kw">print</span>(br, <span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">rounding_function =</span> signif)</a>
+<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt;                            contribution</span></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt; (Intercept)                     5.90000</span></a>
+<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="co">#&gt; residual.sugar = 20.7           1.20000</span></a>
+<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">#&gt; density = 1.001                -1.00000</span></a>
+<a class="sourceLine" id="cb4-28" data-line-number="28"><span class="co">#&gt; alcohol = 8.8                  -0.33000</span></a>
+<a class="sourceLine" id="cb4-29" data-line-number="29"><span class="co">#&gt; pH = 3                         -0.13000</span></a>
+<a class="sourceLine" id="cb4-30" data-line-number="30"><span class="co">#&gt; free.sulfur.dioxide = 45        0.03600</span></a>
+<a class="sourceLine" id="cb4-31" data-line-number="31"><span class="co">#&gt; sulphates = 0.45               -0.02500</span></a>
+<a class="sourceLine" id="cb4-32" data-line-number="32"><span class="co">#&gt; volatile.acidity = 0.27         0.01500</span></a>
+<a class="sourceLine" id="cb4-33" data-line-number="33"><span class="co">#&gt; fixed.acidity = 7               0.00950</span></a>
+<a class="sourceLine" id="cb4-34" data-line-number="34"><span class="co">#&gt; total.sulfur.dioxide = 170     -0.00900</span></a>
+<a class="sourceLine" id="cb4-35" data-line-number="35"><span class="co">#&gt; citric.acid = 0.36              0.00057</span></a>
+<a class="sourceLine" id="cb4-36" data-line-number="36"><span class="co">#&gt; chlorides = 0.045               0.00019</span></a>
+<a class="sourceLine" id="cb4-37" data-line-number="37"><span class="co">#&gt; final_prognosis                 5.60000</span></a>
+<a class="sourceLine" id="cb4-38" data-line-number="38"><span class="co">#&gt; baseline:  0</span></a>
+<a class="sourceLine" id="cb4-39" data-line-number="39"><span class="kw">print</span>(br, <span class="dt">digits =</span> <span class="dv">6</span>, <span class="dt">rounding_function =</span> round)</a>
+<a class="sourceLine" id="cb4-40" data-line-number="40"><span class="co">#&gt;                            contribution</span></a>
+<a class="sourceLine" id="cb4-41" data-line-number="41"><span class="co">#&gt; (Intercept)                    5.877909</span></a>
+<a class="sourceLine" id="cb4-42" data-line-number="42"><span class="co">#&gt; residual.sugar = 20.7          1.165904</span></a>
+<a class="sourceLine" id="cb4-43" data-line-number="43"><span class="co">#&gt; density = 1.001               -1.047875</span></a>
+<a class="sourceLine" id="cb4-44" data-line-number="44"><span class="co">#&gt; alcohol = 8.8                 -0.331669</span></a>
+<a class="sourceLine" id="cb4-45" data-line-number="45"><span class="co">#&gt; pH = 3                        -0.129216</span></a>
+<a class="sourceLine" id="cb4-46" data-line-number="46"><span class="co">#&gt; free.sulfur.dioxide = 45       0.036178</span></a>
+<a class="sourceLine" id="cb4-47" data-line-number="47"><span class="co">#&gt; sulphates = 0.45              -0.025162</span></a>
+<a class="sourceLine" id="cb4-48" data-line-number="48"><span class="co">#&gt; volatile.acidity = 0.27        0.015355</span></a>
+<a class="sourceLine" id="cb4-49" data-line-number="49"><span class="co">#&gt; fixed.acidity = 7              0.009514</span></a>
+<a class="sourceLine" id="cb4-50" data-line-number="50"><span class="co">#&gt; total.sulfur.dioxide = 170    -0.009041</span></a>
+<a class="sourceLine" id="cb4-51" data-line-number="51"><span class="co">#&gt; citric.acid = 0.36             0.000570</span></a>
+<a class="sourceLine" id="cb4-52" data-line-number="52"><span class="co">#&gt; chlorides = 0.045              0.000191</span></a>
+<a class="sourceLine" id="cb4-53" data-line-number="53"><span class="co">#&gt; final_prognosis                5.562658</span></a>
+<a class="sourceLine" id="cb4-54" data-line-number="54"><span class="co">#&gt; baseline:  0</span></a>
+<a class="sourceLine" id="cb4-55" data-line-number="55"><span class="kw">plot</span>(br) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for predicted quality of a wine"</span>)</a></code></pre></div>
 <p><img src="break_lm_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 <p>Use the <code>baseline</code> argument to set the origin of plots.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">br &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, new_observation, <span class="dt">baseline =</span> <span class="st">"Intercept"</span>)
-br
-<span class="co">#&gt;                            contribution</span>
-<span class="co">#&gt; residual.sugar = 20.7             1.166</span>
-<span class="co">#&gt; density = 1.001                  -1.048</span>
-<span class="co">#&gt; alcohol = 8.8                    -0.332</span>
-<span class="co">#&gt; pH = 3                           -0.129</span>
-<span class="co">#&gt; free.sulfur.dioxide = 45          0.036</span>
-<span class="co">#&gt; sulphates = 0.45                 -0.025</span>
-<span class="co">#&gt; volatile.acidity = 0.27           0.015</span>
-<span class="co">#&gt; fixed.acidity = 7                 0.010</span>
-<span class="co">#&gt; total.sulfur.dioxide = 170       -0.009</span>
-<span class="co">#&gt; citric.acid = 0.36                0.001</span>
-<span class="co">#&gt; chlorides = 0.045                 0.000</span>
-<span class="co">#&gt; final_prognosis                  -0.315</span>
-<span class="co">#&gt; baseline:  5.877909</span>
-<span class="kw">plot</span>(br) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for predicted quality of a wine"</span>)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">br &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, new_observation, <span class="dt">baseline =</span> <span class="st">"Intercept"</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">br</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt;                            contribution</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; residual.sugar = 20.7             1.166</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; density = 1.001                  -1.048</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; alcohol = 8.8                    -0.332</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; pH = 3                           -0.129</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; free.sulfur.dioxide = 45          0.036</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; sulphates = 0.45                 -0.025</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; volatile.acidity = 0.27           0.015</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; fixed.acidity = 7                 0.010</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; total.sulfur.dioxide = 170       -0.009</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt; citric.acid = 0.36                0.001</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt; chlorides = 0.045                 0.000</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt; final_prognosis                  -0.315</span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt; baseline:  5.877909</span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="kw">plot</span>(br) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for predicted quality of a wine"</span>)</a></code></pre></div>
 <p><img src="break_lm_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 <p>Works for interactions as well</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>(quality <span class="op">~</span><span class="st"> </span>(alcohol <span class="op">+</span><span class="st"> </span>density  <span class="op">+</span><span class="st"> </span>residual.sugar)<span class="op">^</span><span class="dv">2</span>,
-               <span class="dt">data =</span> wine)
-new_observation &lt;-<span class="st"> </span>wine[<span class="dv">1</span>,]
-
-br &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, new_observation, <span class="dt">baseline =</span> <span class="st">"Intercept"</span>)
-br
-<span class="co">#&gt;                                     contribution</span>
-<span class="co">#&gt; alcohol = 8.8                             -5.546</span>
-<span class="co">#&gt; density:residual.sugar = 1.001:20.7        5.422</span>
-<span class="co">#&gt; alcohol:density = 8.8:1.001                4.882</span>
-<span class="co">#&gt; residual.sugar = 20.7                     -3.791</span>
-<span class="co">#&gt; alcohol:residual.sugar = 8.8:20.7         -0.705</span>
-<span class="co">#&gt; density = 1.001                           -0.401</span>
-<span class="co">#&gt; final_prognosis                           -0.139</span>
-<span class="co">#&gt; baseline:  5.877909</span>
-<span class="kw">plot</span>(br) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for predicted quality of a wine"</span>)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">model &lt;-<span class="st"> </span><span class="kw">lm</span>(quality <span class="op">~</span><span class="st"> </span>(alcohol <span class="op">+</span><span class="st"> </span>density  <span class="op">+</span><span class="st"> </span>residual.sugar)<span class="op">^</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">               <span class="dt">data =</span> wine)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">new_observation &lt;-<span class="st"> </span>wine[<span class="dv">1</span>,]</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">br &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, new_observation, <span class="dt">baseline =</span> <span class="st">"Intercept"</span>)</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">br</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt;                                     contribution</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; alcohol = 8.8                             -5.546</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt; density:residual.sugar = 1.001:20.7        5.422</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt; alcohol:density = 8.8:1.001                4.882</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt; residual.sugar = 20.7                     -3.791</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt; alcohol:residual.sugar = 8.8:20.7         -0.705</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt; density = 1.001                           -0.401</span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt; final_prognosis                           -0.139</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt; baseline:  5.877909</span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="kw">plot</span>(br) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for predicted quality of a wine"</span>)</a></code></pre></div>
 <p><img src="break_lm_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
 </div>
   </div>

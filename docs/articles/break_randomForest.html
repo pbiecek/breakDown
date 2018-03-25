@@ -62,6 +62,9 @@
       <a href="../articles/break_ranger.html">model agnostic breakDown plots for ranger</a>
     </li>
     <li>
+      <a href="../articles/break_svm.html">How to use breakDown package for SVM models</a>
+    </li>
+    <li>
       <a href="../articles/break_xgboost.html">How to use breakDown package for models created with xgboost</a>
     </li>
   </ul>
@@ -85,7 +88,7 @@
       <h1>model agnostic breakDown plots for randomForest</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2018-03-19</h4>
+            <h4 class="date">2018-03-25</h4>
           </div>
 
     
@@ -93,75 +96,75 @@
 <div class="contents">
 <p>Here we will use the HR churn data (<a href="https://www.kaggle.com/" class="uri">https://www.kaggle.com/</a>) to present the breakDown package for <code>glm</code> models.</p>
 <p>The data is in the <code>breakDown</code> package</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1313</span>)
-
-<span class="kw">library</span>(breakDown)
-<span class="kw">head</span>(HR_data, <span class="dv">3</span>)
-<span class="co">#&gt;   satisfaction_level last_evaluation number_project average_montly_hours</span>
-<span class="co">#&gt; 1               0.38            0.53              2                  157</span>
-<span class="co">#&gt; 2               0.80            0.86              5                  262</span>
-<span class="co">#&gt; 3               0.11            0.88              7                  272</span>
-<span class="co">#&gt;   time_spend_company Work_accident left promotion_last_5years sales salary</span>
-<span class="co">#&gt; 1                  3             0    1                     0 sales    low</span>
-<span class="co">#&gt; 2                  6             0    1                     0 sales medium</span>
-<span class="co">#&gt; 3                  4             0    1                     0 sales medium</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1313</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(breakDown)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">head</span>(HR_data, <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt;   satisfaction_level last_evaluation number_project average_montly_hours</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt; 1               0.38            0.53              2                  157</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">#&gt; 2               0.80            0.86              5                  262</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">#&gt; 3               0.11            0.88              7                  272</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">#&gt;   time_spend_company Work_accident left promotion_last_5years sales salary</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#&gt; 1                  3             0    1                     0 sales    low</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt; 2                  6             0    1                     0 sales medium</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt; 3                  4             0    1                     0 sales medium</span></a></code></pre></div>
 <p>Now let’s create a logistic regression model for churn, the <code>left</code> variable.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"randomForest"</span>)
-<span class="co">#&gt; randomForest 4.6-12</span>
-<span class="co">#&gt; Type rfNews() to see new features/changes/bug fixes.</span>
-model &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/randomForest/topics/randomForest">randomForest</a></span>(<span class="kw">factor</span>(left)<span class="op">~</span>., <span class="dt">data =</span> HR_data, <span class="dt">family =</span> <span class="st">"binomial"</span>, <span class="dt">maxnodes =</span> <span class="dv">5</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"randomForest"</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; randomForest 4.6-12</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; Type rfNews() to see new features/changes/bug fixes.</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">model &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/randomForest/topics/randomForest">randomForest</a></span>(<span class="kw">factor</span>(left)<span class="op">~</span>., <span class="dt">data =</span> HR_data, <span class="dt">family =</span> <span class="st">"binomial"</span>, <span class="dt">maxnodes =</span> <span class="dv">5</span>)</a></code></pre></div>
 <p>But how to understand which factors drive predictions for a single observation?</p>
 <p>With the <code>breakDown</code> package!</p>
 <p>Explanations for the linear predictor.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'ggplot2'</span>
-<span class="co">#&gt; The following object is masked from 'package:randomForest':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     margin</span>
-
-predict.function &lt;-<span class="st"> </span><span class="cf">function</span>(model, new_observation) <span class="kw">predict</span>(model, new_observation, <span class="dt">type=</span><span class="st">"prob"</span>)[,<span class="dv">2</span>]
-<span class="kw">predict.function</span>(model, HR_data[<span class="dv">11</span>,<span class="op">-</span><span class="dv">7</span>])
-<span class="co">#&gt; [1] 0.888</span>
-
-explain_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, HR_data[<span class="dv">11</span>,<span class="op">-</span><span class="dv">7</span>], <span class="dt">data =</span> HR_data[,<span class="op">-</span><span class="dv">7</span>],
-                    <span class="dt">predict.function =</span> predict.function, 
-                    <span class="dt">direction =</span> <span class="st">"down"</span>)
-explain_<span class="dv">1</span>
-<span class="co">#&gt;                              contribution</span>
-<span class="co">#&gt; (Intercept)                         0.148</span>
-<span class="co">#&gt; - satisfaction_level = 0.45         0.000</span>
-<span class="co">#&gt; - number_project = 2                0.133</span>
-<span class="co">#&gt; - last_evaluation = 0.54            0.201</span>
-<span class="co">#&gt; - average_montly_hours = 135        0.182</span>
-<span class="co">#&gt; - time_spend_company = 3            0.141</span>
-<span class="co">#&gt; - Work_accident = 0                 0.068</span>
-<span class="co">#&gt; - salary = low                      0.010</span>
-<span class="co">#&gt; - sales = sales                     0.005</span>
-<span class="co">#&gt; - promotion_last_5years = 0         0.000</span>
-<span class="co">#&gt; final_prognosis                     0.888</span>
-<span class="co">#&gt; baseline:  0</span>
-<span class="kw">plot</span>(explain_<span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot  (direction=down) for randomForest model"</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; Attaching package: 'ggplot2'</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; The following object is masked from 'package:randomForest':</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt;     margin</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">predict.function &lt;-<span class="st"> </span><span class="cf">function</span>(model, new_observation) <span class="kw">predict</span>(model, new_observation, <span class="dt">type=</span><span class="st">"prob"</span>)[,<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw">predict.function</span>(model, HR_data[<span class="dv">11</span>,<span class="op">-</span><span class="dv">7</span>])</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; [1] 0.888</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">explain_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, HR_data[<span class="dv">11</span>,<span class="op">-</span><span class="dv">7</span>], <span class="dt">data =</span> HR_data[,<span class="op">-</span><span class="dv">7</span>],</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">                    <span class="dt">predict.function =</span> predict.function, </a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">                    <span class="dt">direction =</span> <span class="st">"down"</span>)</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">explain_<span class="dv">1</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt;                              contribution</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; (Intercept)                         0.148</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; - satisfaction_level = 0.45         0.133</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; - number_project = 2                0.201</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt; - last_evaluation = 0.54            0.182</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt; - average_montly_hours = 135        0.141</span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt; - time_spend_company = 3            0.068</span></a>
+<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt; - Work_accident = 0                 0.010</span></a>
+<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt; - salary = low                      0.005</span></a>
+<a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">#&gt; - sales = sales                     0.000</span></a>
+<a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt; - promotion_last_5years = 0         0.000</span></a>
+<a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt; final_prognosis                     0.888</span></a>
+<a class="sourceLine" id="cb3-28" data-line-number="28"><span class="co">#&gt; baseline:  0</span></a>
+<a class="sourceLine" id="cb3-29" data-line-number="29"><span class="kw">plot</span>(explain_<span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot  (direction=down) for randomForest model"</span>)</a></code></pre></div>
 <p><img src="break_randomForest_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-explain_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, HR_data[<span class="dv">11</span>,<span class="op">-</span><span class="dv">7</span>], <span class="dt">data =</span> HR_data[,<span class="op">-</span><span class="dv">7</span>],
-                    <span class="dt">predict.function =</span> predict.function, 
-                    <span class="dt">direction =</span> <span class="st">"up"</span>)
-explain_<span class="dv">2</span>
-<span class="co">#&gt;                              contribution</span>
-<span class="co">#&gt; (Intercept)                         0.148</span>
-<span class="co">#&gt; + satisfaction_level = 0.45         0.133</span>
-<span class="co">#&gt; + number_project = 2                0.201</span>
-<span class="co">#&gt; + last_evaluation = 0.54            0.182</span>
-<span class="co">#&gt; + average_montly_hours = 135        0.141</span>
-<span class="co">#&gt; + time_spend_company = 3            0.068</span>
-<span class="co">#&gt; + Work_accident = 0                 0.010</span>
-<span class="co">#&gt; + salary = low                      0.005</span>
-<span class="co">#&gt; + promotion_last_5years = 0         0.000</span>
-<span class="co">#&gt; + sales = sales                     0.000</span>
-<span class="co">#&gt; final_prognosis                     0.888</span>
-<span class="co">#&gt; baseline:  0</span>
-<span class="kw">plot</span>(explain_<span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot (direction=up) for randomForest model"</span>)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">explain_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(model, HR_data[<span class="dv">11</span>,<span class="op">-</span><span class="dv">7</span>], <span class="dt">data =</span> HR_data[,<span class="op">-</span><span class="dv">7</span>],</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">                    <span class="dt">predict.function =</span> predict.function, </a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">                    <span class="dt">direction =</span> <span class="st">"up"</span>)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">explain_<span class="dv">2</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt;                              contribution</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; (Intercept)                         0.148</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; + satisfaction_level = 0.45         0.133</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; + number_project = 2                0.201</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; + last_evaluation = 0.54            0.182</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; + average_montly_hours = 135        0.141</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; + time_spend_company = 3            0.068</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; + Work_accident = 0                 0.010</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; + salary = low                      0.005</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; + promotion_last_5years = 0         0.000</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; + sales = sales                     0.000</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; final_prognosis                     0.888</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; baseline:  0</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="kw">plot</span>(explain_<span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot (direction=up) for randomForest model"</span>)</a></code></pre></div>
 <p><img src="break_randomForest_files/figure-html/unnamed-chunk-3-2.png" width="672"></p>
 </div>
   </div>

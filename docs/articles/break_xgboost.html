@@ -62,6 +62,9 @@
       <a href="../articles/break_ranger.html">model agnostic breakDown plots for ranger</a>
     </li>
     <li>
+      <a href="../articles/break_svm.html">How to use breakDown package for SVM models</a>
+    </li>
+    <li>
       <a href="../articles/break_xgboost.html">How to use breakDown package for models created with xgboost</a>
     </li>
   </ul>
@@ -85,67 +88,66 @@
       <h1>How to use breakDown package for models created with xgboost</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2018-03-19</h4>
+            <h4 class="date">2018-03-25</h4>
           </div>
 
     
     
 <div class="contents">
 <p>This example demonstrates how to use the <code>breakDown</code> package for models created with the <a href="https://CRAN.R-project.org/package=xgboost">xgboost</a> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"breakDown"</span>)
-<span class="kw">library</span>(<span class="st">"xgboost"</span>)
-
-model_martix_train &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(left <span class="op">~</span><span class="st"> </span>. <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, HR_data)
-data_train &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/xgboost/topics/xgb.DMatrix">xgb.DMatrix</a></span>(model_martix_train, <span class="dt">label =</span> HR_data<span class="op">$</span>left)
-param &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">max_depth =</span> <span class="dv">2</span>, <span class="dt">eta =</span> <span class="dv">1</span>, <span class="dt">silent =</span> <span class="dv">1</span>, <span class="dt">nthread =</span> <span class="dv">2</span>,
-              <span class="dt">objective =</span> <span class="st">"binary:logistic"</span>, <span class="dt">eval_metric =</span> <span class="st">"auc"</span>)
-
-HR_xgb_model &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/xgboost/topics/xgb.train">xgb.train</a></span>(param, data_train, <span class="dt">nrounds =</span> <span class="dv">50</span>)
-HR_xgb_model
-<span class="co">#&gt; ##### xgb.Booster</span>
-<span class="co">#&gt; raw: 19.4 Kb </span>
-<span class="co">#&gt; call:</span>
-<span class="co">#&gt;   xgb.train(params = param, data = data_train, nrounds = 50)</span>
-<span class="co">#&gt; params (as set within xgb.train):</span>
-<span class="co">#&gt;   max_depth = "2", eta = "1", silent = "1", nthread = "2", objective = "binary:logistic", eval_metric = "auc", silent = "1"</span>
-<span class="co">#&gt; xgb.attributes:</span>
-<span class="co">#&gt;   niter</span>
-<span class="co">#&gt; callbacks:</span>
-<span class="co">#&gt;   cb.print.evaluation(period = print_every_n)</span>
-<span class="co">#&gt; niter: 50</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"breakDown"</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(xgboost)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">model_martix_train &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(left <span class="op">~</span><span class="st"> </span>. <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, HR_data)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">data_train &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/xgboost/topics/xgb.DMatrix">xgb.DMatrix</a></span>(model_martix_train, <span class="dt">label =</span> <span class="kw">as.numeric</span>(HR_data<span class="op">$</span>left))</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">param &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">objective =</span> <span class="st">"reg:linear"</span>)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">HR_xgb_model &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/xgboost/topics/xgb.train">xgb.train</a></span>(param, data_train, <span class="dt">nrounds =</span> <span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">HR_xgb_model</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#&gt; ##### xgb.Booster</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt; raw: 187 Kb </span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt; call:</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt;   xgb.train(params = param, data = data_train, nrounds = 50)</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; params (as set within xgb.train):</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt;   objective = "reg:linear", silent = "1"</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt; xgb.attributes:</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt;   niter</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt; callbacks:</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt;   cb.print.evaluation(period = print_every_n)</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt; niter: 50</span></a></code></pre></div>
 <p>Now we are ready to call the <code><a href="../reference/broken.html">broken()</a></code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"breakDown"</span>)
-nobs &lt;-<span class="st"> </span>model_martix_train[1L, , drop =<span class="st"> </span><span class="ot">FALSE</span>]
-
-explain_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(HR_xgb_model, <span class="dt">new_observation =</span> nobs, 
-                    <span class="dt">data =</span> model_martix_train)
-explain_<span class="dv">2</span>
-<span class="co">#&gt;                              contribution</span>
-<span class="co">#&gt; (Intercept)                         0.238</span>
-<span class="co">#&gt; + time_spend_company = 3           -0.058</span>
-<span class="co">#&gt; + salarymedium = 0                 -0.005</span>
-<span class="co">#&gt; + salessupport = 0                 -0.001</span>
-<span class="co">#&gt; + salestechnical = 0               -0.001</span>
-<span class="co">#&gt; + saleshr = 0                       0.000</span>
-<span class="co">#&gt; + salesaccounting = 0               0.000</span>
-<span class="co">#&gt; + salesIT = 0                       0.000</span>
-<span class="co">#&gt; + salesmanagement = 0               0.000</span>
-<span class="co">#&gt; + salesmarketing = 0                0.000</span>
-<span class="co">#&gt; + promotion_last_5years = 0         0.000</span>
-<span class="co">#&gt; + salesRandD = 0                    0.000</span>
-<span class="co">#&gt; + salesproduct_mng = 0              0.000</span>
-<span class="co">#&gt; + Work_accident = 0                 0.002</span>
-<span class="co">#&gt; + salessales = 1                    0.003</span>
-<span class="co">#&gt; + average_montly_hours = 157        0.005</span>
-<span class="co">#&gt; + satisfaction_level = 0.38         0.157</span>
-<span class="co">#&gt; + number_project = 2                0.293</span>
-<span class="co">#&gt; + last_evaluation = 0.53            0.315</span>
-<span class="co">#&gt; + salarylow = 1                     0.032</span>
-<span class="co">#&gt; final_prognosis                     0.982</span>
-<span class="co">#&gt; baseline:  0</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"breakDown"</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">nobs &lt;-<span class="st"> </span>model_martix_train[1L, , drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">explain_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(HR_xgb_model, <span class="dt">new_observation =</span> nobs, </a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">                    <span class="dt">data =</span> model_martix_train)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">explain_<span class="dv">2</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt;                              contribution</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; (Intercept)                         0.238</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; + time_spend_company = 3           -0.058</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; + number_project = 2               -0.008</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; + average_montly_hours = 157       -0.023</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; + satisfaction_level = 0.38         0.212</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; + last_evaluation = 0.53            0.620</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; + salarylow = 1                     0.009</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; + Work_accident = 0                 0.002</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; + salesRandD = 0                    0.001</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; + saleshr = 0                       0.001</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; + salesIT = 0                       0.000</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; + salarymedium = 0                  0.000</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; + salesaccounting = 0               0.000</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; + salesmarketing = 0                0.000</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; + salessales = 1                    0.000</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt; + salessupport = 0                  0.000</span></a>
+<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; + salesmanagement = 0               0.000</span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#&gt; + salesproduct_mng = 0              0.000</span></a>
+<a class="sourceLine" id="cb2-26" data-line-number="26"><span class="co">#&gt; + promotion_last_5years = 0         0.000</span></a>
+<a class="sourceLine" id="cb2-27" data-line-number="27"><span class="co">#&gt; + salestechnical = 0               -0.001</span></a>
+<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="co">#&gt; final_prognosis                     0.992</span></a>
+<a class="sourceLine" id="cb2-29" data-line-number="29"><span class="co">#&gt; baseline:  0</span></a></code></pre></div>
 <p>And plot it.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-<span class="kw">plot</span>(explain_<span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for xgboost model"</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">plot</span>(explain_<span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for xgboost model"</span>)</a></code></pre></div>
 <p><img src="break_xgboost_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
 </div>
   </div>

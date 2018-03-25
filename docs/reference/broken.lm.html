@@ -86,6 +86,9 @@
       <a href="../articles/break_ranger.html">model agnostic breakDown plots for ranger</a>
     </li>
     <li>
+      <a href="../articles/break_svm.html">How to use breakDown package for SVM models</a>
+    </li>
+    <li>
       <a href="../articles/break_xgboost.html">How to use breakDown package for models created with xgboost</a>
     </li>
   </ul>
@@ -117,7 +120,7 @@
 
     <pre class="usage"><span class='co'># S3 method for lm</span>
 <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>new_observation</span>, <span class='no'>...</span>, <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>predict.function</span> <span class='kw'>=</span> <span class='no'>predict</span>)</pre>
+  <span class='kw'>predict.function</span> <span class='kw'>=</span> <span class='kw pkg'>stats</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/stats/topics/predict.lm'>predict.lm</a></span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -153,20 +156,31 @@
     <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>lm</span>(<span class='no'>Sepal.Length</span>~<span class='no'>.</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>iris</span>)
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>[<span class='fl'>1</span>,]
 <span class='no'>br</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>new_observation</span>)
-<span class='fu'>plot</span>(<span class='no'>br</span>)</div><div class='img'><img src='broken.lm-9.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>br</span>)</div><div class='img'><img src='broken.lm-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># works for interactions as well</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>lm</span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Width</span>*<span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='no'>model</span></div><div class='output co'>#&gt; 
+<span class='fu'>summary</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; 
 #&gt; Call:
 #&gt; lm(formula = Sepal.Length ~ Petal.Width * Species, data = iris)
 #&gt; 
+#&gt; Residuals:
+#&gt;      Min       1Q   Median       3Q      Max 
+#&gt; -1.47583 -0.29891 -0.04508  0.25075  1.32892 
+#&gt; 
 #&gt; Coefficients:
-#&gt;                   (Intercept)                    Petal.Width  
-#&gt;                        4.7772                         0.9302  
-#&gt;             Speciesversicolor               Speciesvirginica  
-#&gt;                       -0.7325                         0.4922  
-#&gt; Petal.Width:Speciesversicolor   Petal.Width:Speciesvirginica  
-#&gt;                        0.4962                        -0.2793  
+#&gt;                               Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)                     4.7772     0.1735  27.541   &lt;2e-16 ***
+#&gt; Petal.Width                     0.9302     0.6491   1.433    0.154    
+#&gt; Speciesversicolor              -0.7325     0.4951  -1.480    0.141    
+#&gt; Speciesvirginica                0.4922     0.5379   0.915    0.362    
+#&gt; Petal.Width:Speciesversicolor   0.4962     0.7356   0.675    0.501    
+#&gt; Petal.Width:Speciesvirginica   -0.2793     0.6953  -0.402    0.688    
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; 
+#&gt; Residual standard error: 0.4789 on 144 degrees of freedom
+#&gt; Multiple R-squared:  0.6768,	Adjusted R-squared:  0.6656 
+#&gt; F-statistic: 60.31 on 5 and 144 DF,  p-value: &lt; 2.2e-16
 #&gt; </div><div class='input'>
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>[<span class='fl'>1</span>,]
 <span class='no'>br</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>new_observation</span>)
@@ -176,7 +190,7 @@
 #&gt; Species = setosa                        0.080
 #&gt; Petal.Width:Species = 0.2:setosa       -0.031
 #&gt; final_prognosis                         4.963
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>br</span>)</div><div class='img'><img src='broken.lm-10.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>br</span>)</div><div class='img'><img src='broken.lm-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='no'>br2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>new_observation</span>, <span class='kw'>predict.function</span> <span class='kw'>=</span> <span class='no'>betas</span>)
 <span class='no'>br2</span></div><div class='output co'>#&gt;                                  contribution
 #&gt; (Intercept)                             4.777
@@ -184,7 +198,7 @@
 #&gt; Species = setosa                        0.000
 #&gt; Petal.Width:Species = 0.2:setosa        0.000
 #&gt; final_prognosis                         4.963
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>br2</span>)</div><div class='img'><img src='broken.lm-11.png' alt='' width='700' height='432.632880098887' /></div></pre>
+#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>br2</span>)</div><div class='img'><img src='broken.lm-3.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
