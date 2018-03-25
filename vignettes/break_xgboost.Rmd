@@ -21,12 +21,11 @@ This example demonstrates how to use the `breakDown` package for models created 
 
 ```{r}
 library("breakDown")
-library("xgboost")
+library(xgboost)
 
 model_martix_train <- model.matrix(left ~ . - 1, HR_data)
-data_train <- xgb.DMatrix(model_martix_train, label = HR_data$left)
-param <- list(max_depth = 2, eta = 1, silent = 1, nthread = 2,
-              objective = "binary:logistic", eval_metric = "auc")
+data_train <- xgb.DMatrix(model_martix_train, label = as.numeric(HR_data$left))
+param <- list(objective = "reg:linear")
 
 HR_xgb_model <- xgb.train(param, data_train, nrounds = 50)
 HR_xgb_model

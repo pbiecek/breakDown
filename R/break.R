@@ -44,7 +44,7 @@ broken <- function(model, new_observation, ...) {
 #' br2
 #' plot(br2)
 
-broken.lm <- function(model, new_observation, ..., baseline = 0, predict.function = predict) {
+broken.lm <- function(model, new_observation, ..., baseline = 0, predict.function = stats::predict.lm) {
   ny <- predict.function(model, newdata = new_observation, type = "terms")
   terms <- NULL
 
@@ -88,6 +88,7 @@ broken.lm <- function(model, new_observation, ..., baseline = 0, predict.functio
 #'
 #' @return an object of the broken class
 #' @importFrom stats predict.lm
+#' @importFrom stats predict
 #'
 #' @examples
 #' # example for wine data
@@ -113,7 +114,7 @@ broken.lm <- function(model, new_observation, ..., baseline = 0, predict.functio
 #' plot(explain_2, trans = function(x) exp(x)/(1+exp(x)))
 #' @export
 
-broken.glm <- function(model, new_observation, ..., baseline = 0, predict.function = predict) {
+broken.glm <- function(model, new_observation, ..., baseline = 0, predict.function = stats::predict.glm) {
   ny <- predict.function(model, newdata = new_observation, type = "terms")
   terms <- NULL
 

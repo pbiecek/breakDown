@@ -5,7 +5,7 @@
 \title{Create the broken object for glm models}
 \usage{
 \method{broken}{glm}(model, new_observation, ..., baseline = 0,
-  predict.function = predict)
+  predict.function = stats::predict.glm)
 }
 \arguments{
 \item{model}{a glm model}

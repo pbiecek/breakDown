@@ -4,6 +4,9 @@
 #' @param newdata new observation(s) with columns that correspond to variables used in the model
 #' @param ... unused additional parameters
 #' @author Joseph Larmarange
+#' @importFrom stats coef
+#' @importFrom stats delete.response
+#' @importFrom stats model.matrix
 #' @export
 
 betas <- function (object, newdata, ...)

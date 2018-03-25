@@ -1,0 +1,65 @@
+---
+title: "How to use breakDown package for SVM models"
+author: "Przemyslaw Biecek"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{model agnostic breakDown plots for SVM model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This example demonstrates how to use the `breakDown` package for models created with the [kernlab](https://CRAN.R-project.org/package=kernlab) package. 
+
+
+```{r}
+library("breakDown")
+library(kernlab)
+
+wine_svm_model <- ksvm(quality~., data = wine)
+wine_svm_model
+
+# or with the e1071:::svm
+
+library(e1071)
+wine_svm_model <- svm(quality~., data = wine)
+wine_svm_model
+
+```
+
+Now we are ready to call the `broken()` function.
+Since `kernlab` is useing S4 methods we need to pass here the hook to `kernlab:::predict` method.
+
+```{r}
+library("breakDown")
+nobs <- wine[5, , drop = FALSE]
+base_prediction <- predict(wine_svm_model, nobs)
+set.seed(1313)
+
+explain_5_up <- broken(wine_svm_model, new_observation = nobs, 
+                    data = wine, predict.function = predict,
+                    baseline = "intercept", direction = "up")
+explain_5_up
+
+explain_5_down <- broken(wine_svm_model, new_observation = nobs, 
+                    data = wine, predict.function = predict,
+                    baseline = "intercept", direction = "down")
+explain_5_down
+```
+
+And plot it.
+
+```{r, fig.width=7}
+library(ggplot2)
+plot(explain_5_up) + ggtitle(paste0("Prediction for SVM model ", round(base_prediction, 3)))
+plot(explain_5_down) +  ggtitle(paste0("Prediction for SVM model ", round(base_prediction, 3)))
+```
+
+

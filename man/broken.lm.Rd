@@ -5,7 +5,7 @@
 \title{Create the broken object for lm models}
 \usage{
 \method{broken}{lm}(model, new_observation, ..., baseline = 0,
-  predict.function = predict)
+  predict.function = stats::predict.lm)
 }
 \arguments{
 \item{model}{a lm model}
@@ -32,7 +32,7 @@ plot(br)
 
 # works for interactions as well
 model <- lm(Sepal.Length ~ Petal.Width*Species, data = iris)
-model
+summary(model)
 
 new_observation <- iris[1,]
 br <- broken(model, new_observation)
