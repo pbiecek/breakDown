@@ -1,4 +1,7 @@
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/breakDown)](https://cran.r-project.org/package=breakDown)
+[![Downloads](http://cranlogs.r-pkg.org/badges/breakDown)](http://cran.rstudio.com/package=breakDown)
+[![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/breakDown?color=orange)](http://cranlogs.r-pkg.org/badges/grand-total/breakDown)
+[![Build Status](https://api.travis-ci.org/pbiecek/breakDown.png)](https://travis-ci.org/pbiecek/breakDown)
 [![Pending Pull-Requests](http://githubbadges.herokuapp.com/pbiecek/breakDown/pulls.svg?style=flat)](https://github.com/pbiecek/breakDown/pulls)
 [![Github Issues](http://githubbadges.herokuapp.com/pbiecek/breakDown/issues.svg)](https://github.com/pbiecek/breakDown/issues)
 
