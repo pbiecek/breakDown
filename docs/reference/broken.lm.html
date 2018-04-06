@@ -156,7 +156,7 @@
     <pre class="examples"><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>lm</span>(<span class='no'>Sepal.Length</span>~<span class='no'>.</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>iris</span>)
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>[<span class='fl'>1</span>,]
 <span class='no'>br</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>new_observation</span>)
-<span class='fu'>plot</span>(<span class='no'>br</span>)</div><div class='img'><img src='broken.lm-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>br</span>)</div><div class='img'><img src='broken.lm-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># works for interactions as well</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>lm</span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Width</span>*<span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>summary</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; 
@@ -190,7 +190,7 @@
 #&gt; Species = setosa                        0.080
 #&gt; Petal.Width:Species = 0.2:setosa       -0.031
 #&gt; final_prognosis                         4.963
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>br</span>)</div><div class='img'><img src='broken.lm-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>br</span>)</div><div class='img'><img src='broken.lm-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='no'>br2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>new_observation</span>, <span class='kw'>predict.function</span> <span class='kw'>=</span> <span class='no'>betas</span>)
 <span class='no'>br2</span></div><div class='output co'>#&gt;                                  contribution
 #&gt; (Intercept)                             4.777
@@ -198,7 +198,7 @@
 #&gt; Species = setosa                        0.000
 #&gt; Petal.Width:Species = 0.2:setosa        0.000
 #&gt; final_prognosis                         4.963
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>br2</span>)</div><div class='img'><img src='broken.lm-3.png' alt='' width='700' height='432.632880098887' /></div></pre>
+#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>br2</span>)</div><div class='img'><img src='broken.lm-6.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

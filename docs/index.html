@@ -86,13 +86,24 @@
   <div class="contents col-md-9">
     
 
-<section class="level1"><div class="page-header"><h1>breakDown</h1></div>
-<p>Modified Waterfall plots for glm, lm and randomForest</p>
-<section class="level2"><h2>Install from GitHub</h2>
+<div class="section level1">
+<div class="page-header"><h1>Break Down Plots: Model Agnostic Explainers for Individual Predictions</h1></div>
+<p><code>breakDown</code> package decomposes individual predictions into parts attributed to particular variables. See <a href="https://pbiecek.github.io/breakDown/articles/break_caret.html">vigniettes</a> for more examples.</p>
+<p>Bookdown website for <code>breakDown</code> package: <a href="https://pbiecek.github.io/breakDown/" class="uri">https://pbiecek.github.io/breakDown/</a></p>
+<p>Methodology behind prediction explainers implemented in <code>breakDown</code> and <code>live</code>: <a href="https://arxiv.org/abs/1804.01955" class="uri">https://arxiv.org/abs/1804.01955</a></p>
+<div class="section level2">
+<h2>How to install</h2>
+<p>Install from GitHub</p>
 <pre><code><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">devtools::install_github("pbiecek/breakDown")</a></code></pre>
-</section><section class="level2"><h2>Cheatsheets</h2>
+<p>Install from CRAN</p>
+<pre><code>install.packages("breakDown")</code></pre>
+</div>
+<div class="section level2">
+<h2>Cheatsheets</h2>
 <p><img src="https://raw.githubusercontent.com/pbiecek/breakDown/master/cheatsheets/breakDownCheatsheet.png" alt="Cheatsheet"></p>
-</section><section class="level2"><h2>Example for lm model</h2>
+</div>
+<div class="section level2">
+<h2>Example for lm model</h2>
 <p>Get data with <a href="https://github.com/pbiecek/archivist">archivist</a></p>
 <ul>
 <li>broken object: <code><a href="http://www.rdocumentation.org/packages/archivist/topics/aread">archivist::aread("pbiecek/breakDown/arepo/81c5be568d4db2ec795dedcb5d7d6599")</a></code>
@@ -134,8 +145,10 @@ br
 ## final_prognosis                 5.60000
 plot(br)</code></pre>
 <p><img src="misc/broken_lm.png" alt="plot for lm model"></p>
-</section></section>
 </div>
+</div>
+
+  </div>
 
   <div class="col-md-3" id="sidebar">
   	<div class="sidebar-logo">
@@ -152,6 +165,10 @@ plot(br)</code></pre>
 </ul>
 <h2>License</h2>
 <p><a href="https://www.r-project.org/Licenses/GPL-2">GPL-2</a></p>
+<h2>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html">Citing breakDown</a></li>
+</ul>
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Przemyslaw Biecek <br><small class="roles"> Author, maintainer </small> </li>
@@ -159,6 +176,9 @@ plot(br)</code></pre>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://cran.r-project.org/package=breakDown"><img src="http://www.r-pkg.org/badges/version/breakDown" alt="CRAN_Status_Badge"></a></li>
+<li><a href="http://cran.rstudio.com/package=breakDown"><img src="http://cranlogs.r-pkg.org/badges/breakDown" alt="Downloads"></a></li>
+<li><a href="http://cranlogs.r-pkg.org/badges/grand-total/breakDown"><img src="http://cranlogs.r-pkg.org/badges/grand-total/breakDown?color=orange" alt="Total Downloads"></a></li>
+<li><a href="https://travis-ci.org/pbiecek/breakDown"><img src="https://api.travis-ci.org/pbiecek/breakDown.png" alt="Build Status"></a></li>
 <li><a href="https://github.com/pbiecek/breakDown/pulls"><img src="http://githubbadges.herokuapp.com/pbiecek/breakDown/pulls.svg?style=flat" alt="Pending Pull-Requests"></a></li>
 <li><a href="https://github.com/pbiecek/breakDown/issues"><img src="http://githubbadges.herokuapp.com/pbiecek/breakDown/issues.svg" alt="Github Issues"></a></li>
 </ul>

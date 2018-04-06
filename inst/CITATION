@@ -1,0 +1,17 @@
+bibentry(bibtype = "Article",
+  title        = "Explanations of Model Predictions with {live} and {breakDown} Packages",
+  author       = c(person(given = "Mateusz",
+                          family = "Staniak"),
+                   person(given = "Przemyslaw",
+                          family = "Biecek")),
+  journal      = "ArXiv e-prints",
+  archivePrefix = "arXiv",
+  eprint = {1804.01955},
+  primaryClass = "stat.ML",
+  year = "2018",
+  month = "Apr",
+  url = {"https://arxiv.org/abs/1804.01955"},
+
+  header       = "To cite breakDown in publications use:"
+)
+

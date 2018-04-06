@@ -5,19 +5,27 @@
 [![Pending Pull-Requests](http://githubbadges.herokuapp.com/pbiecek/breakDown/pulls.svg?style=flat)](https://github.com/pbiecek/breakDown/pulls)
 [![Github Issues](http://githubbadges.herokuapp.com/pbiecek/breakDown/issues.svg)](https://github.com/pbiecek/breakDown/issues)
 
-# breakDown
+# Break Down Plots: Model Agnostic Explainers for Individual Predictions
 
-Model agnostic decompositions of a single prediction. 
+`breakDown` package decomposes individual predictions into parts attributed to particular variables. See [vigniettes](https://pbiecek.github.io/breakDown/articles/break_caret.html) for more examples.
 
-Bookdown website: https://pbiecek.github.io/breakDown/
+Bookdown website for `breakDown` package: https://pbiecek.github.io/breakDown/
 
-Overview of prediction explainers: https://arxiv.org/abs/1804.01955
+Methodology behind prediction explainers implemented in `breakDown` and `live`: https://arxiv.org/abs/1804.01955
 
 
-## Install from GitHub
+## How to install
+
+Install from GitHub
 
 ```
 devtools::install_github("pbiecek/breakDown")
+```
+
+Install from CRAN
+
+```
+install.packages("breakDown")
 ```
 
 ## Cheatsheets

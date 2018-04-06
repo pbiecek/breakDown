@@ -88,7 +88,7 @@
       <h1>model agnostic breakDown plots for ranger</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2018-03-25</h4>
+            <h4 class="date">2018-04-06</h4>
           </div>
 
     
@@ -115,7 +115,7 @@
 <a class="sourceLine" id="cb2-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw">predict.function</span>(model, HR_data[<span class="dv">11</span>,])</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt;         1 </span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; 0.8706997</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; 0.8696505</span></a></code></pre></div>
 <p>But how to understand which factors drive predictions for a single observation?</p>
 <p>With the <code>breakDown</code> package!</p>
 <p>Explanations for the trees votings.</p>
@@ -127,16 +127,16 @@
 <a class="sourceLine" id="cb3-6" data-line-number="6">explain_<span class="dv">1</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt;                              contribution</span></a>
 <a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; (Intercept)                         0.238</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; - satisfaction_level = 0.45         0.069</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; - number_project = 2                0.270</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; - last_evaluation = 0.54            0.113</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; - average_montly_hours = 135        0.090</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; - time_spend_company = 3            0.077</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; - Work_accident = 0                 0.010</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; - number_project = 2                0.051</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; - satisfaction_level = 0.45         0.269</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; - last_evaluation = 0.54            0.122</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; - average_montly_hours = 135        0.095</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; - time_spend_company = 3            0.081</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; - Work_accident = 0                 0.011</span></a>
 <a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; - salary = low                      0.003</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; - sales = sales                     0.000</span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; - promotion_last_5years = 0         0.000</span></a>
-<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; final_prognosis                     0.871</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; - promotion_last_5years = 0         0.000</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; - sales = sales                     0.000</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; final_prognosis                     0.870</span></a>
 <a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; baseline:  0</span></a>
 <a class="sourceLine" id="cb3-20" data-line-number="20"><span class="kw">plot</span>(explain_<span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot  (direction=down) for ranger model"</span>)</a></code></pre></div>
 <p><img src="break_ranger_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
@@ -147,16 +147,16 @@
 <a class="sourceLine" id="cb4-5" data-line-number="5">explain_<span class="dv">2</span></a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt;                              contribution</span></a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; (Intercept)                         0.238</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; + satisfaction_level = 0.45         0.069</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; + number_project = 2                0.270</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; + last_evaluation = 0.54            0.113</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; + average_montly_hours = 135        0.090</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; + time_spend_company = 3            0.077</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; + Work_accident = 0                 0.010</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; + number_project = 2                0.051</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; + satisfaction_level = 0.45         0.269</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; + last_evaluation = 0.54            0.122</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; + average_montly_hours = 135        0.095</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; + time_spend_company = 3            0.081</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; + Work_accident = 0                 0.011</span></a>
 <a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; + salary = low                      0.003</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; + sales = sales                     0.000</span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; + promotion_last_5years = 0         0.000</span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; final_prognosis                     0.871</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; + promotion_last_5years = 0         0.000</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; + sales = sales                     0.000</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; final_prognosis                     0.870</span></a>
 <a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; baseline:  0</span></a>
 <a class="sourceLine" id="cb4-19" data-line-number="19"><span class="kw">plot</span>(explain_<span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot (direction=up) for ranger model"</span>)</a></code></pre></div>
 <p><img src="break_ranger_files/figure-html/unnamed-chunk-3-2.png" width="672"></p>
