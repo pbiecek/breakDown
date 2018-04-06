@@ -7,7 +7,12 @@
 
 # breakDown
 
-Modified Waterfall plots for glm, lm and randomForest
+Model agnostic decompositions of a single prediction. 
+
+Bookdown website: https://pbiecek.github.io/breakDown/
+
+Overview of prediction explainers: https://arxiv.org/abs/1804.01955
+
 
 ## Install from GitHub
 
