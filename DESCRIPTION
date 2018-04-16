@@ -8,7 +8,7 @@ Description: Break Down Plots are inspired by waterfall plots created by 'xgboos
     Break Down Plots show the contribution of every variable present in the model. 
     Such plots will work for binary classifiers and general regression models. 
 Depends: R (>= 3.0)
-Date: 2018-02-15
+Date: 2018-04-01
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
