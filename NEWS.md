@@ -1,3 +1,7 @@
+breakDown 0.1.6
+----------------------------------------------------------------
+* `broken.default` has now the `keep_distributions` arguments. If `TRUE` then the whole distribution of conditional residuals is remebered and avaliable for plotting   [#17](https://github.com/pbiecek/breakDown/issues/17)
+
 breakDown 0.1.5
 ----------------------------------------------------------------
 * small changes in `broken.default` to make it work with `xgboost` and other non `data.frame` data

@@ -5,7 +5,7 @@
 \title{Create the model agnostic broken object}
 \usage{
 \method{broken}{default}(model, new_observation, data, direction = "up", ...,
-  baseline = 0, predict.function = predict)
+  baseline = 0, keep_distributions = FALSE, predict.function = predict)
 }
 \arguments{
 \item{model}{a ranger model}
@@ -19,6 +19,8 @@
 \item{...}{other parameters}
 
 \item{baseline}{the orgin/baseline for the breakDown plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.}
+
+\item{keep_distributions}{if TRUE, then the distribution of partial predictions is stored in addition to the average.}
 
 \item{predict.function}{function that will calculate predictions out of model. It shall return a single numeric value per observation. For classification it may be a probability of the default class.}
 }
@@ -41,5 +43,13 @@ explain_1 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
 predict.function = predict.function, direction = "down")
 explain_1
 plot(explain_1) + ggtitle("breakDown plot (direction=down) for randomForest model")
+
+explain_2 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
+predict.function = predict.function, direction = "down", keep_distributions = TRUE)
+plot(explain_2, plot_distributions = TRUE) + ggtitle("breakDown distributions (direction=down) for randomForest model")
+
+explain_3 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
+predict.function = predict.function, direction = "up", keep_distributions = TRUE)
+plot(explain_3, plot_distributions = TRUE) + ggtitle("breakDown distributions (direction=up) for randomForest model")
 
 }
