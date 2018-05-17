@@ -120,7 +120,7 @@
 
     <pre class="usage"><span class='co'># S3 method for default</span>
 <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>new_observation</span>, <span class='no'>data</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"up"</span>, <span class='no'>...</span>,
-  <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>predict.function</span> <span class='kw'>=</span> <span class='no'>predict</span>)</pre>
+  <span class='kw'>baseline</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>predict.function</span> <span class='kw'>=</span> <span class='no'>predict</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -148,6 +148,10 @@
     <tr>
       <th>baseline</th>
       <td><p>the orgin/baseline for the breakDown plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.</p></td>
+    </tr>
+    <tr>
+      <th>keep_distributions</th>
+      <td><p>if TRUE, then the distribution of partial predictions is stored in addition to the average.</p></td>
     </tr>
     <tr>
       <th>predict.function</th>
@@ -182,7 +186,15 @@
 #&gt; - sales = sales                     0.000
 #&gt; - promotion_last_5years = 0         0.000
 #&gt; final_prognosis                     0.888
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>) + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>ggtitle</a></span>(<span class='st'>"breakDown plot (direction=down) for randomForest model"</span>)</div><div class='img'><img src='broken.default-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>) + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>ggtitle</a></span>(<span class='st'>"breakDown plot (direction=down) for randomForest model"</span>)</div><div class='img'><img src='broken.default-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='no'>explain_2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>HR_data</span>[<span class='fl'>11</span>,-<span class='fl'>7</span>], <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR_data</span>[,-<span class='fl'>7</span>],
+<span class='kw'>predict.function</span> <span class='kw'>=</span> <span class='no'>predict.function</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"down"</span>, <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>plot</span>(<span class='no'>explain_2</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) +
+         <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>ggtitle</a></span>(<span class='st'>"breakDown distributions (direction=down) for randomForest model"</span>)</div><div class='img'><img src='broken.default-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='no'>explain_3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>HR_data</span>[<span class='fl'>11</span>,-<span class='fl'>7</span>], <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR_data</span>[,-<span class='fl'>7</span>],
+<span class='kw'>predict.function</span> <span class='kw'>=</span> <span class='no'>predict.function</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"up"</span>, <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>plot</span>(<span class='no'>explain_3</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) +
+         <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>ggtitle</a></span>(<span class='st'>"breakDown distributions (direction=up) for randomForest model"</span>)</div><div class='img'><img src='broken.default-6.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

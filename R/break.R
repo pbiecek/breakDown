@@ -184,11 +184,13 @@ broken.glm <- function(model, new_observation, ..., baseline = 0, predict.functi
 #'
 #' explain_2 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
 #' predict.function = predict.function, direction = "down", keep_distributions = TRUE)
-#' plot(explain_2, plot_distributions = TRUE) + ggtitle("breakDown distributions (direction=down) for randomForest model")
+#' plot(explain_2, plot_distributions = TRUE) +
+#'          ggtitle("breakDown distributions (direction=down) for randomForest model")
 #'
 #' explain_3 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
 #' predict.function = predict.function, direction = "up", keep_distributions = TRUE)
-#' plot(explain_3, plot_distributions = TRUE) + ggtitle("breakDown distributions (direction=up) for randomForest model")
+#' plot(explain_3, plot_distributions = TRUE) +
+#'          ggtitle("breakDown distributions (direction=up) for randomForest model")
 #'
 #' @export
 

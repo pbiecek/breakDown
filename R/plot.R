@@ -19,7 +19,7 @@
 plot.broken <- function(x, trans = I, ..., add_contributions = TRUE,
                         vcolors = c("-1" = "#d8b365", "0" = "#f5f5f5", "1" = "#5ab4ac", "X" = "darkgrey"),
                         digits = 3, rounding_function = round, plot_distributions = FALSE) {
-  position <- cummulative <- prev <- trans_contribution <- prediction <- label <- NULL
+  position <- cummulative <- prev <- trans_contribution <- prediction <- label <- id <- NULL
 
   if (plot_distributions) {
     df <- attr(x, "yhats_distribution")

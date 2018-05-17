@@ -88,7 +88,7 @@
       <h1>model agnostic breakDown plots for randomForest</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2018-04-06</h4>
+            <h4 class="date">2018-05-17</h4>
           </div>
 
     
@@ -110,7 +110,7 @@
 <a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt; 3                  4             0    1                     0 sales medium</span></a></code></pre></div>
 <p>Now let’s create a logistic regression model for churn, the <code>left</code> variable.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"randomForest"</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; randomForest 4.6-12</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; randomForest 4.6-14</span></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; Type rfNews() to see new features/changes/bug fixes.</span></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">model &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/randomForest/topics/randomForest">randomForest</a></span>(<span class="kw">factor</span>(left)<span class="op">~</span>., <span class="dt">data =</span> HR_data, <span class="dt">family =</span> <span class="st">"binomial"</span>, <span class="dt">maxnodes =</span> <span class="dv">5</span>)</a></code></pre></div>
 <p>But how to understand which factors drive predictions for a single observation?</p>

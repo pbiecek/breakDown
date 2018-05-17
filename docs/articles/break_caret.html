@@ -88,7 +88,7 @@
       <h1>How to use breakDown package for models created with caret</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2018-04-06</h4>
+            <h4 class="date">2018-05-17</h4>
           </div>
 
     
@@ -137,33 +137,31 @@
 <a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; Pre-processing: centered (7), scaled (7) </span></a>
 <a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; Resampling: Cross-Validated (3 fold) </span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; Summary of sample sizes: 33, 33, 34 </span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; Resampling results</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; Summary of sample sizes: 34, 32, 34 </span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; Resampling results:</span></a>
 <a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt;   ROC       Sens       Spec       ROC SD      Sens SD     Spec SD   </span></a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt;   0.728588  0.6805556  0.6805556  0.07234259  0.06364688  0.06364688</span></a>
-<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#&gt; </span></a></code></pre></div>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt;   ROC        Sens       Spec    </span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt;   0.7420267  0.7962963  0.712963</span></a></code></pre></div>
 <p>To use <code>breakDown</code> we need a function that will calculate scores/predictions for a single observation. By default the <code>predict()</code> function returns predicted class.</p>
 <p>So we are adding <code>type = "prob"</code> argument to get scores. And since there will be two scores for each observarion we need to extract one of them.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">predict.fun &lt;-<span class="st"> </span><span class="cf">function</span>(model, x) <span class="kw">predict</span>(model, x, <span class="dt">type =</span> <span class="st">"prob"</span>)[,<span class="dv">1</span>]</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">testing &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/caret/topics/twoClassSim">twoClassSim</a></span>(<span class="dv">10</span>, <span class="dt">linearVars =</span> <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">predict.fun</span>(test_class_cv_model, testing[<span class="dv">1</span>,])</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; [1] 0.1997649</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; [1] 0.2167808</span></a></code></pre></div>
 <p>Now we are ready to call the <code><a href="../reference/broken.html">broken()</a></code> function.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"breakDown"</span>)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">explain_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/broken.html">broken</a></span>(test_class_cv_model, testing[<span class="dv">1</span>,], <span class="dt">data =</span> trainX, <span class="dt">predict.function =</span> predict.fun)</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">explain_<span class="dv">2</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;                                  contribution</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; (Intercept)                             0.500</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; + TwoFactor2 = 1.0795496599768         -0.184</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; + TwoFactor1 = -0.47479191451519       -0.135</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; + Linear2 = -0.787000382007838         -0.083</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; + Nonlinear3 = 0.614545789547265       -0.016</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; + Linear1 = 0.75131230478348           -0.012</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; + Nonlinear1 = 0.915338645223528        0.022</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; + Nonlinear2 = 0.983319560531527        0.108</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; final_prognosis                         0.200</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;                                    contribution</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; (Intercept)                               0.500</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; + Nonlinear2 = 0.00841055694036186       -0.221</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; + Nonlinear3 = 0.788420163793489         -0.068</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; + Linear1 = 1.07462052400591             -0.026</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; + Linear2 = -0.127127315706899           -0.018</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; + Nonlinear1 = 0.305425189435482          0.009</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; + TwoFactor2 = -0.118314424604999         0.023</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; + TwoFactor1 = 0.909898852880227          0.018</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; final_prognosis                           0.217</span></a>
 <a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; baseline:  0</span></a></code></pre></div>
 <p>And plot it.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
