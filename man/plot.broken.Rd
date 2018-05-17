@@ -6,7 +6,8 @@
 \usage{
 \method{plot}{broken}(x, trans = I, ..., add_contributions = TRUE,
   vcolors = c(`-1` = "#d8b365", `0` = "#f5f5f5", `1` = "#5ab4ac", X =
-  "darkgrey"), digits = 3, rounding_function = round)
+  "darkgrey"), digits = 3, rounding_function = round,
+  plot_distributions = FALSE)
 }
 \arguments{
 \item{x}{the model model of 'broken' class}
@@ -25,6 +26,8 @@ See the \code{rounding_function} argument}
 \item{rounding_function}{function that is to used for rounding numbers.
 It may be \code{signif()} which keeps a specified number of significant digits.
 Or the default \code{round()} to have the same precision for all components}
+
+\item{plot_distributions}{if TRUE then distributions of conditional propotions will be plotted. This requires keep_distributions=TRUE in the broken.default().}
 }
 \value{
 a ggplot2 object
