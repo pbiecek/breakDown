@@ -10,3 +10,7 @@ notifications:
 r_packages:
   - archivist
   - ggplot2
+  - covr
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'
