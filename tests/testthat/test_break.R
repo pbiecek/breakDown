@@ -22,7 +22,10 @@ broken_lm_regr <- broken(model_regr_lm, new_observation_regr, data = wine[,-12],
 
 broken_glm_classif <- broken(model_classif_glm, new_observation_classif, data = HR_data[,-7], direction = "up")
 
-
+broken_glm_classif_extended<- broken(model_classif_glm, new_observation_classif, data = HR_data[,-7], direction = "up", baseline="intercept")
+broken_rf_classif_extended<- broken_rf_classif <- broken(model_classif_rf, new_observation_classif, data = HR_data[,-7],
+                                                         predict.function = predict_function_rf, direction = "down", baseline="intercept")
+broken_lm_regr_extended <- broken(model_regr_lm, new_observation_regr, data=wine[,-12], baseline="intercept")
 
 test_that("Output format",{
   expect_is(broken_rf_classif, "broken")
@@ -32,6 +35,9 @@ test_that("Output format",{
   expect_length(broken_lm_regr, 7)
   expect_length(broken_glm_classif, 7)
   expect_output(str(broken_glm_classif), "List of 7")
+  expect_is(broken_glm_classif_extended, "broken")
+  expect_is(broken_rf_classif_extended, "broken")
+  expect_is(broken_lm_regr_extended, "broken")
 })
 
 test_that("Wrong input",{
