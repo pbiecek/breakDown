@@ -21,7 +21,8 @@ Suggests: knitr,
     xgboost,
     caret,
     randomForest,
-    ranger
+    ranger,
+    testthat
 VignetteBuilder: knitr
 URL: https://pbiecek.github.io/breakDown/
 BugReports: https://github.com/pbiecek/breakDown/issues
