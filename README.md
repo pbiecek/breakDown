@@ -2,8 +2,8 @@
 [![Downloads](http://cranlogs.r-pkg.org/badges/breakDown)](http://cran.rstudio.com/package=breakDown)
 [![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/breakDown?color=orange)](http://cranlogs.r-pkg.org/badges/grand-total/breakDown)
 [![Build Status](https://api.travis-ci.org/pbiecek/breakDown.png)](https://travis-ci.org/pbiecek/breakDown)
-[![Pending Pull-Requests](http://githubbadges.herokuapp.com/pbiecek/breakDown/pulls.svg?style=flat)](https://github.com/pbiecek/breakDown/pulls)
-[![Github Issues](http://githubbadges.herokuapp.com/pbiecek/breakDown/issues.svg)](https://github.com/pbiecek/breakDown/issues)
+[![Coverage
+Status](https://img.shields.io/codecov/c/github/pbiecek/breakDown/master.svg)](https://codecov.io/github/pbiecek/breakDown?branch=master)
 
 # Break Down Plots: Model Agnostic Explainers for Individual Predictions
 
