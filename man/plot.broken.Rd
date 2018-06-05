@@ -43,6 +43,8 @@ Break Down Plot
 model <- lm(quality~., data=wine)
 new_observation <- wine[1,]
 br <- broken(model, new_observation)
+plot(br)
+plot(br, top_features = 2)
 plot(br, top_features = 2, min_delta = 0.01)
 
 }
