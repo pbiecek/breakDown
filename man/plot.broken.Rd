@@ -2,11 +2,11 @@
 % Please edit documentation in R/plot.R
 \name{plot.broken}
 \alias{plot.broken}
-\title{Break Down PLot}
+\title{Break Down Plot}
 \usage{
-\method{plot}{broken}(x, trans = I, ..., add_contributions = TRUE,
-  vcolors = c(`-1` = "#d8b365", `0` = "#f5f5f5", `1` = "#5ab4ac", X =
-  "darkgrey"), digits = 3, rounding_function = round,
+\method{plot}{broken}(x, trans = I, ..., top_features = 0, min_delta = 0,
+  add_contributions = TRUE, vcolors = c(`-1` = "#d8b365", `0` = "#f5f5f5",
+  `1` = "#5ab4ac", X = "darkgrey"), digits = 3, rounding_function = round,
   plot_distributions = FALSE)
 }
 \arguments{
@@ -15,6 +15,10 @@
 \item{trans}{transformation that shal be applied to scores}
 
 \item{...}{other parameters}
+
+\item{top_features}{maximal number of variables from model we want to plot}
+
+\item{min_delta}{minimal stroke value of variables from model we want to plot}
 
 \item{add_contributions}{shall variable contributions to be added on plot?}
 
@@ -33,5 +37,14 @@ Or the default \code{round()} to have the same precision for all components}
 a ggplot2 object
 }
 \description{
-Break Down PLot
+Break Down Plot
+}
+\examples{
+model <- lm(quality~., data=wine)
+new_observation <- wine[1,]
+br <- broken(model, new_observation)
+plot(br)
+plot(br, top_features = 2)
+plot(br, top_features = 2, min_delta = 0.01)
+
 }
