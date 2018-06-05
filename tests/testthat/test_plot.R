@@ -28,9 +28,9 @@ broken_glm_classif <- broken(model_classif_glm, new_observation_classif, data = 
 
 
 test_that("Output format", {
-  expect_is(plot(broken_rf_classif), "gg")
-  expect_is(plot(broken_lm_regr), "gg")
-  expect_is(plot(broken_glm_classif), "gg")
+  expect_is(plot(broken_rf_classif, top_features = 3), "gg")
+  expect_is(plot(broken_lm_regr, min_delta = 0.1), "gg")
+  expect_is(plot(broken_glm_classif, top_features = 5, min_delta = 0.1), "gg")
   expect_length(plot(broken_rf_classif), 9)
   expect_length(plot(broken_lm_regr),9)
   expect_length(plot(broken_glm_classif), 9)
