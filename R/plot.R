@@ -17,7 +17,30 @@
 #' @return a ggplot2 object
 #' @import ggplot2
 #'
-#'@examples
+#' @examples
+#' library("breakDown")
+#' library("randomForest")
+#' library("ggplot2")
+#' set.seed(1313)
+#' model <- randomForest(factor(left)~., data = HR_data, family = "binomial", maxnodes = 5)
+#' predict.function <- function(model, new_observation)
+#'       predict(model, new_observation, type="prob")[,2]
+#' predict.function(model, HR_data[11,-7])
+#' explain_1 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
+#' predict.function = predict.function, direction = "down")
+#' explain_1
+#' plot(explain_1) + ggtitle("breakDown plot (direction=down) for randomForest model")
+#'
+#' explain_2 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
+#' predict.function = predict.function, direction = "down", keep_distributions = TRUE)
+#' plot(explain_2, plot_distributions = TRUE) +
+#'          ggtitle("breakDown distributions (direction=down) for randomForest model")
+#'
+#' explain_3 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
+#' predict.function = predict.function, direction = "up", keep_distributions = TRUE)
+#' plot(explain_3, plot_distributions = TRUE) +
+#'          ggtitle("breakDown distributions (direction=up) for randomForest model")
+#'
 #' model <- lm(quality~., data=wine)
 #' new_observation <- wine[1,]
 #' br <- broken(model, new_observation)
@@ -30,7 +53,7 @@ plot.broken <- function(x, trans = I, ..., top_features = 0, min_delta = 0, add_
                         vcolors = c("-1" = "#d8b365", "0" = "#f5f5f5", "1" = "#5ab4ac", "X" = "darkgrey"),
                         digits = 3, rounding_function = round, plot_distributions = FALSE) {
   position <- cummulative <- prev <- trans_contribution <- prediction <- label <- id <- NULL
-  
+
   if(top_features > 0){
     if(top_features >= (length(x[["variable"]])-1)){
       message(paste0("We have only ", length(x[["variable"]])-1, " variables in our model."))
@@ -43,17 +66,17 @@ plot.broken <- function(x, trans = I, ..., top_features = 0, min_delta = 0, add_
     logical_condition[length(logical_condition)] <- TRUE #we always want to have the final prognosis
     }
   }
-  
+
   if(min_delta > 0){
     if((min_delta > max(abs(x[["contribution"]])))){
       message(paste0("The maximum stroke of variables in our model is ", max(abs(x[["contribution"]]))))
     }else{
     logical_condition_2 <- abs(x[["contribution"]]) > min_delta
     logical_condition_2[length(logical_condition_2)] <- TRUE #we always want to have the final prognosis
-    
+
     }
   }
-  
+
   if((top_features > 0 & top_features < (length(x[["variable"]])-1)) & (min_delta > 0 & min_delta <= max(abs(x[["contribution"]])))){
     logical_condition <- "&"(logical_condition, logical_condition_2)
   }else if(top_features > 0 & top_features < (length(x[["variable"]])-1)){
@@ -61,7 +84,7 @@ plot.broken <- function(x, trans = I, ..., top_features = 0, min_delta = 0, add_
   }else if((min_delta > 0 & min_delta <= max(abs(x[["contribution"]])))){
     logical_condition <- logical_condition_2
   }
-    
+
   if((top_features > 0 & top_features < (length(x[["variable"]])-1))|| (min_delta > 0 & min_delta <= max(abs(x[["contribution"]])))){
     list_names <- names(x)
     df <- list()
@@ -69,14 +92,14 @@ plot.broken <- function(x, trans = I, ..., top_features = 0, min_delta = 0, add_
       df[[i]] <- x[[i]][logical_condition]
       names(df)[[i]] <- list_names[i]
     }
-    
+
     df_rest <- list()
-    
+
     for(i in 1:length(x)){
       df_rest[[i]] <- x[[i]][!logical_condition]
       names(df_rest)[[i]] <- list_names[i]
     }
-    
+
     variable_rest <- as.factor(paste0("remaining ", length(df_rest[["variable"]]), " variables"))
     contribution_rest <- sum(df_rest[["contribution"]])
     position_rest <- length(df[["variable"]])
@@ -86,27 +109,27 @@ plot.broken <- function(x, trans = I, ..., top_features = 0, min_delta = 0, add_
     attr(df, "baseline") <- constant
     distribution <- attr(x, "yhats_distribution")
     attr(df, "yhats_distribution") <- distribution
-    
+
     x<-df
-    
+
     for(i in seq_along(x[["position"]])){
       x[["position"]][i] <- i
     }
-    
+
     x[["position"]][length(x[["position"]])] <- (length(x[["position"]])+1)
-    
-    
+
+
     levels(x[["variable"]]) <- c(levels(x[["variable"]]), levels(variable_rest))
     x[["variable"]][length(x[["variable"]])+1] <- variable_rest
     x[["contribution"]][length(x[["variable"]])] <- contribution_rest
     x[["sign"]][length(x[["variable"]])] <- sign_rest
-    x[["cummulative"]][length(x[["variable"]])] <- cummulative_rest  
+    x[["cummulative"]][length(x[["variable"]])] <- cummulative_rest
     x[["position"]][length(x[["variable"]])] <- position_rest
     x[["variable_name"]][length(x[["variable"]])] <- ""
     x[["variable_value"]][length(x[["variable"]])] <- ""
   }
 
-  
+
   if (plot_distributions) {
     df <- attr(x, "yhats_distribution")
     if (is.null(df))
@@ -128,7 +151,7 @@ plot.broken <- function(x, trans = I, ..., top_features = 0, min_delta = 0, add_
     }else{
       class(broken_cumm) = "data.frame"
     }
-    
+
     broken_cumm$trans_contribution <- broken_cumm$cummulative - broken_cumm$prev
     broken_cumm <- droplevels(broken_cumm)
     pl <- ggplot(broken_cumm, aes(x = position + 0.5,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/break.R
 \name{broken.glm}
 \alias{broken.glm}
-\title{Create the broken object for glm models}
+\title{Breaking Down of Model Predictions for glm models}
 \usage{
 \method{broken}{glm}(model, new_observation, ..., baseline = 0,
   predict.function = stats::predict.glm)
@@ -22,7 +22,7 @@
 an object of the broken class
 }
 \description{
-Create the broken object for glm models
+Breaking Down of Model Predictions for glm models
 }
 \examples{
 # example for wine data

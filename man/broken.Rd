@@ -2,7 +2,7 @@
 % Please edit documentation in R/break.R
 \name{broken}
 \alias{broken}
-\title{Create the broken object}
+\title{Generic Function for Breaking Down of Model Predictions}
 \usage{
 broken(model, new_observation, ...)
 }
@@ -13,6 +13,36 @@ broken(model, new_observation, ...)
 
 \item{...}{other parameters}
 }
+\value{
+an object of the broken class
+}
 \description{
-Create the broken object
+The \code{broken} function is a generic function for decomposition of model predictions.
+For linear models please use \link{broken.lm}, for generic linear models please use \link{broken.glm}.
+For all other models please use the model agnostic version \link{broken.default}.
+Please note, that some of these functions have additional parameters.
+}
+\examples{
+library("breakDown")
+library("randomForest")
+library("ggplot2")
+set.seed(1313)
+model <- randomForest(factor(left)~., data = HR_data, family = "binomial", maxnodes = 5)
+predict.function <- function(model, new_observation)
+      predict(model, new_observation, type="prob")[,2]
+predict.function(model, HR_data[11,-7])
+explain_1 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
+predict.function = predict.function, direction = "down")
+explain_1
+plot(explain_1) + ggtitle("breakDown plot (direction=down) for randomForest model")
+
+explain_2 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
+predict.function = predict.function, direction = "down", keep_distributions = TRUE)
+plot(explain_2, plot_distributions = TRUE) +
+         ggtitle("breakDown distributions (direction=down) for randomForest model")
+
+explain_3 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
+predict.function = predict.function, direction = "up", keep_distributions = TRUE)
+plot(explain_3, plot_distributions = TRUE) +
+         ggtitle("breakDown distributions (direction=up) for randomForest model")
 }

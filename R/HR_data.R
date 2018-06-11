@@ -16,7 +16,9 @@
 #'    \item  salary  Relative level of salary (high)
 #' }
 #'
+#' @docType data
+#' @keywords datasets
 #' @name HR_data
 #' @format A data frame with 14999 rows and 10 variables
-#' @source Dataset hr-analytics from \url{https://www.kaggle.com}
+#' @source Dataset HR-analytics from \url{https://www.kaggle.com}
 NULL

@@ -1,6 +1,7 @@
 breakDown 0.1.6
 ----------------------------------------------------------------
 * `broken.default` has now the `keep_distributions` arguments. If `TRUE` then the whole distribution of conditional residuals is remebered and avaliable for plotting   [#17](https://github.com/pbiecek/breakDown/issues/17)
+* small updates in `README.md`
 
 breakDown 0.1.5
 ----------------------------------------------------------------

@@ -40,6 +40,29 @@ a ggplot2 object
 Break Down Plot
 }
 \examples{
+library("breakDown")
+library("randomForest")
+library("ggplot2")
+set.seed(1313)
+model <- randomForest(factor(left)~., data = HR_data, family = "binomial", maxnodes = 5)
+predict.function <- function(model, new_observation)
+      predict(model, new_observation, type="prob")[,2]
+predict.function(model, HR_data[11,-7])
+explain_1 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
+predict.function = predict.function, direction = "down")
+explain_1
+plot(explain_1) + ggtitle("breakDown plot (direction=down) for randomForest model")
+
+explain_2 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
+predict.function = predict.function, direction = "down", keep_distributions = TRUE)
+plot(explain_2, plot_distributions = TRUE) +
+         ggtitle("breakDown distributions (direction=down) for randomForest model")
+
+explain_3 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
+predict.function = predict.function, direction = "up", keep_distributions = TRUE)
+plot(explain_3, plot_distributions = TRUE) +
+         ggtitle("breakDown distributions (direction=up) for randomForest model")
+
 model <- lm(quality~., data=wine)
 new_observation <- wine[1,]
 br <- broken(model, new_observation)

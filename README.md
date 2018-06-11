@@ -5,27 +5,29 @@
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/pbiecek/breakDown/master.svg)](https://codecov.io/github/pbiecek/breakDown?branch=master)
 
-# Break Down Plots: Model Agnostic Explainers for Individual Predictions
+# Break Down: Model Agnostic Explainers for Individual Predictions
 
-`breakDown` package decomposes individual predictions into parts attributed to particular variables. See [vigniettes](https://pbiecek.github.io/breakDown/articles/break_caret.html) for more examples.
+The `breakDown` package is a model agnostic tool for decomposition of predictions from black boxes.
+Break Down Table shows contributions of every variable to a final prediction. 
+Break Down Plot presents variable contributions in a concise graphical way. 
+This package works for binary classifiers and general regression models. 
 
-Bookdown website for `breakDown` package: https://pbiecek.github.io/breakDown/
+Find lots of R examples at `breakDown` website: https://pbiecek.github.io/breakDown/
 
-Methodology behind prediction explainers implemented in `breakDown` and `live`: https://arxiv.org/abs/1804.01955
+Interested in the methodology? Find the math behind `breakDown` and `live` at: https://arxiv.org/abs/1804.01955
 
-
-## How to install
-
-Install from GitHub
-
-```
-devtools::install_github("pbiecek/breakDown")
-```
+## Installation
 
 Install from CRAN
 
 ```
 install.packages("breakDown")
+```
+
+Install from GitHub
+
+```
+devtools::install_github("pbiecek/breakDown")
 ```
 
 ## Cheatsheets

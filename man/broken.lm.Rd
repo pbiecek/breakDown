@@ -2,7 +2,7 @@
 % Please edit documentation in R/break.R
 \name{broken.lm}
 \alias{broken.lm}
-\title{Create the broken object for lm models}
+\title{Breaking Down of Model Predictions for lm models}
 \usage{
 \method{broken}{lm}(model, new_observation, ..., baseline = 0,
   predict.function = stats::predict.lm)
@@ -22,7 +22,7 @@
 an object of the broken class
 }
 \description{
-Create the broken object for lm models
+Breaking Down of Model Predictions for lm models
 }
 \examples{
 model <- lm(Sepal.Length~., data=iris)

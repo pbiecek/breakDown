@@ -1,10 +1,10 @@
-#' Clean the object of the broken class
-#' Internal function
-#' @param broken_intercept list with variable contributions
-#' @param baseline level on which the baseline line shall be plotted
-#'
-#' @return enriched broken class
-#'
+# Clean the object of the broken class
+# Internal function
+# @param broken_intercept list with variable contributions
+# @param baseline level on which the baseline line shall be plotted
+#
+# @return enriched broken class
+#
 create.broken <- function(broken_intercept, baseline = 0) {
   broken_cumm <- data.frame(broken_intercept,
                             cummulative = cumsum(as.numeric(broken_intercept$contribution)),

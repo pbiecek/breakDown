@@ -1,20 +1,19 @@
 Package: breakDown
-Title: Break Down Plots
+Title: Model Agnostic Explainers for Individual Predictions
 Version: 0.1.6
 Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre")),
-    person("Aleksandra", "Grudziaz", email = "aleksandra.grudziaz@gmail.com", role = "cbt"))
-Description: Break Down Plots are inspired by waterfall plots created by 'xgboostExplainer' package
-    (see <https://github.com/AppliedDataSciencePartners/xgboostExplainer>). 
-    The idea behind Break Down Plots it to decompose model prediction for a single observation. 
-    Break Down Plots show the contribution of every variable present in the model. 
-    Such plots will work for binary classifiers and general regression models. 
+    person("Aleksandra", "Grudziaz", email = "aleksandra.grudziaz@gmail.com", role = "ctb"))
+Description: Model agnostic tool for decomposition of predictions from black boxes.
+    Break Down Table shows contributions of every variable to a final prediction. 
+    Break Down Plot presents variable contributions in a concise graphical way. 
+    This package work for binary classifiers and general regression models. 
 Depends: R (>= 3.0)
-Date: 2018-04-01
+Date: 2018-06-11
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Imports: ggplot2
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.0.1
 Suggests: knitr,
     rmarkdown,
     e1071,
