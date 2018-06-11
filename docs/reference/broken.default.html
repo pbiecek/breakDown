@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create the model agnostic broken object — broken.default • breakDown</title>
+<title>Model Agnostic Approach to Breaking Down of Model Predictions — broken.default • breakDown</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -23,8 +23,6 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -50,7 +48,7 @@
 	  <a class = "navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
         <img src = "https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">breakDown</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html">Model Agnostic Approach to Breaking Down of Model Predictions</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -94,7 +92,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -111,11 +109,13 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create the model agnostic broken object</h1>
+    <h1>Model Agnostic Approach to Breaking Down of Model Predictions</h1>
     </div>
 
     
-    <p>Create the model agnostic broken object</p>
+    <p>This function implements two greedy strategies for decompositions of model predictions (see the <code>direction</code> parameter).
+Both stategies are model agnostic, they are greedy but in most cases they give very similar results.
+Find more information about these strategies in https://arxiv.org/abs/1804.01955.</p>
     
 
     <pre class="usage"><span class='co'># S3 method for default</span>
@@ -127,7 +127,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>a ranger model</p></td>
+      <td><p>a model, it can be any predictive model, find examples for most popular frameworks in vigniettes</p></td>
     </tr>
     <tr>
       <th>new_observation</th>
@@ -165,9 +165,9 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>breakDown</span>)
-<span class='fu'>library</span>(<span class='no'>randomForest</span>)
-<span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"breakDown"</span>)
+<span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
+<span class='fu'>library</span>(<span class='st'>"ggplot2"</span>)
 <span class='fu'>set.seed</span>(<span class='fl'>1313</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='fu'>factor</span>(<span class='no'>left</span>)~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR_data</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>, <span class='kw'>maxnodes</span> <span class='kw'>=</span> <span class='fl'>5</span>)
 <span class='no'>predict.function</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>model</span>, <span class='no'>new_observation</span>)
@@ -186,15 +186,15 @@
 #&gt; - sales = sales                     0.000
 #&gt; - promotion_last_5years = 0         0.000
 #&gt; final_prognosis                     0.888
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>) + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>ggtitle</a></span>(<span class='st'>"breakDown plot (direction=down) for randomForest model"</span>)</div><div class='img'><img src='broken.default-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>) + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>ggtitle</a></span>(<span class='st'>"breakDown plot (direction=down) for randomForest model"</span>)</div><div class='img'><img src='broken.default-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>explain_2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>HR_data</span>[<span class='fl'>11</span>,-<span class='fl'>7</span>], <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR_data</span>[,-<span class='fl'>7</span>],
 <span class='kw'>predict.function</span> <span class='kw'>=</span> <span class='no'>predict.function</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"down"</span>, <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>plot</span>(<span class='no'>explain_2</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) +
-         <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>ggtitle</a></span>(<span class='st'>"breakDown distributions (direction=down) for randomForest model"</span>)</div><div class='img'><img src='broken.default-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+         <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>ggtitle</a></span>(<span class='st'>"breakDown distributions (direction=down) for randomForest model"</span>)</div><div class='img'><img src='broken.default-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>explain_3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>HR_data</span>[<span class='fl'>11</span>,-<span class='fl'>7</span>], <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR_data</span>[,-<span class='fl'>7</span>],
 <span class='kw'>predict.function</span> <span class='kw'>=</span> <span class='no'>predict.function</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"up"</span>, <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>plot</span>(<span class='no'>explain_3</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) +
-         <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>ggtitle</a></span>(<span class='st'>"breakDown distributions (direction=up) for randomForest model"</span>)</div><div class='img'><img src='broken.default-6.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+         <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>ggtitle</a></span>(<span class='st'>"breakDown distributions (direction=up) for randomForest model"</span>)</div><div class='img'><img src='broken.default-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -224,3 +224,4 @@
 
   </body>
 </html>
+

@@ -15,7 +15,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top navbar-mi2" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -26,7 +26,7 @@
       </button>
 	  <a class="navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
         <img src="https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt="MI2" height="46" title="MI2"></a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">breakDown</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html"></a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -70,7 +70,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
@@ -83,17 +83,20 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>How to use breakDown package for models created with xgboost</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2018-05-17</h4>
-          </div>
+            <h4 class="date">2018-06-11</h4>
+      
+      
+      <div class="hidden name"><code>break_xgboost.Rmd</code></div>
+
+    </div>
 
     
     
-<div class="contents">
 <p>This example demonstrates how to use the <code>breakDown</code> package for models created with the <a href="https://CRAN.R-project.org/package=xgboost">xgboost</a> package.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"breakDown"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(xgboost)</a>
@@ -105,16 +108,17 @@
 <a class="sourceLine" id="cb1-8" data-line-number="8">HR_xgb_model &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/xgboost/topics/xgb.train">xgb.train</a></span>(param, data_train, <span class="dt">nrounds =</span> <span class="dv">50</span>)</a>
 <a class="sourceLine" id="cb1-9" data-line-number="9">HR_xgb_model</a>
 <a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#&gt; ##### xgb.Booster</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt; raw: 187 Kb </span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt; call:</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt;   xgb.train(params = param, data = data_train, nrounds = 50)</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; params (as set within xgb.train):</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt;   objective = "reg:linear", silent = "1"</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt; xgb.attributes:</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt;   niter</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt; callbacks:</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt;   cb.print.evaluation(period = print_every_n)</span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt; niter: 50</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt; Handle is invalid! Suggest using xgb.Booster.complete</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt; raw: 187 Kb </span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt; call:</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt;   xgb.train(params = param, data = data_train, nrounds = 50)</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt; params (as set within xgb.train):</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt;   objective = "reg:linear", silent = "1"</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt; callbacks:</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt;   cb.print.evaluation(period = print_every_n)</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt; # of features: 19 </span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt; niter: 50</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#&gt; nfeatures : 19</span></a></code></pre></div>
 <p>Now we are ready to call the <code><a href="../reference/broken.html">broken()</a></code> function.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"breakDown"</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">nobs &lt;-<span class="st"> </span>model_martix_train[1L, , drop =<span class="st"> </span><span class="ot">FALSE</span>]</a>
@@ -149,7 +153,6 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">plot</span>(explain_<span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot for xgboost model"</span>)</a></code></pre></div>
 <p><img src="break_xgboost_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

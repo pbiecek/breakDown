@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create the broken object for glm models — broken.glm • breakDown</title>
+<title>Breaking Down of Model Predictions for glm models — broken.glm • breakDown</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -23,8 +23,6 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -50,7 +48,7 @@
 	  <a class = "navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
         <img src = "https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">breakDown</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html">Breaking Down of Model Predictions for glm models</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -94,7 +92,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -111,11 +109,11 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create the broken object for glm models</h1>
+    <h1>Breaking Down of Model Predictions for glm models</h1>
     </div>
 
     
-    <p>Create the broken object for glm models</p>
+    <p>Breaking Down of Model Predictions for glm models</p>
     
 
     <pre class="usage"><span class='co'># S3 method for glm</span>
@@ -162,7 +160,7 @@
 <span class='no'>new_observation</span> <span class='kw'>&lt;-</span> <span class='no'>wine</span>[<span class='fl'>1</span>,]
 <span class='no'>br</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>modelg</span>, <span class='no'>new_observation</span>)
 <span class='no'>logit</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>exp</span>(<span class='no'>x</span>)/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>x</span>))
-<span class='fu'>plot</span>(<span class='no'>br</span>, <span class='no'>logit</span>)</div><div class='img'><img src='broken.glm-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>br</span>, <span class='no'>logit</span>)</div><div class='img'><img src='broken.glm-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># example for HR_data</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>left</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR_data</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explain_1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>HR_data</span>[<span class='fl'>1</span>,])
@@ -178,7 +176,7 @@
 #&gt; promotion_last_5years = 0         0.030
 #&gt; sales = sales                     0.014
 #&gt; final_prognosis                   0.118
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>)</div><div class='img'><img src='broken.glm-6.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>exp</span>(<span class='no'>x</span>)/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>x</span>)))</div><div class='img'><img src='broken.glm-7.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>)</div><div class='img'><img src='broken.glm-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_1</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>exp</span>(<span class='no'>x</span>)/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>x</span>)))</div><div class='img'><img src='broken.glm-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>explain_2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>HR_data</span>[<span class='fl'>1</span>,], <span class='kw'>predict.function</span> <span class='kw'>=</span> <span class='no'>betas</span>)
 <span class='no'>explain_2</span></div><div class='output co'>#&gt;                            contribution
 #&gt; (Intercept)                      -1.476
@@ -192,7 +190,7 @@
 #&gt; Work_accident = 0                 0.000
 #&gt; promotion_last_5years = 0         0.000
 #&gt; final_prognosis                   0.118
-#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_2</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>exp</span>(<span class='no'>x</span>)/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>x</span>)))</div><div class='img'><img src='broken.glm-8.png' alt='' width='700' height='432.632880098887' /></div></pre>
+#&gt; baseline:  0 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>explain_2</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>exp</span>(<span class='no'>x</span>)/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>x</span>)))</div><div class='img'><img src='broken.glm-4.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -221,3 +219,4 @@
 
   </body>
 </html>
+

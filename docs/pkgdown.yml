@@ -1,0 +1,12 @@
+pandoc: 2.1.3
+pkgdown: 1.0.0
+pkgdown_sha: ~
+articles:
+  break_caret: break_caret.html
+  break_glm: break_glm.html
+  break_lm: break_lm.html
+  break_randomForest: break_randomForest.html
+  break_ranger: break_ranger.html
+  break_svm: break_svm.html
+  break_xgboost: break_xgboost.html
+

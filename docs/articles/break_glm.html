@@ -15,7 +15,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top navbar-mi2" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -26,7 +26,7 @@
       </button>
 	  <a class="navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
         <img src="https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt="MI2" height="46" title="MI2"></a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">breakDown</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html"></a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -70,7 +70,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
@@ -83,17 +83,20 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>breakDown plots for the generalised linear models</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2018-05-17</h4>
-          </div>
+            <h4 class="date">2018-06-11</h4>
+      
+      
+      <div class="hidden name"><code>break_glm.Rmd</code></div>
+
+    </div>
 
     
     
-<div class="contents">
 <p>Here we will use the HR churn data (<a href="https://www.kaggle.com/" class="uri">https://www.kaggle.com/</a>) to present the breakDown package for <code>glm</code> models.</p>
 <p>The data is in the <code>breakDown</code> package</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(breakDown)</a>
@@ -158,7 +161,6 @@
 <a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt; Scale for 'y' is already present. Adding another scale for 'y', which</span></a>
 <a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt; will replace the existing scale.</span></a></code></pre></div>
 <p><img src="break_glm_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

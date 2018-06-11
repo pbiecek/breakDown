@@ -15,7 +15,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top navbar-mi2" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -26,7 +26,7 @@
       </button>
 	  <a class="navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
         <img src="https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt="MI2" height="46" title="MI2"></a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">breakDown</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html"></a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -70,7 +70,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
@@ -83,17 +83,20 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>model agnostic breakDown plots for ranger</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2018-05-17</h4>
-          </div>
+            <h4 class="date">2018-06-11</h4>
+      
+      
+      <div class="hidden name"><code>break_ranger.Rmd</code></div>
+
+    </div>
 
     
     
-<div class="contents">
 <p>Here we will use the HR churn data (<a href="https://www.kaggle.com/" class="uri">https://www.kaggle.com/</a>) to present the <code>breakDown</code> package for <code>ranger</code> models.</p>
 <p>The data is in the <code>breakDown</code> package</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(breakDown)</a>
@@ -115,7 +118,7 @@
 <a class="sourceLine" id="cb2-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw">predict.function</span>(model, HR_data[<span class="dv">11</span>,])</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt;        1 </span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; 0.868579</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; 0.869104</span></a></code></pre></div>
 <p>But how to understand which factors drive predictions for a single observation?</p>
 <p>With the <code>breakDown</code> package!</p>
 <p>Explanations for the trees votings.</p>
@@ -127,12 +130,12 @@
 <a class="sourceLine" id="cb3-6" data-line-number="6">explain_<span class="dv">1</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt;                              contribution</span></a>
 <a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; (Intercept)                         0.238</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; - satisfaction_level = 0.45         0.067</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; - number_project = 2                0.262</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; - last_evaluation = 0.54            0.110</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; - average_montly_hours = 135        0.104</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; - time_spend_company = 3            0.074</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; - Work_accident = 0                 0.010</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; - satisfaction_level = 0.45         0.055</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; - number_project = 2                0.255</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; - last_evaluation = 0.54            0.117</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; - average_montly_hours = 135        0.105</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; - time_spend_company = 3            0.086</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; - Work_accident = 0                 0.011</span></a>
 <a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; - salary = low                      0.003</span></a>
 <a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; - promotion_last_5years = 0         0.000</span></a>
 <a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; - sales = sales                     0.000</span></a>
@@ -147,12 +150,12 @@
 <a class="sourceLine" id="cb4-5" data-line-number="5">explain_<span class="dv">2</span></a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt;                              contribution</span></a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; (Intercept)                         0.238</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; + satisfaction_level = 0.45         0.067</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; + number_project = 2                0.262</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; + last_evaluation = 0.54            0.110</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; + average_montly_hours = 135        0.104</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; + time_spend_company = 3            0.074</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; + Work_accident = 0                 0.010</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; + satisfaction_level = 0.45         0.055</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; + number_project = 2                0.255</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; + last_evaluation = 0.54            0.117</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; + average_montly_hours = 135        0.105</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; + time_spend_company = 3            0.086</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; + Work_accident = 0                 0.011</span></a>
 <a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; + salary = low                      0.003</span></a>
 <a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; + promotion_last_5years = 0         0.000</span></a>
 <a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; + sales = sales                     0.000</span></a>
@@ -160,7 +163,6 @@
 <a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; baseline:  0</span></a>
 <a class="sourceLine" id="cb4-19" data-line-number="19"><span class="kw">plot</span>(explain_<span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"breakDown plot (direction=up) for ranger model"</span>)</a></code></pre></div>
 <p><img src="break_ranger_files/figure-html/unnamed-chunk-3-2.png" width="672"></p>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

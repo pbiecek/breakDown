@@ -15,7 +15,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top navbar-mi2" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -26,7 +26,7 @@
       </button>
 	  <a class="navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
         <img src="https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt="MI2" height="46" title="MI2"></a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">breakDown</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html"></a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -70,7 +70,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
@@ -83,17 +83,20 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>How to use breakDown package for SVM models</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2018-05-17</h4>
-          </div>
+            <h4 class="date">2018-06-11</h4>
+      
+      
+      <div class="hidden name"><code>break_svm.Rmd</code></div>
+
+    </div>
 
     
     
-<div class="contents">
 <p>This example demonstrates how to use the <code>breakDown</code> package for models created with the <a href="https://CRAN.R-project.org/package=kernlab">kernlab</a> package.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"breakDown"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(kernlab)</a>
@@ -106,12 +109,12 @@
 <a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">#&gt;  parameter : epsilon = 0.1  cost C = 1 </span></a>
 <a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt; Gaussian Radial Basis kernel function. </span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt;  Hyperparameter : sigma =  0.0809713808556178 </span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt;  Hyperparameter : sigma =  0.082020927772521 </span></a>
 <a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; Number of Support Vectors : 4195 </span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; Number of Support Vectors : 4191 </span></a>
 <a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt; Objective Function Value : -2270.014 </span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt; Training error : 0.523137</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt; Objective Function Value : -2266.48 </span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt; Training error : 0.521774</span></a>
 <a class="sourceLine" id="cb1-18" data-line-number="18"></a>
 <a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co"># or with the e1071:::svm</span></a>
 <a class="sourceLine" id="cb1-20" data-line-number="20"></a>
@@ -190,7 +193,6 @@
 <p><img src="break_svm_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">plot</span>(explain_<span class="dv">5</span>_down) <span class="op">+</span><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="kw">paste0</span>(<span class="st">"Prediction for SVM model "</span>, <span class="kw">round</span>(base_prediction, <span class="dv">3</span>)))</a></code></pre></div>
 <p><img src="break_svm_files/figure-html/unnamed-chunk-3-2.png" width="672"></p>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
