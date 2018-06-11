@@ -16,6 +16,8 @@ Find lots of R examples at `breakDown` website: https://pbiecek.github.io/breakD
 
 Interested in the methodology? Find the math behind `breakDown` and `live` at: https://arxiv.org/abs/1804.01955
 
+Looking for the `python` version of Break Down? Find it here: https://github.com/bondyra/pyBreakDown
+
 ## Installation
 
 Install from CRAN
