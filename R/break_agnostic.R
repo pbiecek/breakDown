@@ -2,7 +2,7 @@
 #'
 #' This function implements two greedy strategies for decompositions of model predictions (see the \code{direction} parameter).
 #' Both stategies are model agnostic, they are greedy but in most cases they give very similar results.
-#' Find more information about these strategies in \link{https://arxiv.org/abs/1804.01955}.
+#' Find more information about these strategies in \url{https://arxiv.org/abs/1804.01955}.
 #'
 #' @param model a model, it can be any predictive model, find examples for most popular frameworks in vigniettes
 #' @param new_observation a new observation with columns that corresponds to variables used in the model
@@ -16,6 +16,7 @@
 #' @return an object of the broken class
 #'
 #' @examples
+#' \dontrun{
 #' library("breakDown")
 #' library("randomForest")
 #' library("ggplot2")
@@ -38,7 +39,7 @@
 #' predict.function = predict.function, direction = "up", keep_distributions = TRUE)
 #' plot(explain_3, plot_distributions = TRUE) +
 #'          ggtitle("breakDown distributions (direction=up) for randomForest model")
-#'
+#' }
 #' @export
 
 broken.default <- function(model, new_observation, data, direction = "up", ..., baseline = 0,

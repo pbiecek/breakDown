@@ -18,6 +18,7 @@
 #' @import ggplot2
 #'
 #' @examples
+#' \dontrun{
 #' library("breakDown")
 #' library("randomForest")
 #' library("ggplot2")
@@ -47,7 +48,7 @@
 #' plot(br)
 #' plot(br, top_features = 2)
 #' plot(br, top_features = 2, min_delta = 0.01)
-#'
+#'}
 #' @export
 plot.broken <- function(x, trans = I, ..., top_features = 0, min_delta = 0, add_contributions = TRUE,
                         vcolors = c("-1" = "#d8b365", "0" = "#f5f5f5", "1" = "#5ab4ac", "X" = "darkgrey"),

@@ -40,6 +40,7 @@ a ggplot2 object
 Break Down Plot
 }
 \examples{
+\dontrun{
 library("breakDown")
 library("randomForest")
 library("ggplot2")
@@ -69,5 +70,5 @@ br <- broken(model, new_observation)
 plot(br)
 plot(br, top_features = 2)
 plot(br, top_features = 2, min_delta = 0.01)
-
+}
 }

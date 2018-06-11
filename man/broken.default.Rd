@@ -30,9 +30,10 @@ an object of the broken class
 \description{
 This function implements two greedy strategies for decompositions of model predictions (see the \code{direction} parameter).
 Both stategies are model agnostic, they are greedy but in most cases they give very similar results.
-Find more information about these strategies in \link{https://arxiv.org/abs/1804.01955}.
+Find more information about these strategies in \url{https://arxiv.org/abs/1804.01955}.
 }
 \examples{
+\dontrun{
 library("breakDown")
 library("randomForest")
 library("ggplot2")
@@ -55,5 +56,5 @@ explain_3 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
 predict.function = predict.function, direction = "up", keep_distributions = TRUE)
 plot(explain_3, plot_distributions = TRUE) +
          ggtitle("breakDown distributions (direction=up) for randomForest model")
-
+}
 }

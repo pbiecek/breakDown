@@ -23,6 +23,7 @@ For all other models please use the model agnostic version \link{broken.default}
 Please note, that some of these functions have additional parameters.
 }
 \examples{
+\dontrun{
 library("breakDown")
 library("randomForest")
 library("ggplot2")
@@ -45,4 +46,5 @@ explain_3 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
 predict.function = predict.function, direction = "up", keep_distributions = TRUE)
 plot(explain_3, plot_distributions = TRUE) +
          ggtitle("breakDown distributions (direction=up) for randomForest model")
+}
 }

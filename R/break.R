@@ -14,6 +14,7 @@
 #' @return an object of the broken class
 #'
 #' @examples
+#' \dontrun{
 #' library("breakDown")
 #' library("randomForest")
 #' library("ggplot2")
@@ -36,6 +37,7 @@
 #' predict.function = predict.function, direction = "up", keep_distributions = TRUE)
 #' plot(explain_3, plot_distributions = TRUE) +
 #'          ggtitle("breakDown distributions (direction=up) for randomForest model")
+#' }
 broken <- function(model, new_observation, ...) {
   UseMethod("broken")
 }
