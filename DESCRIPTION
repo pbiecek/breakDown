@@ -1,7 +1,8 @@
 Package: breakDown
 Title: Break Down Plots
 Version: 0.1.6
-Authors@R: person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre"))
+Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre")),
+    person("Aleksandra", "Grudziaz", email = "aleksandra.grudziaz@gmail.com", role = "cbt"))
 Description: Break Down Plots are inspired by waterfall plots created by 'xgboostExplainer' package
     (see <https://github.com/AppliedDataSciencePartners/xgboostExplainer>). 
     The idea behind Break Down Plots it to decompose model prediction for a single observation. 
