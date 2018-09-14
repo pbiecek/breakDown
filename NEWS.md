@@ -1,6 +1,7 @@
 breakDown 0.2.0
 ----------------------------------------------------------------
 * `break_down` function identifies inteactions 
+* `break_down` function supports DALEX explainers
 * `break_down` function has complexity O(2p) for models without interactions, much faster than the old version
 
 breakDown 0.1.6

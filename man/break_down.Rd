@@ -12,7 +12,7 @@ break_down(explainer, new_observation, check_interactions = TRUE,
 
 \item{new_observation}{a new observation with columns that corresponds to variables used in the model}
 
-\item{check_interactions}{the orgin/baseline for the breakDown plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.}
+\item{check_interactions}{the orgin/baseline for the `breakDown`` plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.}
 
 \item{keep_distributions}{if TRUE, then the distribution of partial predictions is stored in addition to the average.}
 }
@@ -22,31 +22,52 @@ an object of the broken class
 \description{
 This function implements decomposition of model predictions with identification
 of interactions.
-The complexity of this function is O(2*p) for additive models and O(2*p^2) for interactions
+The complexity of this function is O(2*p) for additive models and O(2*p^2) for interactions.
+This function works in similar way to step-up and step-down greedy approaximations,
+the main difference is that in the fisrt step the order of variables is determied.
+And in the second step the impact is calculated.
 }
 \examples{
 \dontrun{
 library("breakDown")
 library("randomForest")
-library("ggplot2")
 set.seed(1313)
-model <- randomForest(factor(left)~., data = HR_data, family = "binomial", maxnodes = 5)
-predict.function <- function(model, new_observation)
-      predict(model, new_observation, type="prob")[,2]
-predict.function(model, HR_data[11,-7])
-explain_1 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
-predict.function = predict.function, direction = "down")
-explain_1
-plot(explain_1) + ggtitle("breakDown plot (direction=down) for randomForest model")
+# example with interaction
+# classification for HR data
+model <- randomForest(status ~ . , data = HR)
+new_observation <- HRTest[1,]
+data <- HR[1:1000,]
+predict.function <- function(m,x) predict(m,x, type = "prob")[,1]
 
-explain_2 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
-predict.function = predict.function, direction = "down", keep_distributions = TRUE)
-plot(explain_2, plot_distributions = TRUE) +
-         ggtitle("breakDown distributions (direction=down) for randomForest model")
+explainer_rf_fired <- explain(model,
+                 data = HR[1:1000,1:5],
+                 y = HR$status[1:1000] == "fired",
+                 predict_function = function(m,x) predict(m,x, type = "prob")[,1],
+                 label = "fired")
 
-explain_3 <- broken(model, HR_data[11,-7], data = HR_data[,-7],
-predict.function = predict.function, direction = "up", keep_distributions = TRUE)
-plot(explain_3, plot_distributions = TRUE) +
-         ggtitle("breakDown distributions (direction=up) for randomForest model")
+bd_rf <- break_down(explainer_rf_fired,
+                 new_observation,
+                 keep_distributions = TRUE)
+
+bd_rf
+plot(bd_rf)
+plot(bd_rf, plot_distributions = TRUE)
+
+# example for regression - apartment prices
+# here we do not have intreactions
+model <- randomForest(m2.price ~ . , data = apartments)
+explainer_rf <- explain(model,
+         data = apartmentsTest[1:1000,2:6],
+         y = apartmentsTest$m2.price[1:1000],
+         label = "rf")
+
+bd_rf <- break_down(explainer_rf,
+         apartmentsTest[1,],
+         check_interactions = FALSE,
+         keep_distributions = TRUE)
+
+bd_rf
+plot(bd_rf)
+plot(bd_rf, plot_distributions = TRUE)
 }
 }
