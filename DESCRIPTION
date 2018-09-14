@@ -1,6 +1,6 @@
 Package: breakDown
 Title: Model Agnostic Explainers for Individual Predictions
-Version: 0.1.6
+Version: 0.2.0
 Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre")),
     person("Aleksandra", "Grudziaz", email = "aleksandra.grudziaz@gmail.com", role = "ctb"))
 Description: Model agnostic tool for decomposition of predictions from black boxes.
