@@ -145,7 +145,7 @@ break_down <- function(explainer, new_observation,
       step <- step + 1
       yhats_pred <- predict_function(model, current_data)
       if (keep_distributions) {
-        yhats[[step]] <- data.frame(variable = colnames(data)[candidates],
+        yhats[[step]] <- data.frame(variable = paste(colnames(data)[candidates], collapse = ":"),
                                     label = paste("*",
                                                   paste(colnames(data)[candidates], collapse = ":"),
                                                   "=",
