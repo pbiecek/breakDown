@@ -21,6 +21,7 @@ Suggests: knitr,
     xgboost,
     caret,
     randomForest,
+    DALEX,
     ranger,
     testthat
 VignetteBuilder: knitr

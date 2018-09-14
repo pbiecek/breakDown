@@ -4,19 +4,13 @@
 \alias{break_down}
 \title{Model Agnostic Experimental Approach to Break Down Plots with Interactions}
 \usage{
-break_down(model, new_observation, data, ..., predict_function = predict,
-  check_interactions = TRUE, keep_distributions = FALSE)
+break_down(explainer, new_observation, check_interactions = TRUE,
+  keep_distributions = FALSE)
 }
 \arguments{
-\item{model}{a model, it can be any predictive model, find examples for most popular frameworks in vigniettes}
+\item{explainer}{a model to be explained, preprocessed by function `DALEX::explain()`.}
 
 \item{new_observation}{a new observation with columns that corresponds to variables used in the model}
-
-\item{data}{the original data used for model fitting, should have same collumns as the 'new_observation'.}
-
-\item{...}{other parameters that will be pased to the predict function}
-
-\item{predict_function}{function that will calculate predictions out of model. It shall return a single numeric value per observation. For classification it may be a probability of the default class.}
 
 \item{check_interactions}{the orgin/baseline for the breakDown plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.}
 

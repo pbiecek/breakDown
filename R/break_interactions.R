@@ -4,12 +4,9 @@
 #' of interactions.
 #' The complexity of this function is O(2*p) for additive models and O(2*p^2) for interactions
 #'
-#' @param model a model, it can be any predictive model, find examples for most popular frameworks in vigniettes
+#' @param explainer a model to be explained, preprocessed by function `DALEX::explain()`.
 #' @param new_observation a new observation with columns that corresponds to variables used in the model
-#' @param data the original data used for model fitting, should have same collumns as the 'new_observation'.
-#' @param ... other parameters that will be pased to the predict function
 #' @param check_interactions the orgin/baseline for the breakDown plots, where the rectangles start. It may be a number or a character "Intercept". In the latter case the orgin will be set to model intercept.
-#' @param predict_function function that will calculate predictions out of model. It shall return a single numeric value per observation. For classification it may be a probability of the default class.
 #' @param keep_distributions if TRUE, then the distribution of partial predictions is stored in addition to the average.
 #'
 #' @return an object of the broken class
@@ -41,11 +38,14 @@
 #' }
 #' @export
 
-break_down <- function(model, new_observation, data,
-                       ...,
-                       predict_function = predict,
+break_down <- function(explainer, new_observation,
                        check_interactions = TRUE,
                        keep_distributions = FALSE) {
+  # important things are in the explainer
+  model <- explainer$model
+  data <- explainer$data
+  predict_function <- explainer$predict_function
+
   # just in case only some variables are specified
   # this will work only for data.frames
   if ("data.frame" %in% class(data)) {
@@ -55,12 +55,12 @@ break_down <- function(model, new_observation, data,
   }
 
   # set target
-  target_yhat <- predict_function(model, new_observation, ...)
-  baseline_yhat <- mean(predict_function(model, data, ...))
+  target_yhat <- predict_function(model, new_observation)
+  baseline_yhat <- mean(predict_function(model, data))
 
   # 1d changes
   # how the average would change if single variable is changed
-  average_yhats <- calculate_1d_changes(model, new_observation, data, predict_function, ...)
+  average_yhats <- calculate_1d_changes(model, new_observation, data, predict_function)
   diffs_1d <- average_yhats - baseline_yhat
 
   # impact summary for 1d variables
@@ -77,7 +77,7 @@ break_down <- function(model, new_observation, data,
 
     # 2d changes
     # how the average would change if two variables are changed
-    changes <- calculate_2d_changes(model, new_observation, data, predict_function, inds, diffs_1d, ...)
+    changes <- calculate_2d_changes(model, new_observation, data, predict_function, inds, diffs_1d)
 
     diffs_2d <- changes$average_yhats - baseline_yhat
     diffs_2d_norm <- changes$average_yhats_norm - baseline_yhat
@@ -112,7 +112,7 @@ break_down <- function(model, new_observation, data,
       # we can add this effect to out path
       current_data[,candidates] <- new_observation[,candidates]
       step <- step + 1
-      yhats_pred <- predict_function(model, current_data, ...)
+      yhats_pred <- predict_function(model, current_data)
       if (keep_distributions) {
         yhats[[step]] <- data.frame(variable = colnames(data)[candidates],
                                     label = paste("*",
@@ -159,7 +159,7 @@ break_down <- function(model, new_observation, data,
     yhats0 <- data.frame(variable = "all data",
                          label = "all data",
                          id = 1:nrow(data),
-                         prediction = predict_function(model, current_data, ...)
+                         prediction = predict_function(model, current_data)
     )
 
     yhats_distribution <- rbind(yhats0, do.call(rbind, yhats))
@@ -189,13 +189,13 @@ nice_pair <- function(x, ind1, ind2) {
 
 # 1d changes
 # how the average would change if single variable is changed
-calculate_1d_changes <- function(model, new_observation, data, predict_function, ...) {
+calculate_1d_changes <- function(model, new_observation, data, predict_function) {
   p <- ncol(data)
   average_yhats <- numeric(p)
   for (i in 1:p) {
     current_data <- data
     current_data[,i] <- new_observation[,i]
-    yhats <- predict_function(model, current_data, ...)
+    yhats <- predict_function(model, current_data)
     average_yhats[i] <- mean(yhats)
   }
   names(average_yhats) <- colnames(data)
@@ -204,14 +204,14 @@ calculate_1d_changes <- function(model, new_observation, data, predict_function,
 
 # 2d changes
 # how the average would change if two variables are changed
-calculate_2d_changes <- function(model, new_observation, data, predict_function, inds, diffs_1d, ...) {
+calculate_2d_changes <- function(model, new_observation, data, predict_function, inds, diffs_1d) {
   average_yhats <- numeric(nrow(inds))
   average_yhats_norm <- numeric(nrow(inds))
   for (i in 1:nrow(inds)) {
     current_data <- data
     current_data[,inds[i, 1]] <- new_observation[,inds[i, 1]]
     current_data[,inds[i, 2]] <- new_observation[,inds[i, 2]]
-    yhats <- predict_function(model, current_data, ...)
+    yhats <- predict_function(model, current_data)
     average_yhats[i] <- mean(yhats)
     average_yhats_norm[i] <- mean(yhats) - diffs_1d[inds[i, 1]] - diffs_1d[inds[i, 2]]
   }
