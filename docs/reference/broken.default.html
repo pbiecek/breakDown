@@ -115,7 +115,7 @@
     
     <p>This function implements two greedy strategies for decompositions of model predictions (see the <code>direction</code> parameter).
 Both stategies are model agnostic, they are greedy but in most cases they give very similar results.
-Find more information about these strategies in https://arxiv.org/abs/1804.01955.</p>
+Find more information about these strategies in <a href='https://arxiv.org/abs/1804.01955'>https://arxiv.org/abs/1804.01955</a>.</p>
     
 
     <pre class="usage"><span class='co'># S3 method for default</span>
@@ -194,8 +194,7 @@ Find more information about these strategies in https://arxiv.org/abs/1804.01955
 <span class='no'>explain_3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='broken.html'>broken</a></span>(<span class='no'>model</span>, <span class='no'>HR_data</span>[<span class='fl'>11</span>,-<span class='fl'>7</span>], <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR_data</span>[,-<span class='fl'>7</span>],
 <span class='kw'>predict.function</span> <span class='kw'>=</span> <span class='no'>predict.function</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"up"</span>, <span class='kw'>keep_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>plot</span>(<span class='no'>explain_3</span>, <span class='kw'>plot_distributions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) +
-         <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>ggtitle</a></span>(<span class='st'>"breakDown distributions (direction=up) for randomForest model"</span>)</div><div class='img'><img src='broken.default-3.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+         <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>ggtitle</a></span>(<span class='st'>"breakDown distributions (direction=up) for randomForest model"</span>)</div><div class='img'><img src='broken.default-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

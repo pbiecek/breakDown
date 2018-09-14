@@ -16,6 +16,7 @@
 #'
 #' @examples
 #' \dontrun{
+#' library("DALEX")
 #' library("breakDown")
 #' library("randomForest")
 #' set.seed(1313)
@@ -39,6 +40,14 @@
 #' bd_rf
 #' plot(bd_rf)
 #' plot(bd_rf, plot_distributions = TRUE)
+#'
+#' bd_rf <- break_down(explainer_rf_fired,
+#'                  new_observation,
+#'                  check_interactions = FALSE,
+#'                  keep_distributions = TRUE)
+#'
+#' bd_rf
+#' plot(bd_rf)
 #'
 #' # example for regression - apartment prices
 #' # here we do not have intreactions

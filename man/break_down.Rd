@@ -29,6 +29,7 @@ And in the second step the impact is calculated.
 }
 \examples{
 \dontrun{
+library("DALEX")
 library("breakDown")
 library("randomForest")
 set.seed(1313)
