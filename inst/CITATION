@@ -3,11 +3,11 @@ bibentry(bibtype = "Article",
   title = "Explanations of Model Predictions with live and breakDown Packages",
   author = c(person(given = "Mateusz",
                     family = "Staniak"),
-             person(given = "Przemysław",
+             person(given = "Przemyslaw",
                     family = "Biecek")),
   journal = {"The R Journal"},
   doi = {"10.32614/RJ-2018-072"},
   year = {2018},
   url = {"https://journal.r-project.org/archive/2018/RJ-2018-072/index.html"},
-  header = "To cite live in publications use:"
+  header = "To cite breakDown in publications use:"
 )
