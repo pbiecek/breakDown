@@ -1,17 +1,13 @@
 bibentry(bibtype = "Article",
-  title        = "Explanations of Model Predictions with {live} and {breakDown} Packages",
-  author       = c(person(given = "Mateusz",
-                          family = "Staniak"),
-                   person(given = "Przemyslaw",
-                          family = "Biecek")),
-  journal      = "ArXiv e-prints",
-  archivePrefix = "arXiv",
-  eprint = {1804.01955},
-  primaryClass = "stat.ML",
-  year = "2018",
-  month = "Apr",
-  url = {"https://arxiv.org/abs/1804.01955"},
-
-  header       = "To cite breakDown in publications use:"
+  key = "RJ-2018-072",
+  title = "Explanations of Model Predictions with live and breakDown Packages",
+  author = c(person(given = "Mateusz",
+                    family = "Staniak"),
+             person(given = "Przemysław",
+                    family = "Biecek")),
+  journal = {"The R Journal"},
+  doi = {"10.32614/RJ-2018-072"},
+  year = {2018},
+  url = {"https://journal.r-project.org/archive/2018/RJ-2018-072/index.html"},
+  header = "To cite live in publications use:"
 )
-
