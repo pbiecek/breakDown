@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Here we will use the HR churn data (https://www.kaggle.com/) to present the breakDown package for `glm` models.
+Here we will use the HR churn data (https://www.kaggle.com/) to present the breakDown package for `randomForest` models.
 
 The data is in the `breakDown` package
 
@@ -27,7 +27,7 @@ library(breakDown)
 head(HR_data, 3)
 ```
 
-Now let's create a logistic regression model for churn, the `left` variable.
+Now let's create a random forest regression model for churn, the `left` variable.
 
 ```{r}
 library("randomForest")

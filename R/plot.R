@@ -51,7 +51,7 @@
 #'}
 #' @export
 plot.broken <- function(x, trans = I, ..., top_features = 0, min_delta = 0, add_contributions = TRUE,
-                        vcolors = c("-1" = "#d8b365", "0" = "#f5f5f5", "1" = "#5ab4ac", "X" = "darkgrey"),
+                        vcolors = c("-1" = "#f05a71", "0" = "#371ea3", "1" = "#8bdcbe", "X" = "#371ea3"),
                         digits = 3, rounding_function = round, plot_distributions = FALSE) {
   position <- cummulative <- prev <- trans_contribution <- prediction <- label <- id <- NULL
 
@@ -178,6 +178,20 @@ plot.broken <- function(x, trans = I, ..., top_features = 0, min_delta = 0, add_
       scale_fill_manual(values = vcolors)
   }
 
-   pl + coord_flip() + theme_classic() +
-     theme(legend.position = "none", panel.border = element_blank())
+   pl + coord_flip() + theme_bw(base_line_size = 0) +
+     theme(axis.ticks = element_blank(), legend.background = element_blank(),
+           legend.key = element_blank(), panel.background = element_blank(),
+           panel.border = element_blank(), strip.background = element_blank(),
+           plot.background = element_blank(),
+           legend.position = "none",
+           axis.line.y = element_line(color = "white"),
+           axis.ticks.y = element_line(color = "white"),
+           axis.title = element_text(color = "#371ea3"),
+           axis.text = element_text(color = "#371ea3", size = 10),
+           strip.text = element_text(color = "#371ea3", size = 12, hjust = 0),
+           panel.grid.major.x = element_line(color = "grey90", size = 0.5, linetype = 1),
+           panel.grid.minor.x = element_line(color = "grey90", size = 0.5,  linetype = 1))
+
+#   theme_classic() +
+#     theme(legend.position = "none", panel.border = element_blank())
 }

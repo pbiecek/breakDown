@@ -88,7 +88,7 @@
       <h1>model agnostic breakDown plots for randomForest</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2018-09-13</h4>
+            <h4 class="date">2019-03-27</h4>
       
       
       <div class="hidden name"><code>break_randomForest.Rmd</code></div>
@@ -97,7 +97,7 @@
 
     
     
-<p>Here we will use the HR churn data (<a href="https://www.kaggle.com/" class="uri">https://www.kaggle.com/</a>) to present the breakDown package for <code>glm</code> models.</p>
+<p>Here we will use the HR churn data (<a href="https://www.kaggle.com/" class="uri">https://www.kaggle.com/</a>) to present the breakDown package for <code>randomForest</code> models.</p>
 <p>The data is in the <code>breakDown</code> package</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1313</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"></a>
@@ -111,7 +111,7 @@
 <a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#&gt; 1                  3             0    1                     0 sales    low</span></a>
 <a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt; 2                  6             0    1                     0 sales medium</span></a>
 <a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt; 3                  4             0    1                     0 sales medium</span></a></code></pre></div>
-<p>Now let’s create a logistic regression model for churn, the <code>left</code> variable.</p>
+<p>Now let’s create a random forest regression model for churn, the <code>left</code> variable.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"randomForest"</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; randomForest 4.6-14</span></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; Type rfNews() to see new features/changes/bug fixes.</span></a>

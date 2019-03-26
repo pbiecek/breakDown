@@ -4,10 +4,10 @@
 \alias{plot.broken}
 \title{Break Down Plot}
 \usage{
-\method{plot}{broken}(x, trans = I, ..., top_features = 0, min_delta = 0,
-  add_contributions = TRUE, vcolors = c(`-1` = "#d8b365", `0` = "#f5f5f5",
-  `1` = "#5ab4ac", X = "darkgrey"), digits = 3, rounding_function = round,
-  plot_distributions = FALSE)
+\method{plot}{broken}(x, trans = I, ..., top_features = 0,
+  min_delta = 0, add_contributions = TRUE, vcolors = c(`-1` =
+  "#f05a71", `0` = "#371ea3", `1` = "#8bdcbe", X = "#371ea3"),
+  digits = 3, rounding_function = round, plot_distributions = FALSE)
 }
 \arguments{
 \item{x}{the model model of 'broken' class}
