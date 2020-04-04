@@ -4,8 +4,12 @@
 \alias{break_down}
 \title{Model Agnostic Experimental Approach to Break Down Plots with Interactions}
 \usage{
-break_down(explainer, new_observation, check_interactions = TRUE,
-  keep_distributions = FALSE)
+break_down(
+  explainer,
+  new_observation,
+  check_interactions = TRUE,
+  keep_distributions = FALSE
+)
 }
 \arguments{
 \item{explainer}{a model to be explained, preprocessed by function `DALEX::explain()`.}

@@ -4,7 +4,9 @@
 \name{HR_data}
 \alias{HR_data}
 \title{Why are our best and most experienced employees leaving prematurely?}
-\format{A data frame with 14999 rows and 10 variables}
+\format{
+A data frame with 14999 rows and 10 variables
+}
 \source{
 Dataset HR-analytics from \url{https://www.kaggle.com}
 }

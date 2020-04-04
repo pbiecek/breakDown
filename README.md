@@ -18,6 +18,10 @@ Interested in the methodology? Find the math behind `breakDown` and `live` at: h
 
 Looking for the `python` version of Break Down? Find it here: https://github.com/bondyra/pyBreakDown
 
+**New generation of the Break-Down algorithm is implemented in the iBreakDown package
+https://github.com/ModelOriented/iBreakDown**. All new features will be added to the iBreakDown.
+
+
 ## Installation
 
 Install from CRAN

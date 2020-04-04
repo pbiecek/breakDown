@@ -3,7 +3,9 @@
 \name{wine}
 \alias{wine}
 \title{White Wine Quality Data}
-\format{A data frame with 4898 rows and 12 variables}
+\format{
+A data frame with 4898 rows and 12 variables
+}
 \source{
 P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis.
 Modeling wine preferences by data mining from physicochemical properties.
@@ -15,7 +17,7 @@ For more details, consult: http://www.vinhoverde.pt/en/ or the reference Cortez 
 }
 \details{
 A dataset downloaded from UCI Machine Learning Database
-https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.cs
+archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.cs
 
 \itemize{
    \item fixed.acidity

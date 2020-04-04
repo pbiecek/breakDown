@@ -16,13 +16,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-Here we will use the wine quality data (https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv) to present the breakDown package for `lm` models.
-
-First, let's download the data from URL
+Here we will use the wine quality data (archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv) to present the breakDown package for `lm` models.
 
 ```{r}
-url <- 'https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv'
-wine <- read.table(url, header = T, sep=";")
+library("breakDown")
 head(wine, 3)
 ```
 

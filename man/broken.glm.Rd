@@ -4,8 +4,13 @@
 \alias{broken.glm}
 \title{Breaking Down of Model Predictions for glm models}
 \usage{
-\method{broken}{glm}(model, new_observation, ..., baseline = 0,
-  predict.function = stats::predict.glm)
+\method{broken}{glm}(
+  model,
+  new_observation,
+  ...,
+  baseline = 0,
+  predict.function = stats::predict.glm
+)
 }
 \arguments{
 \item{model}{a glm model}

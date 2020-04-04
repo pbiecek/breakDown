@@ -4,9 +4,16 @@
 \alias{broken.default}
 \title{Model Agnostic Approach to Breaking Down of Model Predictions}
 \usage{
-\method{broken}{default}(model, new_observation, data, direction = "up",
-  ..., baseline = 0, keep_distributions = FALSE,
-  predict.function = predict)
+\method{broken}{default}(
+  model,
+  new_observation,
+  data,
+  direction = "up",
+  ...,
+  baseline = 0,
+  keep_distributions = FALSE,
+  predict.function = predict
+)
 }
 \arguments{
 \item{model}{a model, it can be any predictive model, find examples for most popular frameworks in vigniettes}

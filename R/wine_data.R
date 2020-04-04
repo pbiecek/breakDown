@@ -4,7 +4,7 @@
 #' For more details, consult: http://www.vinhoverde.pt/en/ or the reference Cortez et al., 2009.
 #'
 #' A dataset downloaded from UCI Machine Learning Database
-#' https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.cs
+#' archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.cs
 #'
 #' \itemize{
 #'    \item fixed.acidity

@@ -4,8 +4,13 @@
 \alias{broken.lm}
 \title{Breaking Down of Model Predictions for lm models}
 \usage{
-\method{broken}{lm}(model, new_observation, ..., baseline = 0,
-  predict.function = stats::predict.lm)
+\method{broken}{lm}(
+  model,
+  new_observation,
+  ...,
+  baseline = 0,
+  predict.function = stats::predict.lm
+)
 }
 \arguments{
 \item{model}{a lm model}
