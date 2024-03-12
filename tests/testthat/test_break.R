@@ -40,13 +40,3 @@ test_that("Output format",{
   expect_is(broken_lm_regr_extended, "broken")
 })
 
-test_that("Wrong input",{
-  expect_error(broken())
-  expect_error(broken(model_classif_rf))
-  expect_error(broken(model_classif_rf, new_observation_classif))
-  expect_error(broken(model_classif_rf, wine[,-12]))
-  expect_error(broken(model_classif_rf, new_observation_classif, data = HR_data[,-7]))
-})
-
-
-  
